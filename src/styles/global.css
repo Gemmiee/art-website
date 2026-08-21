@@ -14,6 +14,13 @@
   --titlebar-mid: #93a3e6;
   --titlebar-end: #4b3a7a;
   --titlebar-border: #332a56;
+  --titlebar-inactive-start: #ebe5f4;
+  --titlebar-inactive-mid: #cfc2e2;
+  --titlebar-inactive-end: #a996c4;
+  --titlebar-inactive-border: #8d7ba3;
+  --titlebar-inactive-text: #4a3f66;
+  --tb-btn-start: #fdfefe;
+  --tb-btn-end: #d6cdea;
   --taskbar-glass: rgba(32, 22, 52, 0.75);
   --taskbar-border: rgba(210, 190, 245, 0.35);
 
@@ -29,6 +36,15 @@
   --accent-orange: #e8823a;
   --accent-red: #e3543f;
 
+  /* content surfaces (chips, table rows, cards) */
+  --surface-faint: rgba(255, 255, 255, 0.38);
+  --surface: rgba(255, 255, 255, 0.55);
+  --surface-hover: rgba(255, 255, 255, 0.9);
+  --card-border: rgba(75, 58, 122, 0.32);
+  --card-border-dashed: rgba(75, 58, 122, 0.4);
+  --card-stripe: rgba(75, 58, 122, 0.15);
+  --card-stripe-bg: rgba(75, 58, 122, 0.06);
+
   /* type */
   --font-ui: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   --font-name: 'Pacifico', cursive;
@@ -39,6 +55,44 @@
   --shadow-window: 0 14px 30px rgba(26, 18, 46, 0.35), 0 2px 0 rgba(255,255,255,0.6) inset;
   --shadow-soft: 0 6px 16px rgba(26, 18, 46, 0.22);
   --taskbar-height: 52px;
+  --theme-transition: 1.6s;
+}
+
+/* ---------- dark theme token overrides ---------- */
+:root[data-theme="dark"] {
+  --glass-fill: rgba(20, 15, 34, 0.55);
+  --glass-fill-strong: rgba(20, 15, 34, 0.78);
+  --glass-border: rgba(255, 255, 255, 0.14);
+  --titlebar-start: #6a5aa8;
+  --titlebar-mid: #392f5c;
+  --titlebar-end: #15111f;
+  --titlebar-border: #08060f;
+  --titlebar-inactive-start: #33294a;
+  --titlebar-inactive-mid: #241c38;
+  --titlebar-inactive-end: #171226;
+  --titlebar-inactive-border: #0d0a16;
+  --titlebar-inactive-text: #cabfe0;
+  --tb-btn-start: #4a4260;
+  --tb-btn-end: #2a2440;
+  --taskbar-glass: rgba(8, 5, 18, 0.8);
+  --taskbar-border: rgba(140, 118, 180, 0.3);
+
+  --ink: #f3ecff;
+  --ink-soft: #cabfe0;
+  --ink-inverse: #fbf3ea;
+
+  --accent: #93a3e6;
+  --accent-deep: #b9c3f0;
+  --accent-teal: #5fe0e6;
+  --accent-orange: #ffab5c;
+
+  --surface-faint: rgba(20, 15, 34, 0.35);
+  --surface: rgba(30, 22, 48, 0.55);
+  --surface-hover: rgba(70, 56, 100, 0.75);
+  --card-border: rgba(185, 195, 240, 0.28);
+  --card-border-dashed: rgba(185, 195, 240, 0.35);
+  --card-stripe: rgba(185, 195, 240, 0.18);
+  --card-stripe-bg: rgba(185, 195, 240, 0.08);
 }
 
 * {
@@ -55,21 +109,23 @@ body {
   color: var(--ink);
   min-height: 100vh;
   padding-bottom: var(--taskbar-height);
-  background-image: url('/images/windows_vista_50.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
+  background-color: #dfe3fb;
   font-size: 15px;
   line-height: 1.55;
   position: relative;
   overflow-x: hidden;
+  transition: color var(--theme-transition) ease;
+}
+
+:root[data-theme="dark"] body {
+  background-color: #0d0a16;
 }
 
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
   }
 }
@@ -110,6 +166,7 @@ button:focus-visible {
   -webkit-backdrop-filter: blur(10px) saturate(1.4);
   overflow: hidden;
   position: relative;
+  transition: background var(--theme-transition) ease, border-color var(--theme-transition) ease;
 }
 
 .window + .window {
@@ -124,6 +181,7 @@ button:focus-visible {
   background: linear-gradient(180deg, var(--titlebar-start) 0%, var(--titlebar-mid) 45%, var(--titlebar-end) 100%);
   border-bottom: 1px solid var(--titlebar-border);
   position: relative;
+  transition: background var(--theme-transition) ease, border-color var(--theme-transition) ease;
 }
 
 .title-bar::before {
@@ -159,7 +217,7 @@ button:focus-visible {
   height: 20px;
   border-radius: 3px;
   border: 1px solid rgba(255,255,255,0.6);
-  background: linear-gradient(180deg, #fdfefe 0%, #d6cdea 100%);
+  background: linear-gradient(180deg, var(--tb-btn-start) 0%, var(--tb-btn-end) 100%);
   color: var(--ink);
   font-size: 0.7rem;
   line-height: 1;
@@ -167,6 +225,7 @@ button:focus-visible {
   align-items: center;
   justify-content: center;
   box-shadow: 0 1px 0 rgba(0,0,0,0.15);
+  transition: background var(--theme-transition) ease;
 }
 
 .tb-btn.close {
@@ -193,6 +252,11 @@ button:focus-visible {
   background: linear-gradient(180deg, #ffffff 0%, #e6ddf7 45%, #ab98e6 46%, #cdb8f0 100%);
   box-shadow: var(--shadow-soft);
   transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+:root[data-theme="dark"] .aero-btn {
+  background: linear-gradient(180deg, #6a5aa8 0%, #4a3d7a 45%, #332a5c 46%, #241d44 100%);
+  color: var(--ink);
 }
 
 .aero-btn:hover {

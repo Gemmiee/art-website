@@ -437,7 +437,7 @@ const ocs = [
 
     .doc-divider {
       border: none;
-      border-top: 1px dashed rgba(75,58,122,0.3);
+      border-top: 1px dashed var(--card-border);
       margin: 26px 0;
     }
     .doc-section.callout {
@@ -446,20 +446,20 @@ const ocs = [
 
     /* ---------- "inactive" side windows ---------- */
     .window.inactive {
-      background: rgba(255,255,255,0.5);
+      background: var(--surface);
       box-shadow: 0 6px 14px rgba(26,18,46,0.16), 0 1px 0 rgba(255,255,255,0.4) inset;
       backdrop-filter: blur(8px) saturate(1.1);
       -webkit-backdrop-filter: blur(8px) saturate(1.1);
     }
     .window.inactive .title-bar {
-      background: linear-gradient(180deg, #ebe5f4 0%, #cfc2e2 55%, #a996c4 100%);
-      border-bottom: 1px solid #8d7ba3;
+      background: linear-gradient(180deg, var(--titlebar-inactive-start) 0%, var(--titlebar-inactive-mid) 55%, var(--titlebar-inactive-end) 100%);
+      border-bottom: 1px solid var(--titlebar-inactive-border);
     }
     .window.inactive .title-bar::before {
       opacity: 0.35;
     }
     .window.inactive .title-bar-text {
-      color: #4a3f66;
+      color: var(--titlebar-inactive-text);
       text-shadow: none;
     }
     .window.inactive .title-bar-icon {
@@ -467,7 +467,7 @@ const ocs = [
       filter: none;
     }
     .window.inactive .tb-btn {
-      background: linear-gradient(180deg, #fbfcfd 0%, #ddd2ec 100%);
+      background: linear-gradient(180deg, var(--tb-btn-start) 0%, var(--tb-btn-end) 100%);
       opacity: 0.8;
     }
     .window.inactive .tb-btn.close {
@@ -531,8 +531,8 @@ const ocs = [
       margin-top: 18px;
       border-collapse: collapse;
       font-size: 0.85rem;
-      background: rgba(255,255,255,0.6);
-      border: 1px solid rgba(75,58,122,0.35);
+      background: var(--surface);
+      border: 1px solid var(--card-border);
       border-radius: 6px;
       overflow: hidden;
     }
@@ -548,10 +548,10 @@ const ocs = [
     }
     .stats-table td {
       padding: 8px 12px;
-      border-bottom: 1px solid rgba(75,58,122,0.15);
+      border-bottom: 1px solid var(--card-stripe);
     }
     .stats-table tr:nth-child(even) td {
-      background: rgba(75,58,122,0.06);
+      background: var(--card-stripe-bg);
     }
     .stats-table tr:last-child td {
       border-bottom: none;
@@ -572,9 +572,9 @@ const ocs = [
     }
     .gallery-slot {
       aspect-ratio: 1;
-      border: 1px dashed rgba(75,58,122,0.4);
+      border: 1px dashed var(--card-border-dashed);
       border-radius: 6px;
-      background: rgba(255,255,255,0.4);
+      background: var(--surface-faint);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -594,7 +594,7 @@ const ocs = [
       width: 60px;
       height: 60px;
       border-radius: 50%;
-      background: repeating-radial-gradient(circle, var(--ink) 0 2px, #fff 2px 8px);
+      background: repeating-radial-gradient(circle, #2b2140 0 2px, #fff 2px 8px);
       border: 1px solid rgba(255,255,255,0.8);
       box-shadow: 0 4px 10px rgba(26,18,46,0.25);
       display: flex;
@@ -614,8 +614,8 @@ const ocs = [
     }
     .np-bar {
       height: 8px;
-      background: rgba(255,255,255,0.6);
-      border: 1px solid rgba(75,58,122,0.35);
+      background: var(--surface);
+      border: 1px solid var(--card-border);
       border-radius: 6px;
       overflow: hidden;
       margin-bottom: 10px;
@@ -684,8 +684,8 @@ const ocs = [
     }
     .nav-list a {
       display: block;
-      background: rgba(255,255,255,0.5);
-      border: 1px solid rgba(75,58,122,0.3);
+      background: var(--surface);
+      border: 1px solid var(--card-border);
       border-radius: 6px;
       padding: 8px 10px;
       text-decoration: none;
@@ -695,7 +695,7 @@ const ocs = [
       transition: background 0.12s ease;
     }
     .nav-list a:hover {
-      background: rgba(255,255,255,0.9);
+      background: var(--surface-hover);
     }
 
     /* mini games teaser */
@@ -707,8 +707,8 @@ const ocs = [
       display: flex;
       align-items: center;
       gap: 8px;
-      background: rgba(255,255,255,0.35);
-      border: 1px dashed rgba(75,58,122,0.4);
+      background: var(--surface-faint);
+      border: 1px dashed var(--card-border-dashed);
       border-radius: 6px;
       padding: 8px 10px;
       opacity: 0.65;
@@ -736,8 +736,8 @@ const ocs = [
     }
     .link-list a {
       display: block;
-      background: rgba(255,255,255,0.55);
-      border: 1px solid rgba(75,58,122,0.3);
+      background: var(--surface);
+      border: 1px solid var(--card-border);
       border-radius: 6px;
       padding: 9px 10px;
       text-decoration: none;
@@ -747,7 +747,7 @@ const ocs = [
       transition: background 0.12s ease;
     }
     .link-list a:hover {
-      background: rgba(255,255,255,0.9);
+      background: var(--surface-hover);
     }
 
     /* friend links / webring buttons */
@@ -759,9 +759,9 @@ const ocs = [
     .friend-slot {
       width: 88px;
       height: 31px;
-      border: 1px dashed rgba(75,58,122,0.4);
+      border: 1px dashed var(--card-border-dashed);
       border-radius: 4px;
-      background: rgba(255,255,255,0.35);
+      background: var(--surface-faint);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -780,9 +780,9 @@ const ocs = [
       width: 100%;
       min-height: 60px;
       resize: vertical;
-      border: 1px solid rgba(75,58,122,0.35);
+      border: 1px solid var(--card-border);
       border-radius: 6px;
-      background: rgba(255,255,255,0.6);
+      background: var(--surface);
       color: var(--ink-soft);
       font-family: var(--font-ui);
       font-size: 0.82rem;
@@ -808,8 +808,8 @@ const ocs = [
       gap: 14px;
     }
     .oc-card {
-      background: rgba(255,255,255,0.55);
-      border: 1px solid rgba(75,58,122,0.3);
+      background: var(--surface);
+      border: 1px solid var(--card-border);
       border-radius: 8px;
       padding: 14px;
       text-align: center;
@@ -818,7 +818,7 @@ const ocs = [
       transition: background 0.12s ease, transform 0.12s ease;
     }
     .oc-card:hover {
-      background: rgba(255,255,255,0.9);
+      background: var(--surface-hover);
       transform: translateY(-2px);
     }
     .oc-swatch {
@@ -851,8 +851,8 @@ const ocs = [
     }
     .badge-btn {
       display: inline-block;
-      background: rgba(255,255,255,0.55);
-      border: 1px solid rgba(75,58,122,0.3);
+      background: var(--surface);
+      border: 1px solid var(--card-border);
       border-radius: 6px;
       padding: 8px 12px;
       font-size: 0.72rem;

@@ -21,8 +21,15 @@ const taskbarLinks = [
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light">
   <head>
+    <script is:inline>
+      (function () {
+        var stored = localStorage.getItem('theme');
+        var theme = stored || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+      })();
+    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
@@ -30,6 +37,9 @@ const taskbarLinks = [
     <title>{title}</title>
   </head>
   <body>
+    <div class="scene scene-light" aria-hidden="true"></div>
+    <div class="scene scene-dark" aria-hidden="true"></div>
+
     <div class="site-banner">
       <img src="/images/banner.png" alt="Gemmie's corner banner — artist.gemmiewow.com" />
     </div>
@@ -49,6 +59,10 @@ const taskbarLinks = [
         ))}
       </ul>
       <div class="tray">
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle dark mode">
+          <span class="theme-icon sun-icon" aria-hidden="true">☀️</span>
+          <span class="theme-icon moon-icon" aria-hidden="true">🌙</span>
+        </button>
         <span class="tray-icon" aria-hidden="true">🔊</span>
         <span class="tray-icon" aria-hidden="true">📶</span>
         <span class="clock" id="taskbar-clock">--:--</span>
@@ -68,9 +82,61 @@ const taskbarLinks = [
       }
       tick();
       setInterval(tick, 15000);
+
+      const themeToggle = document.getElementById('theme-toggle');
+      if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+          const current = document.documentElement.getAttribute('data-theme');
+          const next = current === 'dark' ? 'light' : 'dark';
+          document.documentElement.setAttribute('data-theme', next);
+          localStorage.setItem('theme', next);
+        });
+      }
     </script>
 
     <style>
+      /* ---------- layered day/night scene ----------
+         each scene is one element with 6 stacked background-images.
+         CSS layers the FIRST-listed image on top, so the list is
+         written back-to-front in reverse of the visual stacking:
+         sky -> sea -> clouds -> sun/moon -> field -> lampost (front) */
+      .scene {
+        position: fixed;
+        inset: 0;
+        z-index: -3;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        pointer-events: none;
+        transition: opacity 1.4s ease;
+      }
+      .scene-light {
+        background-image:
+          url('/images/wallpaper/light/light_lampost.png'),
+          url('/images/wallpaper/light/light_field.png'),
+          url('/images/wallpaper/light/light_sun.png'),
+          url('/images/wallpaper/light/light_clouds.png'),
+          url('/images/wallpaper/light/light_sea.png'),
+          url('/images/wallpaper/light/light_sky.png');
+        opacity: 1;
+      }
+      .scene-dark {
+        background-image:
+          url('/images/wallpaper/dark/dark_lampost.png'),
+          url('/images/wallpaper/dark/dark_field.png'),
+          url('/images/wallpaper/dark/dark_moon.png'),
+          url('/images/wallpaper/dark/dark_clouds.png'),
+          url('/images/wallpaper/dark/dark_sea.png'),
+          url('/images/wallpaper/dark/dark_sky.png');
+        opacity: 0;
+      }
+      :root[data-theme="dark"] .scene-light {
+        opacity: 0;
+      }
+      :root[data-theme="dark"] .scene-dark {
+        opacity: 1;
+      }
+
       .site-banner {
         max-width: 1360px;
         margin: 0 auto;
@@ -179,6 +245,42 @@ const taskbarLinks = [
         font-variant-numeric: tabular-nums;
         min-width: 68px;
         text-align: center;
+      }
+
+      .theme-toggle {
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        border: 1px solid rgba(255,255,255,0.35);
+        background: rgba(255,255,255,0.08);
+        position: relative;
+        cursor: pointer;
+        flex-shrink: 0;
+      }
+      .theme-icon {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.85rem;
+        transition: opacity 0.4s ease, transform 0.4s ease;
+      }
+      :root[data-theme="light"] .sun-icon {
+        opacity: 1;
+        transform: rotate(0deg) scale(1);
+      }
+      :root[data-theme="light"] .moon-icon {
+        opacity: 0;
+        transform: rotate(-90deg) scale(0.6);
+      }
+      :root[data-theme="dark"] .sun-icon {
+        opacity: 0;
+        transform: rotate(90deg) scale(0.6);
+      }
+      :root[data-theme="dark"] .moon-icon {
+        opacity: 1;
+        transform: rotate(0deg) scale(1);
       }
 
       @media (max-width: 560px) {
