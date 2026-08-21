@@ -21,8 +21,6 @@
   --titlebar-inactive-text: #4a3f66;
   --tb-btn-start: #fdfefe;
   --tb-btn-end: #d6cdea;
-  --taskbar-glass: rgba(32, 22, 52, 0.75);
-  --taskbar-border: rgba(210, 190, 245, 0.35);
 
   /* text */
   --ink: #2b2140;
@@ -54,7 +52,6 @@
   --radius: 8px;
   --shadow-window: 0 14px 30px rgba(26, 18, 46, 0.35), 0 2px 0 rgba(255,255,255,0.6) inset;
   --shadow-soft: 0 6px 16px rgba(26, 18, 46, 0.22);
-  --taskbar-height: 52px;
   --theme-transition: 1.6s;
 }
 
@@ -74,8 +71,6 @@
   --titlebar-inactive-text: #cabfe0;
   --tb-btn-start: #4a4260;
   --tb-btn-end: #2a2440;
-  --taskbar-glass: rgba(8, 5, 18, 0.8);
-  --taskbar-border: rgba(140, 118, 180, 0.3);
 
   --ink: #f3ecff;
   --ink-soft: #cabfe0;
@@ -108,7 +103,6 @@ body {
   font-family: var(--font-ui);
   color: var(--ink);
   min-height: 100vh;
-  padding-bottom: var(--taskbar-height);
   background-color: #dfe3fb;
   font-size: 15px;
   line-height: 1.55;
