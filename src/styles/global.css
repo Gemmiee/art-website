@@ -3,44 +3,41 @@
    Frutiger Aero / Windows 7 Aero Glass
    ============================================ */
 
-:root {
-  /* sky + desktop */
-  --sky-top: #2f7fd1;
-  --sky-mid: #6bb6f0;
-  --sky-bottom: #d7ecff;
-  --hill-dark: #3f7d2e;
-  --hill-light: #6fae4a;
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700&family=Pacifico&display=swap');
 
+:root {
   /* glass + chrome */
-  --glass-fill: rgba(255, 255, 255, 0.6);
-  --glass-fill-strong: rgba(255, 255, 255, 0.82);
+  --glass-fill: rgba(255, 250, 245, 0.6);
+  --glass-fill-strong: rgba(255, 250, 245, 0.84);
   --glass-border: rgba(255, 255, 255, 0.85);
-  --titlebar-start: #bfe0fb;
-  --titlebar-mid: #6fb6ee;
-  --titlebar-end: #2f7fd1;
-  --titlebar-border: #1a5aa0;
-  --taskbar-glass: rgba(12, 34, 64, 0.72);
-  --taskbar-border: rgba(160, 210, 255, 0.35);
+  --titlebar-start: #dee3fb;
+  --titlebar-mid: #93a3e6;
+  --titlebar-end: #4b3a7a;
+  --titlebar-border: #332a56;
+  --taskbar-glass: rgba(32, 22, 52, 0.75);
+  --taskbar-border: rgba(210, 190, 245, 0.35);
 
   /* text */
-  --ink: #12263f;
-  --ink-soft: #3c5a78;
-  --ink-inverse: #f4faff;
+  --ink: #2b2140;
+  --ink-soft: #5c4f7a;
+  --ink-inverse: #fbf3ea;
 
   /* accents */
-  --accent: #2f7fd1;
-  --accent-deep: #1a5aa0;
-  --accent-green: #4f9e3b;
-  --accent-orange: #f0a13a;
+  --accent: #6a7fd9;
+  --accent-deep: #4b3a7a;
+  --accent-teal: #3fbfc7;
+  --accent-orange: #e8823a;
   --accent-red: #e3543f;
 
   /* type */
   --font-ui: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --font-name: 'Pacifico', cursive;
+  --font-banner: 'Baloo 2', var(--font-ui);
 
   /* misc */
   --radius: 8px;
-  --shadow-window: 0 14px 30px rgba(10, 30, 60, 0.35), 0 2px 0 rgba(255,255,255,0.6) inset;
-  --shadow-soft: 0 6px 16px rgba(10, 30, 60, 0.22);
+  --shadow-window: 0 14px 30px rgba(26, 18, 46, 0.35), 0 2px 0 rgba(255,255,255,0.6) inset;
+  --shadow-soft: 0 6px 16px rgba(26, 18, 46, 0.22);
   --taskbar-height: 52px;
 }
 
@@ -58,46 +55,15 @@ body {
   color: var(--ink);
   min-height: 100vh;
   padding-bottom: var(--taskbar-height);
-  background:
-    radial-gradient(ellipse 60% 40% at 20% 15%, rgba(255,255,255,0.55), transparent 60%),
-    radial-gradient(ellipse 45% 30% at 78% 8%, rgba(255,255,255,0.4), transparent 60%),
-    linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 45%, var(--sky-bottom) 78%, var(--sky-bottom) 100%);
+  background-image: url('/images/windows_vista_50.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   background-attachment: fixed;
   font-size: 15px;
   line-height: 1.55;
   position: relative;
   overflow-x: hidden;
-}
-
-/* rolling hill + bokeh droplets, pure CSS "bliss" nod */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: -2;
-  pointer-events: none;
-  background-image:
-    radial-gradient(circle, rgba(255,255,255,0.55) 0 3px, transparent 4px),
-    radial-gradient(circle, rgba(255,255,255,0.4) 0 5px, transparent 6px),
-    radial-gradient(circle, rgba(255,255,255,0.5) 0 2px, transparent 3px);
-  background-size: 260px 260px, 340px 340px, 180px 180px;
-  background-position: 10% 20%, 70% 10%, 40% 60%;
-  opacity: 0.8;
-}
-
-body::after {
-  content: '';
-  position: fixed;
-  left: -5%;
-  right: -5%;
-  bottom: var(--taskbar-height);
-  height: 26vh;
-  z-index: -1;
-  pointer-events: none;
-  background:
-    radial-gradient(ellipse 70% 100% at 30% 100%, var(--hill-light) 0%, var(--hill-dark) 70%, transparent 72%),
-    radial-gradient(ellipse 60% 90% at 80% 100%, var(--hill-light) 0%, var(--hill-dark) 65%, transparent 68%);
-  filter: blur(0.5px);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -126,7 +92,7 @@ button:focus-visible {
 /* ---------- shared components ---------- */
 
 .wrap {
-  max-width: 1180px;
+  max-width: 1360px;
   margin: 0 auto;
   padding: 40px 16px 64px;
   position: relative;
@@ -193,7 +159,7 @@ button:focus-visible {
   height: 20px;
   border-radius: 3px;
   border: 1px solid rgba(255,255,255,0.6);
-  background: linear-gradient(180deg, #fdfefe 0%, #c9d8e6 100%);
+  background: linear-gradient(180deg, #fdfefe 0%, #d6cdea 100%);
   color: var(--ink);
   font-size: 0.7rem;
   line-height: 1;
@@ -224,14 +190,14 @@ button:focus-visible {
   font-size: 0.9rem;
   color: var(--ink);
   text-decoration: none;
-  background: linear-gradient(180deg, #ffffff 0%, #cfe6fb 45%, #8fc3ee 46%, #bfe0fb 100%);
+  background: linear-gradient(180deg, #ffffff 0%, #e6ddf7 45%, #ab98e6 46%, #cdb8f0 100%);
   box-shadow: var(--shadow-soft);
   transition: transform 0.12s ease, box-shadow 0.12s ease;
 }
 
 .aero-btn:hover {
   transform: translateY(-1px);
-  box-shadow: 0 8px 18px rgba(10, 30, 60, 0.28);
+  box-shadow: 0 8px 18px rgba(26, 18, 46, 0.28);
 }
 
 .aero-btn:active {
