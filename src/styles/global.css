@@ -1,0 +1,243 @@
+/* ============================================
+   gemmie's corner — design tokens
+   Frutiger Aero / Windows 7 Aero Glass
+   ============================================ */
+
+:root {
+  /* sky + desktop */
+  --sky-top: #2f7fd1;
+  --sky-mid: #6bb6f0;
+  --sky-bottom: #d7ecff;
+  --hill-dark: #3f7d2e;
+  --hill-light: #6fae4a;
+
+  /* glass + chrome */
+  --glass-fill: rgba(255, 255, 255, 0.6);
+  --glass-fill-strong: rgba(255, 255, 255, 0.82);
+  --glass-border: rgba(255, 255, 255, 0.85);
+  --titlebar-start: #bfe0fb;
+  --titlebar-mid: #6fb6ee;
+  --titlebar-end: #2f7fd1;
+  --titlebar-border: #1a5aa0;
+  --taskbar-glass: rgba(12, 34, 64, 0.72);
+  --taskbar-border: rgba(160, 210, 255, 0.35);
+
+  /* text */
+  --ink: #12263f;
+  --ink-soft: #3c5a78;
+  --ink-inverse: #f4faff;
+
+  /* accents */
+  --accent: #2f7fd1;
+  --accent-deep: #1a5aa0;
+  --accent-green: #4f9e3b;
+  --accent-orange: #f0a13a;
+  --accent-red: #e3543f;
+
+  /* type */
+  --font-ui: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+  /* misc */
+  --radius: 8px;
+  --shadow-window: 0 14px 30px rgba(10, 30, 60, 0.35), 0 2px 0 rgba(255,255,255,0.6) inset;
+  --shadow-soft: 0 6px 16px rgba(10, 30, 60, 0.22);
+  --taskbar-height: 52px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-ui);
+  color: var(--ink);
+  min-height: 100vh;
+  padding-bottom: var(--taskbar-height);
+  background:
+    radial-gradient(ellipse 60% 40% at 20% 15%, rgba(255,255,255,0.55), transparent 60%),
+    radial-gradient(ellipse 45% 30% at 78% 8%, rgba(255,255,255,0.4), transparent 60%),
+    linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 45%, var(--sky-bottom) 78%, var(--sky-bottom) 100%);
+  background-attachment: fixed;
+  font-size: 15px;
+  line-height: 1.55;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* rolling hill + bokeh droplets, pure CSS "bliss" nod */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle, rgba(255,255,255,0.55) 0 3px, transparent 4px),
+    radial-gradient(circle, rgba(255,255,255,0.4) 0 5px, transparent 6px),
+    radial-gradient(circle, rgba(255,255,255,0.5) 0 2px, transparent 3px);
+  background-size: 260px 260px, 340px 340px, 180px 180px;
+  background-position: 10% 20%, 70% 10%, 40% 60%;
+  opacity: 0.8;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  left: -5%;
+  right: -5%;
+  bottom: var(--taskbar-height);
+  height: 26vh;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 70% 100% at 30% 100%, var(--hill-light) 0%, var(--hill-dark) 70%, transparent 72%),
+    radial-gradient(ellipse 60% 90% at 80% 100%, var(--hill-light) 0%, var(--hill-dark) 65%, transparent 68%);
+  filter: blur(0.5px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: var(--accent-deep);
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--accent-deep);
+  outline-offset: 2px;
+}
+
+/* ---------- shared components ---------- */
+
+.wrap {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 40px 16px 64px;
+  position: relative;
+  z-index: 1;
+}
+
+/* -- Aero Glass "window" chrome -- */
+
+.window {
+  background: var(--glass-fill-strong);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-window);
+  backdrop-filter: blur(10px) saturate(1.4);
+  -webkit-backdrop-filter: blur(10px) saturate(1.4);
+  overflow: hidden;
+  position: relative;
+}
+
+.window + .window {
+  margin-top: 26px;
+}
+
+.title-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 8px 7px 12px;
+  background: linear-gradient(180deg, var(--titlebar-start) 0%, var(--titlebar-mid) 45%, var(--titlebar-end) 100%);
+  border-bottom: 1px solid var(--titlebar-border);
+  position: relative;
+}
+
+.title-bar::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 45%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.75), rgba(255,255,255,0));
+  pointer-events: none;
+}
+
+.title-bar-icon {
+  font-size: 0.95rem;
+  filter: drop-shadow(0 1px 0 rgba(255,255,255,0.5));
+}
+
+.title-bar-text {
+  flex: 1;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ink-inverse);
+  text-shadow: 0 1px 1px rgba(0,0,0,0.35);
+  letter-spacing: 0.2px;
+}
+
+.title-bar-controls {
+  display: flex;
+  gap: 4px;
+}
+
+.tb-btn {
+  width: 22px;
+  height: 20px;
+  border-radius: 3px;
+  border: 1px solid rgba(255,255,255,0.6);
+  background: linear-gradient(180deg, #fdfefe 0%, #c9d8e6 100%);
+  color: var(--ink);
+  font-size: 0.7rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.15);
+}
+
+.tb-btn.close {
+  background: linear-gradient(180deg, #ff9a8a 0%, #e3543f 100%);
+  color: #fff;
+}
+
+.window-body {
+  padding: 20px;
+}
+
+/* -- Aero glossy buttons -- */
+
+.aero-btn {
+  display: inline-block;
+  border: 1px solid var(--accent-deep);
+  border-radius: 6px;
+  padding: 10px 16px;
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--ink);
+  text-decoration: none;
+  background: linear-gradient(180deg, #ffffff 0%, #cfe6fb 45%, #8fc3ee 46%, #bfe0fb 100%);
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.aero-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(10, 30, 60, 0.28);
+}
+
+.aero-btn:active {
+  transform: translateY(0);
+}
+
+.sparkle {
+  color: var(--accent-orange);
+}

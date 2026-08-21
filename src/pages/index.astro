@@ -1,0 +1,802 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const quickNav = [
+  { emoji: '🙋', label: 'About Me', href: '#about' },
+  { emoji: '🖼️', label: 'Art', href: '#art' },
+  { emoji: '🎨', label: 'OCs', href: '#ocs' },
+  { emoji: '🕹️', label: 'Project', href: '#project' },
+  { emoji: '🌍', label: 'Portfolio', href: '#portfolio' },
+];
+
+const miniGames = [
+  { icon: '🃏', name: 'solitaire.exe' },
+  { icon: '💣', name: 'minesweeper.exe' },
+  { icon: '🐍', name: 'snake.exe' },
+];
+
+const socials = [
+  { emoji: '🛍️', label: 'Ko-fi Shop', href: 'https://ko-fi.com/gemmiewow/' },
+  { emoji: '🐠', label: 'Cara Art Portfolio', href: 'https://cara.app/gemmiewow' },
+  { emoji: '🪼', label: 'Pixelfed', href: 'https://pixelfed.social/gemmie_wow' },
+  { emoji: '👥', label: 'OC Fandom Wiki', href: 'https://shanka-angelo.fandom.com/wiki/Shanka_%26_Angelo_Wiki' },
+  { emoji: '📸', label: 'Instagram', href: 'https://www.instagram.com/gemmie_wow' },
+  { emoji: '🕹️', label: 'Twitch', href: 'https://www.twitch.tv/gemmie_wow' },
+  { emoji: '🎥', label: 'YouTube', href: 'https://youtube.com/@gemmiewow' },
+  { emoji: '🎨', label: "Colors!Live 3DS Gallery", href: 'https://www.colorslive.com/artist/GemmieWow' },
+];
+
+const ocs = [
+  { name: 'Gemmie', blurb: 'the artist herself, sunflower motif, always sketching' },
+  { name: 'Shanka', blurb: 'lore-heavy OC from the uni-game world' },
+  { name: 'Angelo', blurb: "Shanka's other half — full lore on the fandom wiki" },
+];
+---
+
+<Layout>
+  <main class="wrap layout-grid">
+    <div class="col-main">
+      <!-- ================= single merged content window ================= -->
+      <section class="window main-doc">
+        <div class="title-bar">
+          <span class="title-bar-icon" aria-hidden="true">🌻</span>
+          <span class="title-bar-text">gemmies-corner.exe</span>
+          <div class="title-bar-controls" aria-hidden="true">
+            <span class="tb-btn">_</span>
+            <span class="tb-btn">□</span>
+            <span class="tb-btn close">×</span>
+          </div>
+        </div>
+        <div class="window-body">
+          <!-- ---- about me ---- -->
+          <div class="doc-section" id="about">
+            <h2 class="doc-heading"><span aria-hidden="true">🙋</span> About Me</h2>
+            <div class="profile-grid">
+              <div class="avatar-frame">
+                <div class="avatar-placeholder" role="img" aria-label="Gemmie's avatar">
+                  🌻
+                </div>
+              </div>
+              <div>
+                <h1>Gemmie <span class="sparkle">☆</span></h1>
+                <p class="tags">Female ♀️ ʕ•ᴥ•ʔ &nbsp;·&nbsp; Artist 🌻</p>
+                <p class="blurb">
+                  🌱 Artist + Animator, studying Programming in uni.
+                  <br />🌻 Stuff I love: my PSVita &amp; 3DS, cats, coding in Python, sunflowers.
+                </p>
+              </div>
+            </div>
+
+            <table class="stats-table">
+              <thead>
+                <tr>
+                  <th>property</th>
+                  <th>value</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>profile views</td>
+                  <td id="view-count">23,000</td>
+                </tr>
+                <tr>
+                  <td>last online</td>
+                  <td>today ✨</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <hr class="doc-divider" />
+
+          <!-- ---- art gallery ---- -->
+          <div class="doc-section" id="art">
+            <h2 class="doc-heading"><span aria-hidden="true">🖼️</span> Art Gallery</h2>
+            <p class="hand-note">gallery under construction — pieces coming soon ☆</p>
+            <div class="gallery-grid">
+              {Array.from({ length: 6 }).map(() => (
+                <div class="gallery-slot" aria-hidden="true">🖌️</div>
+              ))}
+            </div>
+          </div>
+
+          <hr class="doc-divider" />
+
+          <!-- ---- OCs ---- -->
+          <div class="doc-section" id="ocs">
+            <h2 class="doc-heading"><span aria-hidden="true">🎨</span> OCs</h2>
+            <p class="hand-note">Gemmie, Shanka &amp; Angelo — click for full lore ☆</p>
+            <div class="oc-grid">
+              {ocs.map((oc) => (
+                <a class="oc-card" href="https://shanka-angelo.fandom.com/wiki/Shanka_%26_Angelo_Wiki" target="_blank" rel="noopener">
+                  <div class="oc-swatch" aria-hidden="true">🖍️</div>
+                  <p class="oc-name">{oc.name}</p>
+                  <p class="oc-blurb">{oc.blurb}</p>
+                </a>
+              ))}
+            </div>
+          </div>
+
+          <hr class="doc-divider" />
+
+          <!-- ---- featured project ---- -->
+          <div class="doc-section" id="project">
+            <h2 class="doc-heading"><span aria-hidden="true">🕹️</span> Project</h2>
+            <p class="hand-note">psst — click to see my uni game's code!</p>
+            <a class="aero-btn game-btn" href="https://github.com/Gemmiee/Universifight" target="_blank" rel="noopener">
+              🎮 My Uni Game — Universifight
+              <span class="game-btn-sub">→ view the GitHub repository</span>
+            </a>
+          </div>
+
+          <hr class="doc-divider" />
+
+          <!-- ---- programming portfolio callout ---- -->
+          <div class="doc-section callout" id="portfolio">
+            <h2 class="doc-heading"><span aria-hidden="true">🌍</span> Portfolio</h2>
+            <a class="aero-btn callout-link" href="https://gemmiewow.com/" target="_blank" rel="noopener">
+              🌍 Visit my Programming Portfolio
+            </a>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="col-nav">
+      <!-- ================= quick nav ================= -->
+      <section class="window compact inactive">
+        <div class="title-bar">
+          <span class="title-bar-icon" aria-hidden="true">📁</span>
+          <span class="title-bar-text">navigate.exe</span>
+          <div class="title-bar-controls" aria-hidden="true">
+            <span class="tb-btn">_</span>
+            <span class="tb-btn">□</span>
+            <span class="tb-btn close">×</span>
+          </div>
+        </div>
+        <div class="window-body">
+          <ul class="nav-list">
+            {quickNav.map((item) => (
+              <li>
+                <a href={item.href}>
+                  <span aria-hidden="true">{item.emoji}</span> {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <!-- ================= mini games teaser ================= -->
+      <section class="window compact inactive" id="games">
+        <div class="title-bar">
+          <span class="title-bar-icon" aria-hidden="true">🎮</span>
+          <span class="title-bar-text">mini-games</span>
+          <div class="title-bar-controls" aria-hidden="true">
+            <span class="tb-btn">_</span>
+            <span class="tb-btn">□</span>
+            <span class="tb-btn close">×</span>
+          </div>
+        </div>
+        <div class="window-body">
+          <p class="hand-note">coming soon ☆</p>
+          <div class="games-grid">
+            {miniGames.map((game) => (
+              <div class="game-slot" aria-hidden="true">
+                <span class="game-slot-icon">{game.icon}</span>
+                <span class="game-slot-lock">🔒</span>
+                <span class="game-slot-name">{game.name}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="col-misc">
+      <!-- ================= now playing ================= -->
+      <section class="window compact inactive" id="now-playing">
+        <div class="title-bar">
+          <span class="title-bar-icon" aria-hidden="true">♫</span>
+          <span class="title-bar-text">nowplaying.mp3</span>
+          <div class="title-bar-controls" aria-hidden="true">
+            <span class="tb-btn">_</span>
+            <span class="tb-btn">□</span>
+            <span class="tb-btn close">×</span>
+          </div>
+        </div>
+        <div class="window-body">
+          <div class="np-grid">
+            <div class="np-art" aria-hidden="true">💿</div>
+            <div class="np-info">
+              <p class="np-track">Pizza Hotline</p>
+              <div class="np-bar"><div class="np-bar-fill"></div></div>
+              <div class="np-eq" aria-hidden="true">
+                <span></span><span></span><span></span><span></span><span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= socials ================= -->
+      <section class="window compact inactive" id="socials">
+        <div class="title-bar">
+          <span class="title-bar-icon" aria-hidden="true">☆</span>
+          <span class="title-bar-text">socials.txt</span>
+          <div class="title-bar-controls" aria-hidden="true">
+            <span class="tb-btn">_</span>
+            <span class="tb-btn">□</span>
+            <span class="tb-btn close">×</span>
+          </div>
+        </div>
+        <div class="window-body">
+          <ul class="link-list">
+            {socials.map((link) => (
+              <li>
+                <a href={link.href} target="_blank" rel="noopener">
+                  <span aria-hidden="true">{link.emoji}</span> {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <!-- ================= friend links / webring ================= -->
+      <section class="window compact inactive" id="friend-links">
+        <div class="title-bar">
+          <span class="title-bar-icon" aria-hidden="true">🔗</span>
+          <span class="title-bar-text">friend-links.htm</span>
+          <div class="title-bar-controls" aria-hidden="true">
+            <span class="tb-btn">_</span>
+            <span class="tb-btn">□</span>
+            <span class="tb-btn close">×</span>
+          </div>
+        </div>
+        <div class="window-body">
+          <p class="hand-note">button swaps coming soon ☆</p>
+          <div class="friend-grid">
+            {Array.from({ length: 4 }).map(() => (
+              <div class="friend-slot" aria-hidden="true">88×31</div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= guestbook ================= -->
+      <section class="window compact inactive" id="guestbook">
+        <div class="title-bar">
+          <span class="title-bar-icon" aria-hidden="true">📖</span>
+          <span class="title-bar-text">guestbook.exe</span>
+          <div class="title-bar-controls" aria-hidden="true">
+            <span class="tb-btn">_</span>
+            <span class="tb-btn">□</span>
+            <span class="tb-btn close">×</span>
+          </div>
+        </div>
+        <div class="window-body">
+          <p class="empty-note">no entries yet — be the first to sign! (coming soon)</p>
+          <textarea class="guestbook-input" placeholder="leave a note..." disabled></textarea>
+          <button class="aero-btn guestbook-btn" type="button" disabled>sign the guestbook</button>
+        </div>
+      </section>
+    </div>
+
+    <!-- ================= footer ================= -->
+    <footer class="footer">
+      <div class="badge-row">
+        <span class="badge-btn">made w/ astro ☆</span>
+        <span class="badge-btn">psvita enjoyer</span>
+        <span class="badge-btn">sunflower certified</span>
+        <span class="badge-btn">best viewed w/ good vibes</span>
+      </div>
+      <p class="footer-note">☆ thanks for stopping by my corner of the internet ☆</p>
+    </footer>
+  </main>
+
+  <script>
+    const el = document.getElementById('view-count');
+    if (el) {
+      const base = 23000;
+      const bump = Math.floor(Math.random() * 6) + 1;
+      el.textContent = (base + bump).toLocaleString();
+    }
+  </script>
+
+  <style>
+    /* ---------- 3-column layout ---------- */
+    .layout-grid {
+      display: grid;
+      grid-template-columns: 200px minmax(0, 1fr) 260px;
+      grid-template-areas: "nav main misc" "footer footer footer";
+      gap: 24px;
+      align-items: start;
+    }
+    .col-main { grid-area: main; min-width: 0; }
+    .col-nav {
+      grid-area: nav;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      position: sticky;
+      top: 20px;
+    }
+    .col-misc {
+      grid-area: misc;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      position: sticky;
+      top: 20px;
+    }
+    .footer { grid-area: footer; }
+
+    @media (max-width: 900px) {
+      .layout-grid {
+        grid-template-columns: 1fr;
+        grid-template-areas: "main" "misc" "nav" "footer";
+      }
+      .col-nav, .col-misc {
+        position: static;
+      }
+    }
+
+    /* ---------- main "active" document window ---------- */
+    .window.main-doc {
+      box-shadow: 0 20px 44px rgba(10, 30, 60, 0.4), 0 0 0 1px rgba(111, 182, 238, 0.5), 0 2px 0 rgba(255,255,255,0.6) inset;
+    }
+    .window.main-doc .window-body {
+      padding: 28px 30px;
+    }
+
+    .doc-heading {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-ui);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--accent-deep);
+      margin: 0 0 14px;
+    }
+    .doc-divider {
+      border: none;
+      border-top: 1px dashed rgba(47,127,209,0.3);
+      margin: 26px 0;
+    }
+    .doc-section.callout {
+      text-align: center;
+    }
+
+    /* ---------- "inactive" side windows ---------- */
+    .window.inactive {
+      background: rgba(255,255,255,0.5);
+      box-shadow: 0 6px 14px rgba(10,30,60,0.16), 0 1px 0 rgba(255,255,255,0.4) inset;
+      backdrop-filter: blur(8px) saturate(1.1);
+      -webkit-backdrop-filter: blur(8px) saturate(1.1);
+    }
+    .window.inactive .title-bar {
+      background: linear-gradient(180deg, #e6ecf2 0%, #ccd8e2 55%, #aebdcc 100%);
+      border-bottom: 1px solid #9aacc0;
+    }
+    .window.inactive .title-bar::before {
+      opacity: 0.35;
+    }
+    .window.inactive .title-bar-text {
+      color: #47586b;
+      text-shadow: none;
+    }
+    .window.inactive .title-bar-icon {
+      opacity: 0.7;
+      filter: none;
+    }
+    .window.inactive .tb-btn {
+      background: linear-gradient(180deg, #fbfcfd 0%, #d7e0e8 100%);
+      opacity: 0.8;
+    }
+    .window.inactive .tb-btn.close {
+      background: linear-gradient(180deg, #f0bdb2 0%, #d3897a 100%);
+      color: #fff;
+      opacity: 0.8;
+    }
+
+    .window.compact .window-body {
+      padding: 16px;
+    }
+    .window .title-bar-text {
+      font-size: 0.78rem;
+    }
+
+    h1 {
+      font-family: var(--font-ui);
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 0 0 6px;
+      color: var(--ink);
+    }
+
+    .profile-grid {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .avatar-frame {
+      position: relative;
+    }
+
+    .avatar-placeholder {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 32% 26%, #fff6cf 0%, #ffd23f 55%, #f0a13a 100%);
+      border: 1px solid rgba(255,255,255,0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.4rem;
+      box-shadow: 0 6px 16px rgba(10,30,60,0.25), inset 0 2px 4px rgba(255,255,255,0.6);
+    }
+
+    .tags {
+      font-size: 0.85rem;
+      margin: 0 0 8px;
+      color: var(--ink-soft);
+      font-weight: 600;
+    }
+
+    .blurb {
+      margin: 0;
+      font-size: 0.92rem;
+      line-height: 1.6;
+    }
+
+    .stats-table {
+      width: 100%;
+      margin-top: 18px;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      background: rgba(255,255,255,0.6);
+      border: 1px solid rgba(47,127,209,0.35);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .stats-table th {
+      text-align: left;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      color: var(--ink-inverse);
+      background: linear-gradient(180deg, #bfe0fb 0%, #6fb6ee 45%, #2f7fd1 100%);
+      padding: 6px 12px;
+      border-bottom: 1px solid var(--titlebar-border);
+    }
+    .stats-table td {
+      padding: 8px 12px;
+      border-bottom: 1px solid rgba(47,127,209,0.15);
+    }
+    .stats-table tr:nth-child(even) td {
+      background: rgba(47,127,209,0.06);
+    }
+    .stats-table tr:last-child td {
+      border-bottom: none;
+    }
+    .stats-table td:first-child {
+      color: var(--ink-soft);
+    }
+    .stats-table td:last-child {
+      text-align: right;
+      font-weight: 700;
+    }
+
+    /* art gallery */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+      gap: 10px;
+    }
+    .gallery-slot {
+      aspect-ratio: 1;
+      border: 1px dashed rgba(47,127,209,0.4);
+      border-radius: 6px;
+      background: rgba(255,255,255,0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      color: var(--ink-soft);
+      opacity: 0.7;
+    }
+
+    /* now playing */
+    .np-grid {
+      display: grid;
+      grid-template-columns: 60px 1fr;
+      gap: 14px;
+      align-items: center;
+    }
+    .np-art {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: repeating-radial-gradient(circle, var(--ink) 0 2px, #fff 2px 8px);
+      border: 1px solid rgba(255,255,255,0.8);
+      box-shadow: 0 4px 10px rgba(10,30,60,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      animation: spin 6s linear infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    .np-track {
+      font-size: 0.92rem;
+      font-weight: 700;
+      margin: 0 0 8px;
+      color: var(--ink);
+    }
+    .np-bar {
+      height: 8px;
+      background: rgba(255,255,255,0.6);
+      border: 1px solid rgba(47,127,209,0.35);
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+    .np-bar-fill {
+      width: 38%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-deep));
+      animation: bar-fill 12s ease-in-out infinite alternate;
+    }
+    @keyframes bar-fill {
+      from { width: 12%; }
+      to { width: 82%; }
+    }
+    .np-eq {
+      display: flex;
+      gap: 4px;
+      align-items: flex-end;
+      height: 18px;
+    }
+    .np-eq span {
+      width: 4px;
+      background: var(--accent-green);
+      animation: eq 1.1s ease-in-out infinite;
+    }
+    .np-eq span:nth-child(1) { height: 40%; animation-delay: 0s; }
+    .np-eq span:nth-child(2) { height: 90%; animation-delay: 0.1s; }
+    .np-eq span:nth-child(3) { height: 60%; animation-delay: 0.2s; }
+    .np-eq span:nth-child(4) { height: 100%; animation-delay: 0.3s; }
+    .np-eq span:nth-child(5) { height: 50%; animation-delay: 0.4s; }
+    @keyframes eq {
+      0%, 100% { transform: scaleY(0.4); }
+      50% { transform: scaleY(1); }
+    }
+
+    /* buttons + notes */
+    .hand-note {
+      font-size: 0.85rem;
+      color: var(--ink-soft);
+      margin: 0 0 14px;
+      font-style: italic;
+    }
+    .game-btn {
+      display: block;
+      width: 100%;
+    }
+    .game-btn-sub {
+      display: block;
+      font-weight: 500;
+      font-size: 0.78rem;
+      margin-top: 4px;
+      opacity: 0.8;
+    }
+
+    .callout-link {
+      font-size: 0.95rem;
+    }
+
+    /* nav list (left sidebar) */
+    .nav-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 6px;
+    }
+    .nav-list a {
+      display: block;
+      background: rgba(255,255,255,0.5);
+      border: 1px solid rgba(47,127,209,0.3);
+      border-radius: 6px;
+      padding: 8px 10px;
+      text-decoration: none;
+      color: var(--ink);
+      font-weight: 600;
+      font-size: 0.82rem;
+      transition: background 0.12s ease;
+    }
+    .nav-list a:hover {
+      background: rgba(255,255,255,0.9);
+    }
+
+    /* mini games teaser */
+    .games-grid {
+      display: grid;
+      gap: 8px;
+    }
+    .game-slot {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.35);
+      border: 1px dashed rgba(47,127,209,0.4);
+      border-radius: 6px;
+      padding: 8px 10px;
+      opacity: 0.65;
+    }
+    .game-slot-icon {
+      font-size: 1.1rem;
+    }
+    .game-slot-name {
+      flex: 1;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--ink-soft);
+    }
+    .game-slot-lock {
+      font-size: 0.8rem;
+    }
+
+    /* socials / links list */
+    .link-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 8px;
+    }
+    .link-list a {
+      display: block;
+      background: rgba(255,255,255,0.55);
+      border: 1px solid rgba(47,127,209,0.3);
+      border-radius: 6px;
+      padding: 9px 10px;
+      text-decoration: none;
+      color: var(--ink);
+      font-weight: 600;
+      font-size: 0.82rem;
+      transition: background 0.12s ease;
+    }
+    .link-list a:hover {
+      background: rgba(255,255,255,0.9);
+    }
+
+    /* friend links / webring buttons */
+    .friend-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .friend-slot {
+      width: 88px;
+      height: 31px;
+      border: 1px dashed rgba(47,127,209,0.4);
+      border-radius: 4px;
+      background: rgba(255,255,255,0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.68rem;
+      color: var(--ink-soft);
+      opacity: 0.7;
+    }
+
+    /* guestbook */
+    .empty-note {
+      font-size: 0.8rem;
+      color: var(--ink-soft);
+      margin: 0 0 10px;
+    }
+    .guestbook-input {
+      width: 100%;
+      min-height: 60px;
+      resize: vertical;
+      border: 1px solid rgba(47,127,209,0.35);
+      border-radius: 6px;
+      background: rgba(255,255,255,0.6);
+      color: var(--ink-soft);
+      font-family: var(--font-ui);
+      font-size: 0.82rem;
+      padding: 8px 10px;
+      margin-bottom: 10px;
+    }
+    .guestbook-input:disabled {
+      cursor: not-allowed;
+    }
+    .guestbook-btn {
+      width: 100%;
+      text-align: center;
+      font-size: 0.82rem;
+      padding: 8px 12px;
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    /* OCs */
+    .oc-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 14px;
+    }
+    .oc-card {
+      background: rgba(255,255,255,0.55);
+      border: 1px solid rgba(47,127,209,0.3);
+      border-radius: 8px;
+      padding: 14px;
+      text-align: center;
+      text-decoration: none;
+      color: var(--ink);
+      transition: background 0.12s ease, transform 0.12s ease;
+    }
+    .oc-card:hover {
+      background: rgba(255,255,255,0.9);
+      transform: translateY(-2px);
+    }
+    .oc-swatch {
+      font-size: 1.6rem;
+      margin-bottom: 6px;
+    }
+    .oc-name {
+      font-size: 1rem;
+      font-weight: 700;
+      margin: 0 0 4px;
+      color: var(--accent-deep);
+    }
+    .oc-blurb {
+      font-size: 0.78rem;
+      margin: 0;
+      color: var(--ink-soft);
+    }
+
+    /* footer */
+    .footer {
+      text-align: center;
+      margin-top: 16px;
+    }
+    .badge-row {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    .badge-btn {
+      display: inline-block;
+      background: rgba(255,255,255,0.55);
+      border: 1px solid rgba(47,127,209,0.3);
+      border-radius: 6px;
+      padding: 8px 12px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--ink-soft);
+    }
+    .footer-note {
+      font-size: 0.85rem;
+      color: var(--ink-soft);
+    }
+
+    @media (max-width: 480px) {
+      .profile-grid {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        text-align: center;
+      }
+    }
+  </style>
+</Layout>
