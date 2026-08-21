@@ -4,9 +4,7 @@ import Layout from '../layouts/Layout.astro';
 const quickNav = [
   { emoji: '🙋', label: 'About Me', href: '#about' },
   { emoji: '🖼️', label: 'Art', href: '#art' },
-  { emoji: '🎨', label: 'OCs', href: '#ocs' },
-  { emoji: '🕹️', label: 'Project', href: '#project' },
-  { emoji: '🌍', label: 'Portfolio', href: '#portfolio' },
+  { emoji: '🌍', label: 'Portfolio', href: '#about' },
 ];
 
 const miniGames = [
@@ -26,10 +24,16 @@ const socials = [
   { emoji: '🎨', label: "Colors!Live 3DS Gallery", href: 'https://www.colorslive.com/artist/GemmieWow' },
 ];
 
-const ocs = [
-  { name: 'Gemmie', blurb: 'the artist herself, sunflower motif, always sketching' },
-  { name: 'Shanka', blurb: 'lore-heavy OC from the uni-game world' },
-  { name: 'Angelo', blurb: "Shanka's other half — full lore on the fandom wiki" },
+const updates = [
+  { date: '08/22', text: 'Dark mode + layered day/night wallpaper added ☆' },
+  { date: '08/21', text: 'Redesigned into a 3-column desktop layout' },
+  { date: '08/17', text: 'Windows Aero glass reskin, v1' },
+];
+
+const announcements = [
+  'Art gallery filling up soon — check back! 🎨',
+  'Guestbook & mini-games still under construction 🛠️',
+  'Site is perpetually a work in progress ☆',
 ];
 ---
 
@@ -50,43 +54,59 @@ const ocs = [
         <div class="window-body">
           <!-- ---- about me ---- -->
           <div class="doc-section" id="about">
-            <div class="doc-banner">
-              <span class="fish-wrap swim-r" style="top: 22%;"><span class="fish-icon">🐠</span></span>
-              <span class="fish-wrap swim-l" style="top: 62%;"><span class="fish-icon">🐟</span></span>
-              <h2 class="doc-banner-text"><span aria-hidden="true">🙋</span> About Me</h2>
-            </div>
             <div class="profile-grid">
               <div class="avatar-frame">
                 <img class="avatar-img" src="/images/GemmieBust.png" alt="Gemmie bust illustration" />
               </div>
               <div>
                 <h1>Gemmie <span class="sparkle">☆</span></h1>
-                <p class="tags">Female ♀️ ʕ•ᴥ•ʔ &nbsp;·&nbsp; Artist 🌻</p>
+                <p class="tags">Female ♀️ ʕ•ᴥ•ʔ &nbsp;·&nbsp; Cartoon Artist + Animator 🌻</p>
                 <p class="blurb">
-                  🌱 Artist + Animator, studying Programming in uni.
-                  <br />🌻 Stuff I love: my PSVita &amp; 3DS, cats, coding in Python, sunflowers.
+                  🌱 Studying Software Engineering in uni.
+                  <br />🌻 Fan of many things: my PSVita &amp; 3DS, frutiger aero, cats, coding in Python, sunflowers.
                 </p>
+                <a class="aero-btn portfolio-inline-btn" href="https://gemmiewow.com/" target="_blank" rel="noopener">
+                  🌍 Visit my Programming Portfolio
+                </a>
               </div>
             </div>
+          </div>
 
-            <table class="stats-table">
-              <thead>
-                <tr>
-                  <th>property</th>
-                  <th>value</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>profile views</td>
-                  <td id="view-count">23,000</td>
-                </tr>
-                <tr>
-                  <td>last online</td>
-                  <td>today ✨</td>
-                </tr>
-              </tbody>
-            </table>
+          <hr class="doc-divider" />
+
+          <!-- ---- site updates + announcements ---- -->
+          <div class="doc-section" id="updates">
+            <div class="inner-window-grid">
+              <div class="update-card">
+                <div class="update-card-banner">
+                  <img src="/images/banners/banner_site_updates.png" alt="Site Updates" />
+                </div>
+                <div class="update-card-body card-ocean">
+                  <div class="update-card-scroll scroll-ocean">
+                    <ul class="update-list">
+                      {updates.map((u) => (
+                        <li><span class="update-date">{u.date}</span> {u.text}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="update-card">
+                <div class="update-card-banner">
+                  <img src="/images/banners/banner_announcements.png" alt="Announcements" />
+                </div>
+                <div class="update-card-body card-border">
+                  <div class="update-card-scroll scroll-border">
+                    <ul class="update-list">
+                      {announcements.map((a) => (
+                        <li><span class="update-bullet" aria-hidden="true">☆</span> {a}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
           <hr class="doc-divider" />
@@ -94,9 +114,12 @@ const ocs = [
           <!-- ---- art gallery ---- -->
           <div class="doc-section" id="art">
             <div class="doc-banner">
-              <span class="fish-wrap swim-l" style="top: 25%;"><span class="fish-icon">🐡</span></span>
-              <span class="fish-wrap swim-r" style="top: 65%;"><span class="fish-icon">🐠</span></span>
-              <h2 class="doc-banner-text"><span aria-hidden="true">🖼️</span> Art Gallery</h2>
+              <span class="bubble-wrap" style="left: 8%; animation-duration: 3.2s; animation-delay: -0.5s;"><img class="bubble-icon" src="/images/bubble.png" alt="" /></span>
+              <span class="bubble-wrap" style="left: 26%; animation-duration: 4s; animation-delay: -2s;"><img class="bubble-icon" src="/images/bubble.png" alt="" /></span>
+              <span class="bubble-wrap" style="left: 46%; animation-duration: 3.5s; animation-delay: -1.2s;"><img class="bubble-icon" src="/images/bubble.png" alt="" /></span>
+              <span class="bubble-wrap" style="left: 66%; animation-duration: 4.5s; animation-delay: -3s;"><img class="bubble-icon" src="/images/bubble.png" alt="" /></span>
+              <span class="bubble-wrap" style="left: 84%; animation-duration: 3.8s; animation-delay: -1.8s;"><img class="bubble-icon" src="/images/bubble.png" alt="" /></span>
+              <h2 class="doc-banner-text"><span aria-hidden="true">🖼️</span> My Art Gallery ☆</h2>
             </div>
             <p class="hand-note">gallery under construction — pieces coming soon ☆</p>
             <div class="gallery-grid">
@@ -105,63 +128,12 @@ const ocs = [
               ))}
             </div>
           </div>
-
-          <hr class="doc-divider" />
-
-          <!-- ---- OCs ---- -->
-          <div class="doc-section" id="ocs">
-            <div class="doc-banner">
-              <span class="fish-wrap swim-r" style="top: 20%;"><span class="fish-icon">🐟</span></span>
-              <span class="fish-wrap swim-l" style="top: 58%;"><span class="fish-icon">🐡</span></span>
-              <h2 class="doc-banner-text"><span aria-hidden="true">🎨</span> OCs</h2>
-            </div>
-            <p class="hand-note">Gemmie, Shanka &amp; Angelo — click for full lore ☆</p>
-            <div class="oc-grid">
-              {ocs.map((oc) => (
-                <a class="oc-card" href="https://shanka-angelo.fandom.com/wiki/Shanka_%26_Angelo_Wiki" target="_blank" rel="noopener">
-                  <div class="oc-swatch" aria-hidden="true">🖍️</div>
-                  <p class="oc-name">{oc.name}</p>
-                  <p class="oc-blurb">{oc.blurb}</p>
-                </a>
-              ))}
-            </div>
-          </div>
-
-          <hr class="doc-divider" />
-
-          <!-- ---- featured project ---- -->
-          <div class="doc-section" id="project">
-            <div class="doc-banner">
-              <span class="fish-wrap swim-l" style="top: 24%;"><span class="fish-icon">🐠</span></span>
-              <span class="fish-wrap swim-r" style="top: 64%;"><span class="fish-icon">🐟</span></span>
-              <h2 class="doc-banner-text"><span aria-hidden="true">🕹️</span> Project</h2>
-            </div>
-            <p class="hand-note">psst — click to see my uni game's code!</p>
-            <a class="aero-btn game-btn" href="https://github.com/Gemmiee/Universifight" target="_blank" rel="noopener">
-              🎮 My Uni Game — Universifight
-              <span class="game-btn-sub">→ view the GitHub repository</span>
-            </a>
-          </div>
-
-          <hr class="doc-divider" />
-
-          <!-- ---- programming portfolio callout ---- -->
-          <div class="doc-section callout" id="portfolio">
-            <div class="doc-banner">
-              <span class="fish-wrap swim-r" style="top: 22%;"><span class="fish-icon">🐡</span></span>
-              <span class="fish-wrap swim-l" style="top: 60%;"><span class="fish-icon">🐠</span></span>
-              <h2 class="doc-banner-text"><span aria-hidden="true">🌍</span> Portfolio</h2>
-            </div>
-            <a class="aero-btn callout-link" href="https://gemmiewow.com/" target="_blank" rel="noopener">
-              🌍 Visit my Programming Portfolio
-            </a>
-          </div>
         </div>
       </section>
     </div>
 
     <div class="col-nav">
-      <!-- ================= quick nav ================= -->
+      <!-- ================= navigation ================= -->
       <section class="window compact inactive">
         <div class="title-bar">
           <span class="title-bar-icon" aria-hidden="true">📁</span>
@@ -182,21 +154,10 @@ const ocs = [
               </li>
             ))}
           </ul>
-        </div>
-      </section>
 
-      <!-- ================= mini games teaser ================= -->
-      <section class="window compact inactive" id="games">
-        <div class="title-bar">
-          <span class="title-bar-icon" aria-hidden="true">🎮</span>
-          <span class="title-bar-text">mini-games</span>
-          <div class="title-bar-controls" aria-hidden="true">
-            <span class="tb-btn">_</span>
-            <span class="tb-btn">□</span>
-            <span class="tb-btn close">×</span>
-          </div>
-        </div>
-        <div class="window-body">
+          <hr class="doc-divider nav-divider" />
+
+          <p class="nav-subheading" id="games"><span aria-hidden="true">🎮</span> mini-games</p>
           <p class="hand-note">coming soon ☆</p>
           <div class="games-grid">
             {miniGames.map((game) => (
@@ -313,15 +274,6 @@ const ocs = [
     </footer>
   </main>
 
-  <script>
-    const el = document.getElementById('view-count');
-    if (el) {
-      const base = 23000;
-      const bump = Math.floor(Math.random() * 6) + 1;
-      el.textContent = (base + bump).toLocaleString();
-    }
-  </script>
-
   <style>
     /* ---------- 3-column layout ---------- */
     .layout-grid {
@@ -372,7 +324,7 @@ const ocs = [
     .doc-banner {
       position: relative;
       overflow: hidden;
-      height: 56px;
+      height: 66px;
       border-radius: 999px;
       margin: 0 0 18px;
       display: flex;
@@ -394,45 +346,35 @@ const ocs = [
       z-index: 2;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       font-family: var(--font-banner);
       font-weight: 700;
-      font-size: 1.15rem;
+      font-size: 1.65rem;
       margin: 0;
       color: #ffffff;
       text-shadow: 0 2px 3px rgba(30,25,60,0.55);
-      letter-spacing: 0.02em;
+      letter-spacing: 0.03em;
     }
-    .fish-wrap {
+    .bubble-wrap {
       position: absolute;
-      left: -12%;
+      bottom: -20%;
       z-index: 1;
-      opacity: 0.9;
+      opacity: 0.85;
+      animation: bubble-rise 6s linear infinite;
     }
-    .fish-wrap.swim-r {
-      animation: swim-right 7s linear infinite;
+    .bubble-icon {
+      display: block;
+      width: 16px;
+      height: 16px;
+      animation: bubble-wobble 2.4s ease-in-out infinite;
     }
-    .fish-wrap.swim-l {
-      animation: swim-left 8s linear infinite;
-      transform: scaleX(-1);
+    @keyframes bubble-rise {
+      from { bottom: -20%; }
+      to { bottom: 120%; }
     }
-    .fish-icon {
-      display: inline-block;
-      font-size: 1.1rem;
-      animation: fish-wiggle 1s ease-in-out infinite;
-      filter: drop-shadow(0 1px 1px rgba(0,0,0,0.2));
-    }
-    @keyframes swim-right {
-      from { left: -12%; }
-      to { left: 105%; }
-    }
-    @keyframes swim-left {
-      from { left: 105%; }
-      to { left: -12%; }
-    }
-    @keyframes fish-wiggle {
-      0%, 100% { transform: rotate(-8deg); }
-      50% { transform: rotate(8deg); }
+    @keyframes bubble-wobble {
+      0%, 100% { transform: translateX(-3px); }
+      50% { transform: translateX(3px); }
     }
 
     .doc-divider {
@@ -440,8 +382,104 @@ const ocs = [
       border-top: 1px dashed var(--card-border);
       margin: 26px 0;
     }
-    .doc-section.callout {
-      text-align: center;
+
+    /* ---------- nested windows: site updates + announcements ---------- */
+    .inner-window-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+
+    /* site updates + announcements: illustrated cards + overlapping banners */
+    .update-card {
+      position: relative;
+      margin-top: 26px;
+    }
+    .update-card-banner {
+      position: absolute;
+      top: -26px;
+      left: 50%;
+      transform: translateX(-50%) rotate(-2deg);
+      width: 78%;
+      max-width: 240px;
+      z-index: 2;
+      filter: drop-shadow(0 4px 8px rgba(26,18,46,0.35));
+      pointer-events: none;
+    }
+    .update-card-banner img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    .update-card-body {
+      position: relative;
+      aspect-ratio: 4 / 5;
+      border-radius: 14px;
+      background-size: cover;
+      background-position: center;
+      overflow: hidden;
+    }
+    .card-ocean {
+      background-image: url('/images/cards/card_ocean.png');
+    }
+    .card-border {
+      background-image: url('/images/cards/card_border.png');
+    }
+    .update-card-scroll {
+      position: absolute;
+      overflow-y: auto;
+      border-radius: 10px;
+      padding: 10px 12px;
+    }
+    .update-card-scroll .update-list {
+      font-size: 0.72rem;
+    }
+    /* card_ocean's art is busy edge-to-edge, so the text gets its own frosted panel */
+    .scroll-ocean {
+      top: 22%;
+      left: 8%;
+      right: 8%;
+      bottom: 12%;
+      background: rgba(255,255,255,0.75);
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
+      box-shadow: 0 2px 8px rgba(26,18,46,0.2);
+    }
+    /* card_border already has a pale interior, so text sits straight on it */
+    .scroll-border {
+      top: 12%;
+      left: 12%;
+      right: 12%;
+      bottom: 12%;
+    }
+    .update-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 8px;
+      font-size: 0.8rem;
+      color: var(--ink);
+    }
+    .update-list li {
+      line-height: 1.4;
+    }
+    .update-date {
+      display: inline-block;
+      font-weight: 700;
+      color: var(--accent-deep);
+      margin-right: 4px;
+    }
+    .update-bullet {
+      color: var(--accent-orange);
+      margin-right: 2px;
+    }
+
+    @media (max-width: 640px) {
+      .inner-window-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
     /* ---------- "inactive" side windows ---------- */
@@ -524,44 +562,6 @@ const ocs = [
       margin: 0;
       font-size: 0.92rem;
       line-height: 1.6;
-    }
-
-    .stats-table {
-      width: 100%;
-      margin-top: 18px;
-      border-collapse: collapse;
-      font-size: 0.85rem;
-      background: var(--surface);
-      border: 1px solid var(--card-border);
-      border-radius: 6px;
-      overflow: hidden;
-    }
-    .stats-table th {
-      text-align: left;
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.03em;
-      color: var(--ink-inverse);
-      background: linear-gradient(180deg, var(--titlebar-start) 0%, var(--titlebar-mid) 45%, var(--titlebar-end) 100%);
-      padding: 6px 12px;
-      border-bottom: 1px solid var(--titlebar-border);
-    }
-    .stats-table td {
-      padding: 8px 12px;
-      border-bottom: 1px solid var(--card-stripe);
-    }
-    .stats-table tr:nth-child(even) td {
-      background: var(--card-stripe-bg);
-    }
-    .stats-table tr:last-child td {
-      border-bottom: none;
-    }
-    .stats-table td:first-child {
-      color: var(--ink-soft);
-    }
-    .stats-table td:last-child {
-      text-align: right;
-      font-weight: 700;
     }
 
     /* art gallery */
@@ -658,23 +658,25 @@ const ocs = [
       margin: 0 0 14px;
       font-style: italic;
     }
-    .game-btn {
-      display: block;
-      width: 100%;
-    }
-    .game-btn-sub {
-      display: block;
-      font-weight: 500;
-      font-size: 0.78rem;
-      margin-top: 4px;
-      opacity: 0.8;
-    }
-
-    .callout-link {
-      font-size: 0.95rem;
+    .portfolio-inline-btn {
+      display: inline-block;
+      margin-top: 14px;
+      font-size: 0.9rem;
     }
 
     /* nav list (left sidebar) */
+    .nav-subheading {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin: 0 0 4px;
+      font-weight: 700;
+      font-size: 0.82rem;
+      color: var(--ink);
+    }
+    .nav-divider {
+      margin: 16px 0;
+    }
     .nav-list {
       list-style: none;
       margin: 0;
@@ -799,42 +801,6 @@ const ocs = [
       padding: 8px 12px;
       opacity: 0.6;
       cursor: not-allowed;
-    }
-
-    /* OCs */
-    .oc-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 14px;
-    }
-    .oc-card {
-      background: var(--surface);
-      border: 1px solid var(--card-border);
-      border-radius: 8px;
-      padding: 14px;
-      text-align: center;
-      text-decoration: none;
-      color: var(--ink);
-      transition: background 0.12s ease, transform 0.12s ease;
-    }
-    .oc-card:hover {
-      background: var(--surface-hover);
-      transform: translateY(-2px);
-    }
-    .oc-swatch {
-      font-size: 1.6rem;
-      margin-bottom: 6px;
-    }
-    .oc-name {
-      font-size: 1rem;
-      font-weight: 700;
-      margin: 0 0 4px;
-      color: var(--accent-deep);
-    }
-    .oc-blurb {
-      font-size: 0.78rem;
-      margin: 0;
-      color: var(--ink-soft);
     }
 
     /* footer */
