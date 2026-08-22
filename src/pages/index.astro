@@ -184,17 +184,22 @@ const announcements = [
             <span class="tb-btn close">×</span>
           </div>
         </div>
-        <div class="window-body">
-          <div class="np-grid">
-            <div class="np-art" aria-hidden="true">💿</div>
-            <div class="np-info">
-              <p class="np-track">Pizza Hotline</p>
-              <div class="np-bar"><div class="np-bar-fill"></div></div>
-              <div class="np-eq" aria-hidden="true">
-                <span></span><span></span><span></span><span></span><span></span>
-              </div>
-            </div>
-          </div>
+        <div class="window-body bandcamp-body">
+          <img
+            class="bandcamp-cover"
+            src="https://f4.bcbits.com/img/a3714087150_10.jpg"
+            alt="Motorslice OST album cover"
+            loading="lazy"
+          />
+          <iframe
+            class="bandcamp-frame"
+            title="Motorslice OST by Pizza Hotline — Bandcamp player"
+            src="https://bandcamp.com/EmbeddedPlayer/album=44696348/size=large/bgcol=faf3ea/linkcol=4b3a7a/tracklist=false/artwork=none/"
+            seamless
+            loading="lazy"
+          >
+            <a href="https://pizzahotline.bandcamp.com/album/motorslice-ost">Motorslice (Original Soundtrack) by Pizza Hotline</a>
+          </iframe>
         </div>
       </section>
 
@@ -278,9 +283,9 @@ const announcements = [
     /* ---------- 3-column layout ---------- */
     .layout-grid {
       display: grid;
-      grid-template-columns: 180px minmax(0, 1fr) 230px;
+      grid-template-columns: 205px minmax(0, 1fr) 265px;
       grid-template-areas: "nav main misc" "footer footer footer";
-      gap: 24px;
+      gap: 14px;
       align-items: start;
     }
     .col-main { grid-area: main; min-width: 0; }
@@ -387,8 +392,9 @@ const announcements = [
     .inner-window-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 16px;
+      gap: 10px;
       align-items: start;
+      margin: 0 -16px;
     }
 
     /* site updates + announcements: illustrated cards + overlapping banners */
@@ -400,9 +406,9 @@ const announcements = [
       position: absolute;
       top: -26px;
       left: 50%;
-      transform: translateX(-50%) rotate(-2deg);
+      transform: translateX(-50%);
       width: 78%;
-      max-width: 240px;
+      max-width: 260px;
       z-index: 2;
       filter: drop-shadow(0 4px 8px rgba(26,18,46,0.35));
       pointer-events: none;
@@ -430,21 +436,24 @@ const announcements = [
       position: absolute;
       overflow-y: auto;
       border-radius: 10px;
-      padding: 10px 12px;
+      padding: 12px 14px;
     }
     .update-card-scroll .update-list {
-      font-size: 0.72rem;
+      font-size: 0.85rem;
     }
-    /* card_ocean's art is busy edge-to-edge, so the text gets its own frosted panel */
+    /* card_ocean's art is busy edge-to-edge, so the text gets its own frosted panel
+       that follows the theme tokens (was a hardcoded white rgba, which stayed
+       white in dark mode while the text above it flipped to light ink) */
     .scroll-ocean {
       top: 22%;
       left: 8%;
       right: 8%;
       bottom: 12%;
-      background: rgba(255,255,255,0.75);
+      background: var(--glass-fill-strong);
       backdrop-filter: blur(3px);
       -webkit-backdrop-filter: blur(3px);
       box-shadow: 0 2px 8px rgba(26,18,46,0.2);
+      transition: background var(--theme-transition) ease;
     }
     /* card_border already has a pale interior, so text sits straight on it */
     .scroll-border {
@@ -583,72 +592,36 @@ const announcements = [
       opacity: 0.7;
     }
 
-    /* now playing */
-    .np-grid {
-      display: grid;
-      grid-template-columns: 60px 1fr;
-      gap: 14px;
-      align-items: center;
-    }
-    .np-art {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      background: repeating-radial-gradient(circle, #2b2140 0 2px, #fff 2px 8px);
-      border: 1px solid rgba(255,255,255,0.8);
-      box-shadow: 0 4px 10px rgba(26,18,46,0.25);
+    /* now playing: real Bandcamp embed (Motorslice OST by Pizza Hotline) —
+       bgcol/linkcol are fixed to a warm cream + deep purple rather than the
+       theme tokens, since the iframe's own text colors can't react to our
+       dark-mode toggle; a fixed light card reads fine in both themes.
+       Bandcamp's own art thumbnail only renders above ~380px iframe width
+       (below that it either hides or overlaps its own controls), which is
+       wider than this column, so the cover is our own <img> and the iframe
+       is the no-artwork/no-tracklist "compact bar" style underneath it. */
+    .bandcamp-body {
+      padding: 14px;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.4rem;
-      animation: spin 6s linear infinite;
+      flex-direction: column;
+      gap: 10px;
     }
-    @keyframes spin {
-      to { transform: rotate(360deg); }
+    .bandcamp-cover {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--shadow-soft);
     }
-    .np-track {
-      font-size: 0.92rem;
-      font-weight: 700;
-      margin: 0 0 8px;
-      color: var(--ink);
-    }
-    .np-bar {
-      height: 8px;
-      background: var(--surface);
-      border: 1px solid var(--card-border);
-      border-radius: 6px;
-      overflow: hidden;
-      margin-bottom: 10px;
-    }
-    .np-bar-fill {
-      width: 38%;
-      height: 100%;
-      background: linear-gradient(90deg, var(--accent), var(--accent-deep));
-      animation: bar-fill 12s ease-in-out infinite alternate;
-    }
-    @keyframes bar-fill {
-      from { width: 12%; }
-      to { width: 82%; }
-    }
-    .np-eq {
-      display: flex;
-      gap: 4px;
-      align-items: flex-end;
-      height: 18px;
-    }
-    .np-eq span {
-      width: 4px;
-      background: var(--accent-teal);
-      animation: eq 1.1s ease-in-out infinite;
-    }
-    .np-eq span:nth-child(1) { height: 40%; animation-delay: 0s; }
-    .np-eq span:nth-child(2) { height: 90%; animation-delay: 0.1s; }
-    .np-eq span:nth-child(3) { height: 60%; animation-delay: 0.2s; }
-    .np-eq span:nth-child(4) { height: 100%; animation-delay: 0.3s; }
-    .np-eq span:nth-child(5) { height: 50%; animation-delay: 0.4s; }
-    @keyframes eq {
-      0%, 100% { transform: scaleY(0.4); }
-      50% { transform: scaleY(1); }
+    .bandcamp-frame {
+      display: block;
+      /* bleeds past the body's own padding — below ~260px the embed's
+         internal layout starts wrapping/overlapping its own controls */
+      width: calc(100% + 28px);
+      margin: 0 -14px -14px;
+      height: 120px;
+      border: 0;
     }
 
     /* buttons + notes */
