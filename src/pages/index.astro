@@ -4,7 +4,7 @@ import WaterButton from '../components/WaterButton.astro';
 import BubbleDivider from '../components/BubbleDivider.astro';
 
 const quickNav = [
-  { emoji: '🙋', label: 'About Me', href: '#about' },
+  { emoji: '🙋', label: 'Main Page', href: '#about' },
   { emoji: '🖼️', label: 'Art', href: '#art' }
 ];
 
@@ -25,15 +25,15 @@ const socials = [
 ];
 
 const updates = [
-  { date: '08/23', text: 'Updated bio, added music and art components' },
+  { date: '08/23', text: 'Updated bio, added music, art banners and social media' },
   { date: '08/22', text: 'Dark mode + layered day/night wallpaper added ☆' },
   { date: '08/21', text: 'Redesigned into a 3-column desktop layout' },
   { date: '08/17', text: 'Windows Aero glass' },
 ];
 
 const announcements = [
-  'Art gallery filling up soon — check back! 🎨',
-  'Guestbook, mini games and friend list still under construction 🛠️',
+  'Art gallery filling up soon, check back! 🎨',
+  'Guestbook, mini games and friend list still under construction',
   'Site is perpetually a work in progress',
 ];
 ---
@@ -901,6 +901,8 @@ const announcements = [
     // window's overflow:hidden, it's never clipped by one.
     const tooltip = document.getElementById('icon-tooltip');
     if (tooltip) {
+      const hide = () => tooltip.classList.remove('is-visible');
+
       document.querySelectorAll<HTMLElement>('.icon-link').forEach((link) => {
         const label = link.getAttribute('aria-label') || '';
         const show = () => {
@@ -910,12 +912,25 @@ const announcements = [
           tooltip.style.top = `${rect.top}px`;
           tooltip.classList.add('is-visible');
         };
-        const hide = () => tooltip.classList.remove('is-visible');
         link.addEventListener('mouseenter', show);
         link.addEventListener('mouseleave', hide);
         link.addEventListener('focus', show);
         link.addEventListener('blur', hide);
       });
+
+      // Clicking a target="_blank" icon steals the window's focus for the
+      // new tab without ever firing mouseleave/blur on the icon itself (the
+      // cursor never moves, and blur only fires when focus moves to another
+      // element in the *same* document) — so the tooltip was getting stuck
+      // "on" and, since it's position:fixed, drifting away from its icon as
+      // soon as you scrolled back on this tab. Hide it on any of the ways
+      // that tab-away can happen, plus on scroll so it can't get stranded
+      // at a stale position at all.
+      window.addEventListener('blur', hide);
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) hide();
+      });
+      window.addEventListener('scroll', hide, { passive: true });
     }
   </script>
 </Layout>
