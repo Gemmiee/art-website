@@ -1,0 +1,131 @@
+---
+// Right sidebar: socials, friend links, guestbook. Only rendered on pages
+// that opt in via <PageShell showMisc> — secondary pages keep just nav + main.
+const socials = [
+  { emoji: '🛍️', label: 'Ko-fi Shop', href: 'https://ko-fi.com/gemmiewow/', icon: 'icon_kofi.png' },
+  { emoji: '🐠', label: 'Cara Art Portfolio', href: 'https://cara.app/gemmiewow', icon: 'icon_cara.png' },
+  { emoji: '🪼', label: 'Pixelfed', href: 'https://pixelfed.social/gemmie_wow', icon: 'icon_pixelfed.png' },
+  { emoji: '📸', label: 'Instagram', href: 'https://www.instagram.com/gemmie_wow', icon: 'icon_instagram.png' },
+  { emoji: '🕹️', label: 'Twitch', href: 'https://www.twitch.tv/gemmie_wow', icon: 'icon_twitch.png' },
+  { emoji: '🎥', label: 'YouTube', href: 'https://youtube.com/@gemmiewow', icon: 'icon_youtube.png' },
+  { emoji: '🎨', label: "Colors!Live 3DS Gallery", href: 'https://www.colorslive.com/artist/GemmieWow', icon: 'icon_colorslive.png' },
+];
+---
+
+<div class="col-misc">
+  <!-- ================= socials ================= -->
+  <section class="window compact inactive" id="socials">
+    <div class="title-bar">
+      <span class="title-bar-icon" aria-hidden="true">☆</span>
+      <span class="title-bar-text">socials.txt</span>
+      <div class="title-bar-controls" aria-hidden="true">
+        <span class="tb-btn">_</span>
+        <span class="tb-btn">□</span>
+        <span class="tb-btn close">×</span>
+      </div>
+    </div>
+    <div class="window-body">
+      <div class="icon-link-grid">
+        {socials.map((link) => (
+          <a
+            class="icon-link"
+            href={link.href}
+            target="_blank"
+            rel="noopener"
+            aria-label={link.label}
+          >
+            {link.icon ? (
+              <img src={`/images/icons/${link.icon}`} alt="" />
+            ) : (
+              <span class="icon-link-emoji" aria-hidden="true">{link.emoji}</span>
+            )}
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= friend links / webring ================= -->
+  <section class="window compact inactive" id="friend-links">
+    <div class="title-bar">
+      <span class="title-bar-icon" aria-hidden="true">🔗</span>
+      <span class="title-bar-text">friend-links.htm</span>
+      <div class="title-bar-controls" aria-hidden="true">
+        <span class="tb-btn">_</span>
+        <span class="tb-btn">□</span>
+        <span class="tb-btn close">×</span>
+      </div>
+    </div>
+    <div class="window-body">
+      <p class="hand-note">button swaps coming soon ☆</p>
+      <div class="friend-grid">
+        {Array.from({ length: 4 }).map(() => (
+          <div class="friend-slot" aria-hidden="true">88×31</div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= guestbook ================= -->
+  <section class="window compact inactive" id="guestbook">
+    <div class="title-bar">
+      <span class="title-bar-icon" aria-hidden="true">📖</span>
+      <span class="title-bar-text">guestbook.exe</span>
+      <div class="title-bar-controls" aria-hidden="true">
+        <span class="tb-btn">_</span>
+        <span class="tb-btn">□</span>
+        <span class="tb-btn close">×</span>
+      </div>
+    </div>
+    <div class="window-body">
+      <p class="empty-note">no entries yet. Be the first to sign! (coming soon)</p>
+      <textarea class="guestbook-input" placeholder="leave a note..." disabled></textarea>
+      <button class="aero-btn guestbook-btn" type="button" disabled>sign the guestbook</button>
+    </div>
+  </section>
+
+  <!-- shared hover tooltip for the social icon buttons - lives outside any
+       .window so its position:fixed isn't trapped by a window's own
+       backdrop-filter/overflow:hidden, and can render above everything -->
+  <div class="icon-tooltip" id="icon-tooltip" role="tooltip"></div>
+</div>
+
+<script>
+  // One shared tooltip element (outside every .window, see the
+  // #icon-tooltip div above) gets repositioned to whichever icon is
+  // hovered/focused. Since it's position:fixed and lives outside any
+  // window's overflow:hidden, it's never clipped by one.
+  const tooltip = document.getElementById('icon-tooltip');
+  if (tooltip) {
+    const hide = () => tooltip.classList.remove('is-visible');
+
+    document.querySelectorAll<HTMLElement>('.icon-link').forEach((link) => {
+      const label = link.getAttribute('aria-label') || '';
+      const show = () => {
+        const rect = link.getBoundingClientRect();
+        tooltip.textContent = label;
+        tooltip.style.left = `${rect.left + rect.width / 2}px`;
+        tooltip.style.top = `${rect.top}px`;
+        tooltip.classList.add('is-visible');
+      };
+      link.addEventListener('mouseenter', show);
+      link.addEventListener('mouseleave', hide);
+      link.addEventListener('focus', show);
+      link.addEventListener('blur', hide);
+    });
+
+    // Clicking a target="_blank" icon steals the window's focus for the
+    // new tab without ever firing mouseleave/blur on the icon itself (the
+    // cursor never moves, and blur only fires when focus moves to another
+    // element in the *same* document) — so the tooltip was getting stuck
+    // "on" and, since it's position:fixed, drifting away from its icon as
+    // soon as you scrolled back on this tab. Hide it on any of the ways
+    // that tab-away can happen, plus on scroll so it can't get stranded
+    // at a stale position at all.
+    window.addEventListener('blur', hide);
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) hide();
+    });
+    window.addEventListener('scroll', hide, { passive: true });
+  }
+</script>

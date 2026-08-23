@@ -1,0 +1,32 @@
+---
+// Wraps every page's 3-column (or 2-column) desktop layout: nav column,
+// main content (slotted in), and the misc column — which secondary pages
+// opt out of via showMisc={false}, since they only show nav + main.
+import NavColumn from './NavColumn.astro';
+import MiscColumn from './MiscColumn.astro';
+
+interface Props {
+  showMisc?: boolean;
+}
+
+const { showMisc = true } = Astro.props;
+---
+
+<main class:list={['wrap', 'layout-grid', !showMisc && 'no-misc']}>
+  <div class="col-main">
+    <slot />
+  </div>
+
+  <NavColumn />
+
+  {showMisc && <MiscColumn />}
+
+  <!-- ================= footer ================= -->
+  <footer class="footer">
+    <div class="badge-row">
+      <span class="badge-btn">made w/ astro ☆</span>
+      <span class="badge-btn">I do silly coding</span>
+    </div>
+    <p class="footer-note">☆ thanks for stopping by!!</p>
+  </footer>
+</main>

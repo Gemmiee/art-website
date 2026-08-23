@@ -265,3 +265,616 @@ button:focus-visible {
 .sparkle {
   color: var(--accent-orange);
 }
+
+/* ============================================
+   page shell: 3-column desktop layout
+   (shared by every page — see PageShell.astro,
+   NavColumn.astro, MiscColumn.astro)
+   ============================================ */
+
+.layout-grid {
+  display: grid;
+  /* nav needs to be at least ~260px: below that, the Bandcamp player in
+     .col-nav overlaps its own buy/share/prev-next controls regardless of
+     height — it's a hard width breakpoint in Bandcamp's embed, not
+     something padding/height can fix */
+  grid-template-columns: 265px minmax(0, 1fr) 265px;
+  grid-template-areas: "nav main misc" "footer footer footer";
+  gap: 14px;
+  align-items: start;
+}
+.layout-grid.no-misc {
+  grid-template-columns: 265px minmax(0, 1fr);
+  grid-template-areas: "nav main" "footer footer";
+}
+.col-main { grid-area: main; min-width: 0; }
+.col-nav {
+  grid-area: nav;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  position: sticky;
+  top: 20px;
+}
+.col-misc {
+  grid-area: misc;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  position: sticky;
+  top: 20px;
+}
+.footer { grid-area: footer; }
+
+@media (max-width: 900px) {
+  .layout-grid,
+  .layout-grid.no-misc {
+    grid-template-columns: 1fr;
+    grid-template-areas: "main" "misc" "nav" "footer";
+  }
+  .col-nav, .col-misc {
+    position: static;
+  }
+}
+
+/* ---------- main "active" document window ---------- */
+.window.main-doc {
+  box-shadow: 0 20px 44px rgba(26, 18, 46, 0.4), 0 0 0 1px rgba(147, 163, 230, 0.55), 0 2px 0 rgba(255,255,255,0.6) inset;
+}
+.window.main-doc .window-body {
+  padding: 28px 30px;
+}
+
+/* watery bubble banner for section titles */
+.doc-banner {
+  position: relative;
+  overflow: hidden;
+  height: 66px;
+  border-radius: 999px;
+  margin: 0 0 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, #eafcff 0%, #9fe0ea 30%, #93a3e6 65%, #4b3a7a 100%);
+  border: 1px solid rgba(255,255,255,0.75);
+  box-shadow: 0 6px 14px rgba(30,25,60,0.3), inset 0 2px 4px rgba(255,255,255,0.6);
+}
+.doc-banner::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 55% 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0));
+  pointer-events: none;
+}
+.doc-banner-img {
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: 78%;
+  max-width: 260px;
+  height: auto;
+  filter: drop-shadow(0 2px 3px rgba(30,25,60,0.4));
+}
+.bubble-wrap {
+  position: absolute;
+  bottom: -20%;
+  z-index: 1;
+  opacity: 0.85;
+  animation: bubble-rise 6s linear infinite;
+}
+.bubble-icon {
+  display: block;
+  width: 16px;
+  height: 16px;
+  animation: bubble-wobble 2.4s ease-in-out infinite;
+}
+@keyframes bubble-rise {
+  from { bottom: -20%; }
+  to { bottom: 120%; }
+}
+@keyframes bubble-wobble {
+  0%, 100% { transform: translateX(-3px); }
+  50% { transform: translateX(3px); }
+}
+
+/* ---------- nested windows: site updates + announcements ---------- */
+.inner-window-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  align-items: start;
+  margin: 0 -26px;
+}
+
+/* site updates + announcements: illustrated cards + overlapping banners */
+.update-card {
+  position: relative;
+  margin-top: 26px;
+}
+.update-card-banner {
+  position: absolute;
+  top: -26px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 78%;
+  max-width: 260px;
+  z-index: 2;
+  filter: drop-shadow(0 4px 8px rgba(26,18,46,0.35));
+  pointer-events: none;
+}
+.update-card-banner img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.update-card-body {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  border-radius: 14px;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+}
+.card-ocean {
+  background-image: url('/images/cards/card_ocean.png');
+}
+.card-border {
+  background-image: url('/images/cards/card_border.png');
+}
+.update-card-scroll {
+  position: absolute;
+  overflow-y: auto;
+  border-radius: 10px;
+  padding: 12px 14px;
+}
+.update-card-scroll .update-list {
+  font-size: 0.85rem;
+}
+/* card_ocean's art is busy edge-to-edge, so the text gets its own frosted panel
+   that follows the theme tokens (was a hardcoded white rgba, which stayed
+   white in dark mode while the text above it flipped to light ink) */
+.scroll-ocean {
+  top: 22%;
+  left: 8%;
+  right: 8%;
+  bottom: 12%;
+  background: var(--glass-fill-strong);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  box-shadow: 0 2px 8px rgba(26,18,46,0.2);
+  transition: background var(--theme-transition) ease;
+}
+/* card_border already has a pale interior, so text sits straight on it */
+.scroll-border {
+  top: 12%;
+  left: 12%;
+  right: 12%;
+  bottom: 12%;
+}
+.update-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+  font-size: 0.8rem;
+  color: var(--ink);
+}
+.update-list li {
+  line-height: 1.4;
+}
+.update-date {
+  display: inline-block;
+  font-weight: 700;
+  color: var(--accent-deep);
+  margin-right: 4px;
+}
+.update-bullet {
+  color: var(--accent-orange);
+  margin-right: 2px;
+}
+
+@media (max-width: 640px) {
+  .inner-window-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- "inactive" side windows ---------- */
+.window.inactive {
+  background: var(--surface);
+  box-shadow: 0 6px 14px rgba(26,18,46,0.16), 0 1px 0 rgba(255,255,255,0.4) inset;
+  backdrop-filter: blur(8px) saturate(1.1);
+  -webkit-backdrop-filter: blur(8px) saturate(1.1);
+}
+.window.inactive .title-bar {
+  background: linear-gradient(180deg, var(--titlebar-inactive-start) 0%, var(--titlebar-inactive-mid) 55%, var(--titlebar-inactive-end) 100%);
+  border-bottom: 1px solid var(--titlebar-inactive-border);
+}
+.window.inactive .title-bar::before {
+  opacity: 0.35;
+}
+.window.inactive .title-bar-text {
+  color: var(--titlebar-inactive-text);
+  text-shadow: none;
+}
+.window.inactive .title-bar-icon {
+  opacity: 0.7;
+  filter: none;
+}
+.window.inactive .tb-btn {
+  background: linear-gradient(180deg, var(--tb-btn-start) 0%, var(--tb-btn-end) 100%);
+  opacity: 0.8;
+}
+.window.inactive .tb-btn.close {
+  background: linear-gradient(180deg, #f0bdb2 0%, #d3897a 100%);
+  color: #fff;
+  opacity: 0.8;
+}
+
+.window.compact .window-body {
+  padding: 16px;
+}
+.window .title-bar-text {
+  font-size: 0.78rem;
+}
+
+h1 {
+  font-family: var(--font-name);
+  font-weight: 400;
+  font-size: 2.8rem;
+  line-height: 1;
+  margin: 0 0 10px;
+  background: linear-gradient(180deg, #ffb3d1 0%, #ff6fa5 45%, #e14f86 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 2px 2px rgba(26,18,46,0.25));
+}
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 22px;
+  align-items: start;
+}
+
+.avatar-frame {
+  position: relative;
+  max-width: 220px;
+}
+
+.avatar-img {
+  width: 100%;
+  height: auto;
+}
+
+.bio-banner {
+  position: relative;
+  margin: 12px 0 16px 46px;
+  max-width: 380px;
+}
+.bio-banner-img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.bio-doodle {
+  position: absolute;
+  left: -46px;
+  top: 50%;
+  width: 56px;
+  height: auto;
+  z-index: 1;
+  transform-origin: 50% 85%;
+  animation: doodle-tilt 4s ease-in-out infinite;
+  filter: drop-shadow(0 3px 6px rgba(26,18,46,0.3));
+  pointer-events: none;
+}
+@keyframes doodle-tilt {
+  0%, 100% { transform: translateY(-50%) rotate(-14deg); }
+  50% { transform: translateY(-50%) rotate(2deg); }
+}
+
+.blurb {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+/* art gallery */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 10px;
+}
+.gallery-slot {
+  aspect-ratio: 1;
+  border: 1px dashed var(--card-border-dashed);
+  border-radius: 6px;
+  background: var(--surface-faint);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  color: var(--ink-soft);
+  opacity: 0.7;
+}
+
+/* now playing: real Bandcamp embed (Motorslice OST by Pizza Hotline) —
+   bgcol/linkcol are fixed to a warm cream + deep purple rather than the
+   theme tokens, since the iframe's own text colors can't react to our
+   dark-mode toggle; a fixed light card reads fine in both themes.
+   Bandcamp's own art thumbnail only renders above ~380px iframe width
+   (below that it either hides or overlaps its own controls), which is
+   wider than this column, so the cover is our own <img> and the iframe
+   is the no-artwork/no-tracklist "compact bar" style underneath it. */
+.bandcamp-body {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.bandcamp-cover {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-soft);
+}
+.bandcamp-frame {
+  display: block;
+  /* bleeds past the body's own padding — below ~260px the embed's
+     internal layout starts wrapping/overlapping its own controls */
+  width: calc(100% + 28px);
+  margin: 0 -14px -14px;
+  height: 120px;
+  border: 0;
+}
+
+/* buttons + notes */
+.hand-note {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  margin: 0 0 14px;
+  font-style: italic;
+}
+.portfolio-inline-btn {
+  display: inline-block;
+  margin-top: 14px;
+  font-size: 0.9rem;
+}
+
+/* nav list (left sidebar) */
+.nav-subheading {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 4px;
+  font-weight: 700;
+  font-size: 0.82rem;
+  color: var(--ink);
+}
+.nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+}
+.nav-list a {
+  display: block;
+  background: var(--surface);
+  border: 1px solid var(--card-border);
+  border-radius: 6px;
+  padding: 8px 10px;
+  text-decoration: none;
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 0.82rem;
+  transition: background 0.12s ease;
+}
+.nav-list a:hover {
+  background: var(--surface-hover);
+}
+.nav-list a[aria-current="page"] {
+  background: var(--surface-hover);
+  border-color: var(--accent-deep);
+  box-shadow: inset 0 0 0 1px var(--accent-deep);
+}
+
+/* mini games teaser */
+.games-grid {
+  display: grid;
+  gap: 8px;
+}
+.game-slot {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface-faint);
+  border: 1px dashed var(--card-border-dashed);
+  border-radius: 6px;
+  padding: 8px 10px;
+  opacity: 0.65;
+}
+.game-slot-icon {
+  font-size: 1.1rem;
+}
+.game-slot-name {
+  flex: 1;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+.game-slot-lock {
+  font-size: 0.8rem;
+}
+
+/* socials: glossy icon buttons */
+.icon-link-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(52px, 1fr));
+  gap: 10px;
+}
+.icon-link {
+  display: block;
+  aspect-ratio: 1;
+  border-radius: 16px;
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+.icon-link img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.icon-link-emoji {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: var(--surface);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  font-size: 1.4rem;
+}
+.icon-link:hover {
+  transform: translateY(-2px) scale(1.05);
+  filter: drop-shadow(0 4px 8px rgba(26, 18, 46, 0.35));
+}
+
+/* comic-style speech bubble tooltip, tail pointing down at the icon.
+   Lives as a single shared element outside every .window (see the
+   #icon-tooltip div in MiscColumn.astro) and is position:fixed, positioned
+   in JS from the hovered icon's own bounding box — that's what lets
+   it render above every window instead of being clipped by one. */
+.icon-tooltip {
+  position: fixed;
+  left: 0;
+  top: 0;
+  transform: translate(-50%, calc(-100% - 11px)) scale(0.85);
+  transform-origin: bottom center;
+  background: var(--glass-fill-strong);
+  border: 2px solid var(--accent-deep);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 0.72rem;
+  white-space: nowrap;
+  padding: 6px 12px;
+  border-radius: 999px;
+  box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(10px) saturate(1.4);
+  -webkit-backdrop-filter: blur(10px) saturate(1.4);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 9999;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+.icon-tooltip::before,
+.icon-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 7px solid transparent;
+  border-top-color: var(--accent-deep);
+}
+.icon-tooltip::after {
+  border-width: 5px;
+  margin-top: -2px;
+  border-top-color: var(--glass-fill-strong);
+}
+.icon-tooltip.is-visible {
+  opacity: 1;
+  transform: translate(-50%, calc(-100% - 11px)) scale(1);
+}
+
+/* friend links / webring buttons */
+.friend-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.friend-slot {
+  width: 88px;
+  height: 31px;
+  border: 1px dashed var(--card-border-dashed);
+  border-radius: 4px;
+  background: var(--surface-faint);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.68rem;
+  color: var(--ink-soft);
+  opacity: 0.7;
+}
+
+/* guestbook */
+.empty-note {
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+  margin: 0 0 10px;
+}
+.guestbook-input {
+  width: 100%;
+  min-height: 60px;
+  resize: vertical;
+  border: 1px solid var(--card-border);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--ink-soft);
+  font-family: var(--font-ui);
+  font-size: 0.82rem;
+  padding: 8px 10px;
+  margin-bottom: 10px;
+}
+.guestbook-input:disabled {
+  cursor: not-allowed;
+}
+.guestbook-btn {
+  width: 100%;
+  text-align: center;
+  font-size: 0.82rem;
+  padding: 8px 12px;
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* footer */
+.footer {
+  text-align: center;
+  margin-top: 16px;
+}
+.badge-row {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.badge-btn {
+  display: inline-block;
+  background: var(--surface);
+  border: 1px solid var(--card-border);
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+.footer-note {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+
+@media (max-width: 480px) {
+  .profile-grid {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+  }
+}
