@@ -15,14 +15,13 @@ const miniGames = [
 ];
 
 const socials = [
-  { emoji: '🛍️', label: 'Ko-fi Shop', href: 'https://ko-fi.com/gemmiewow/' },
-  { emoji: '🐠', label: 'Cara Art Portfolio', href: 'https://cara.app/gemmiewow' },
-  { emoji: '🪼', label: 'Pixelfed', href: 'https://pixelfed.social/gemmie_wow' },
-  { emoji: '👥', label: 'OC Fandom Wiki', href: 'https://shanka-angelo.fandom.com/wiki/Shanka_%26_Angelo_Wiki' },
-  { emoji: '📸', label: 'Instagram', href: 'https://www.instagram.com/gemmie_wow' },
-  { emoji: '🕹️', label: 'Twitch', href: 'https://www.twitch.tv/gemmie_wow' },
-  { emoji: '🎥', label: 'YouTube', href: 'https://youtube.com/@gemmiewow' },
-  { emoji: '🎨', label: "Colors!Live 3DS Gallery", href: 'https://www.colorslive.com/artist/GemmieWow' },
+  { emoji: '🛍️', label: 'Ko-fi Shop', href: 'https://ko-fi.com/gemmiewow/', icon: 'icon_kofi.png' },
+  { emoji: '🐠', label: 'Cara Art Portfolio', href: 'https://cara.app/gemmiewow', icon: 'icon_cara.png' },
+  { emoji: '🪼', label: 'Pixelfed', href: 'https://pixelfed.social/gemmie_wow', icon: 'icon_pixelfed.png' },
+  { emoji: '📸', label: 'Instagram', href: 'https://www.instagram.com/gemmie_wow', icon: 'icon_instagram.png' },
+  { emoji: '🕹️', label: 'Twitch', href: 'https://www.twitch.tv/gemmie_wow', icon: 'icon_twitch.png' },
+  { emoji: '🎥', label: 'YouTube', href: 'https://youtube.com/@gemmiewow', icon: 'icon_youtube.png' },
+  { emoji: '🎨', label: "Colors!Live 3DS Gallery", href: 'https://www.colorslive.com/artist/GemmieWow', icon: 'icon_colorslive.png' },
 ];
 
 const updates = [
@@ -207,7 +206,7 @@ const announcements = [
             seamless
             loading="lazy"
           >
-            <a href="https://pizzahotline.bandcamp.com/album/motorslice-ost">Motorslice (Original Soundtrack) by Pizza Hotline</a>
+            Motorslice (Original Soundtrack) by Pizza Hotline — listen at pizzahotline.bandcamp.com/album/motorslice-ost
           </iframe>
         </div>
       </section>
@@ -224,15 +223,23 @@ const announcements = [
           </div>
         </div>
         <div class="window-body">
-          <ul class="link-list">
+          <div class="icon-link-grid">
             {socials.map((link) => (
-              <li>
-                <a href={link.href} target="_blank" rel="noopener">
-                  <span aria-hidden="true">{link.emoji}</span> {link.label}
-                </a>
-              </li>
+              <a
+                class="icon-link"
+                href={link.href}
+                target="_blank"
+                rel="noopener"
+                aria-label={link.label}
+              >
+                {link.icon ? (
+                  <img src={`/images/icons/${link.icon}`} alt="" />
+                ) : (
+                  <span class="icon-link-emoji" aria-hidden="true">{link.emoji}</span>
+                )}
+              </a>
             ))}
-          </ul>
+          </div>
         </div>
       </section>
 
@@ -285,6 +292,11 @@ const announcements = [
       <p class="footer-note">☆ thanks for stopping by!!</p>
     </footer>
   </main>
+
+  <!-- shared hover tooltip for the social icon buttons - lives outside any
+       .window so its position:fixed isn't trapped by a window's own
+       backdrop-filter/overflow:hidden, and can render above everything -->
+  <div class="icon-tooltip" id="icon-tooltip" role="tooltip"></div>
 
   <style>
     /* ---------- 3-column layout ---------- */
@@ -388,9 +400,9 @@ const announcements = [
     .inner-window-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 10px;
+      gap: 6px;
       align-items: start;
-      margin: 0 -16px;
+      margin: 0 -26px;
     }
 
     /* site updates + announcements: illustrated cards + overlapping banners */
@@ -714,28 +726,85 @@ const announcements = [
       font-size: 0.8rem;
     }
 
-    /* socials / links list */
-    .link-list {
-      list-style: none;
-      margin: 0;
-      padding: 0;
+    /* socials: glossy icon buttons */
+    .icon-link-grid {
       display: grid;
-      gap: 8px;
+      grid-template-columns: repeat(auto-fill, minmax(52px, 1fr));
+      gap: 10px;
     }
-    .link-list a {
+    .icon-link {
       display: block;
+      aspect-ratio: 1;
+      border-radius: 16px;
+      transition: transform 0.15s ease, filter 0.15s ease;
+    }
+    .icon-link img {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+    .icon-link-emoji {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
       background: var(--surface);
       border: 1px solid var(--card-border);
-      border-radius: 6px;
-      padding: 9px 10px;
-      text-decoration: none;
-      color: var(--ink);
-      font-weight: 600;
-      font-size: 0.82rem;
-      transition: background 0.12s ease;
+      border-radius: 16px;
+      font-size: 1.4rem;
     }
-    .link-list a:hover {
-      background: var(--surface-hover);
+    .icon-link:hover {
+      transform: translateY(-2px) scale(1.05);
+      filter: drop-shadow(0 4px 8px rgba(26, 18, 46, 0.35));
+    }
+
+    /* comic-style speech bubble tooltip, tail pointing down at the icon.
+       Lives as a single shared element outside every .window (see the
+       #icon-tooltip div after </main>) and is position:fixed, positioned
+       in JS from the hovered icon's own bounding box — that's what lets
+       it render above every window instead of being clipped by one. */
+    .icon-tooltip {
+      position: fixed;
+      left: 0;
+      top: 0;
+      transform: translate(-50%, calc(-100% - 11px)) scale(0.85);
+      transform-origin: bottom center;
+      background: var(--glass-fill-strong);
+      border: 2px solid var(--accent-deep);
+      color: var(--ink);
+      font-family: var(--font-ui);
+      font-weight: 700;
+      font-size: 0.72rem;
+      white-space: nowrap;
+      padding: 6px 12px;
+      border-radius: 999px;
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(10px) saturate(1.4);
+      -webkit-backdrop-filter: blur(10px) saturate(1.4);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 9999;
+      transition: opacity 0.18s ease, transform 0.18s ease;
+    }
+    .icon-tooltip::before,
+    .icon-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 7px solid transparent;
+      border-top-color: var(--accent-deep);
+    }
+    .icon-tooltip::after {
+      border-width: 5px;
+      margin-top: -2px;
+      border-top-color: var(--glass-fill-strong);
+    }
+    .icon-tooltip.is-visible {
+      opacity: 1;
+      transform: translate(-50%, calc(-100% - 11px)) scale(1);
     }
 
     /* friend links / webring buttons */
@@ -824,4 +893,29 @@ const announcements = [
       }
     }
   </style>
+
+  <script>
+    // One shared tooltip element (outside every .window, see the
+    // #icon-tooltip div above) gets repositioned to whichever icon is
+    // hovered/focused. Since it's position:fixed and lives outside any
+    // window's overflow:hidden, it's never clipped by one.
+    const tooltip = document.getElementById('icon-tooltip');
+    if (tooltip) {
+      document.querySelectorAll<HTMLElement>('.icon-link').forEach((link) => {
+        const label = link.getAttribute('aria-label') || '';
+        const show = () => {
+          const rect = link.getBoundingClientRect();
+          tooltip.textContent = label;
+          tooltip.style.left = `${rect.left + rect.width / 2}px`;
+          tooltip.style.top = `${rect.top}px`;
+          tooltip.classList.add('is-visible');
+        };
+        const hide = () => tooltip.classList.remove('is-visible');
+        link.addEventListener('mouseenter', show);
+        link.addEventListener('mouseleave', hide);
+        link.addEventListener('focus', show);
+        link.addEventListener('blur', hide);
+      });
+    }
+  </script>
 </Layout>

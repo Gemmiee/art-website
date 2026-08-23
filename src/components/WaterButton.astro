@@ -197,6 +197,10 @@ const { href, label, waterColor = '#3fbfc7', external = false } = Astro.props;
     const context = canvas?.getContext('2d');
     if (!canvas || !context) return;
     const ctx = context;
+    // rebind so TS keeps the non-null narrowing inside the nested
+    // functions below (control-flow narrowing doesn't cross function
+    // boundaries even for a `const` that's never reassigned)
+    const canvasEl = canvas;
 
     let raf = 0;
     let last = 0;
@@ -251,8 +255,8 @@ const { href, label, waterColor = '#3fbfc7', external = false } = Astro.props;
 
     function raster() {
       pixScale = pixelScale();
-      canvas.width = Math.round(W * pixScale);
-      canvas.height = Math.round(H * pixScale);
+      canvasEl.width = Math.round(W * pixScale);
+      canvasEl.height = Math.round(H * pixScale);
       ctx.setTransform(pixScale, 0, 0, pixScale, 0, 0);
     }
 
