@@ -793,24 +793,70 @@ h1 {
   transform: translate(-50%, calc(-100% - 11px)) scale(1);
 }
 
-/* friend links / webring buttons */
+/* friend links / webring buttons — classic 88x31s */
 .friend-grid {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+  margin-bottom: 4px;
 }
-.friend-slot {
+.friend-btn {
+  display: block;
   width: 88px;
   height: 31px;
-  border: 1px dashed var(--card-border-dashed);
-  border-radius: 4px;
-  background: var(--surface-faint);
+  border-radius: 3px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(26, 18, 46, 0.25);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.friend-btn img {
+  display: block;
+  width: 88px;
+  height: 31px;
+}
+.friend-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(26, 18, 46, 0.3);
+}
+
+/* grab-my-button embed snippet */
+.embed-row {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  gap: 6px;
+  margin-top: 10px;
+}
+.embed-input {
+  flex: 1;
+  min-width: 0;
+  font-family: monospace;
   font-size: 0.68rem;
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--card-border);
+  background: var(--surface);
   color: var(--ink-soft);
-  opacity: 0.7;
+}
+.embed-copy-btn {
+  flex-shrink: 0;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--accent-deep);
+  background: linear-gradient(180deg, #ffffff 0%, #e6ddf7 45%, #ab98e6 46%, #cdb8f0 100%);
+  color: var(--ink);
+  cursor: pointer;
+  transition: transform 0.12s ease;
+}
+:root[data-theme="dark"] .embed-copy-btn {
+  background: linear-gradient(180deg, #6a5aa8 0%, #4a3d7a 45%, #332a5c 46%, #241d44 100%);
+  color: var(--ink);
+}
+.embed-copy-btn:hover {
+  transform: translateY(-1px);
+}
+.embed-copy-btn:active {
+  transform: translateY(0);
 }
 
 /* guestbook */

@@ -1,6 +1,8 @@
 ---
 // Right sidebar: socials, friend links, guestbook. Only rendered on pages
 // that opt in via <PageShell showMisc> — secondary pages keep just nav + main.
+import BubbleDivider from './BubbleDivider.astro';
+
 const socials = [
   { emoji: '🛍️', label: 'Ko-fi Shop', href: 'https://ko-fi.com/gemmiewow/', icon: 'icon_kofi.png' },
   { emoji: '🐠', label: 'Cara Art Portfolio', href: 'https://cara.app/gemmiewow', icon: 'icon_cara.png' },
@@ -10,6 +12,15 @@ const socials = [
   { emoji: '🎥', label: 'YouTube', href: 'https://youtube.com/@gemmiewow', icon: 'icon_youtube.png' },
   { emoji: '🎨', label: "Colors!Live 3DS Gallery", href: 'https://www.colorslive.com/artist/GemmieWow', icon: 'icon_colorslive.png' },
 ];
+
+const friends = [
+  { name: 'Mage2B', href: 'https://www.instagram.com/mage.236?igsh=eG1rMm4yZDRkcGV2', button: 'button_mage.png' },
+  { name: 'mianimator', href: 'https://www.youtube.com/channel/UCMr9ZRUKxJgv4uBKAtGeM0w', button: 'button_mia.gif' },
+];
+
+const siteUrl = 'https://artist.gemmiewow.com/';
+const ownButtonSrc = `${siteUrl}images/friends/button_gem.gif`;
+const embedCode = `<a href="${siteUrl}"><img src="${ownButtonSrc}" width="88" height="31" alt="gemmie's corner"></a>`;
 ---
 
 <div class="col-misc">
@@ -57,11 +68,24 @@ const socials = [
       </div>
     </div>
     <div class="window-body">
-      <p class="hand-note">button swaps coming soon ☆</p>
+      <p class="hand-note">gathering more friends slowly but surely ☆</p>
       <div class="friend-grid">
-        {Array.from({ length: 4 }).map(() => (
-          <div class="friend-slot" aria-hidden="true">88×31</div>
+        {friends.map((friend) => (
+          <a class="friend-btn" href={friend.href} target="_blank" rel="noopener">
+            <img src={`/images/friends/${friend.button}`} width="88" height="31" alt={friend.name} />
+          </a>
         ))}
+      </div>
+
+      <BubbleDivider />
+
+      <p class="hand-note">grab my button! ☆</p>
+      <a class="friend-btn" href={siteUrl} target="_blank" rel="noopener">
+        <img src="/images/friends/button_gem.gif" width="88" height="31" alt="gemmie's corner" />
+      </a>
+      <div class="embed-row">
+        <input class="embed-input" type="text" readonly value={embedCode} />
+        <button class="embed-copy-btn" type="button" data-copy-text={embedCode}>Copy</button>
       </div>
     </div>
   </section>
@@ -127,5 +151,29 @@ const socials = [
       if (document.hidden) hide();
     });
     window.addEventListener('scroll', hide, { passive: true });
+  }
+
+  // grab-my-button embed snippet: click-to-select the field, and a Copy
+  // button that writes it straight to the clipboard with a quick "Copied!"
+  // confirmation.
+  const embedInput = document.querySelector<HTMLInputElement>('.embed-input');
+  embedInput?.addEventListener('click', () => embedInput.select());
+
+  const copyBtn = document.querySelector<HTMLButtonElement>('.embed-copy-btn');
+  if (copyBtn) {
+    const defaultLabel = copyBtn.textContent || 'Copy';
+    copyBtn.addEventListener('click', async () => {
+      const text = copyBtn.dataset.copyText || '';
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch {
+        embedInput?.select();
+        document.execCommand('copy');
+      }
+      copyBtn.textContent = 'Copied!';
+      setTimeout(() => {
+        copyBtn.textContent = defaultLabel;
+      }, 1500);
+    });
   }
 </script>
