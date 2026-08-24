@@ -279,13 +279,13 @@ button:focus-visible {
      height — it's a hard width breakpoint in Bandcamp's embed, not
      something padding/height can fix */
   grid-template-columns: 265px minmax(0, 1fr) 265px;
-  grid-template-areas: "mascot main misc" "nav main misc" "footer footer footer";
+  grid-template-areas: "nav main misc" "footer footer footer";
   gap: 14px;
   align-items: start;
 }
 .layout-grid.no-misc {
   grid-template-columns: 265px minmax(0, 1fr);
-  grid-template-areas: "mascot main" "nav main" "footer footer";
+  grid-template-areas: "nav main" "footer footer";
 }
 .col-main { grid-area: main; min-width: 0; }
 .col-nav {
@@ -306,20 +306,32 @@ button:focus-visible {
 }
 .footer { grid-area: footer; }
 
-/* nav mascot + "mood check" speech cloud — its own grid row sitting right
-   above topics.exe on desktop (grid-area: mascot, see .layout-grid) and
-   above the main content window on mobile once the layout collapses to a
-   single column. The negative margin-bottom cancels the grid's own row
-   gap so the sprite is flush against whichever window follows it. */
+/* nav mascot + "mood check" speech cloud. Two copies share the styles
+   below so there's exactly one always visible, never two independently
+   sticky elements trying to stay in sync (that's what caused the sprite
+   to drift/detach while scrolling before):
+   - .in-nav (added in NavColumn.astro) lives *inside* .col-nav itself, so
+     it scrolls and sticks as part of the exact same box as topics.exe —
+     always touching it, by construction, on desktop.
+   - .in-shell (added in PageShell.astro) is a standalone copy shown only
+     on mobile, positioned via the "mascot" grid row, since .col-nav moves
+     far down the page there and this needs to sit above the main window
+     instead. */
 .nav-mascot {
-  grid-area: mascot;
   position: relative;
   width: 100%;
   height: 172px;
   max-width: 260px;
   margin-left: 6px;
   margin-right: 6px;
-  margin-bottom: -14px;
+}
+.nav-mascot.in-nav {
+  display: block;
+  /* cancels .col-nav's own 24px flex gap so the sprite touches topics.exe */
+  margin-bottom: -24px;
+}
+.nav-mascot.in-shell {
+  display: none;
 }
 .nav-mascot-sprite {
   position: absolute;
@@ -387,11 +399,25 @@ button:focus-visible {
   .layout-grid.no-misc {
     grid-template-columns: 1fr;
     grid-template-areas: "mascot" "main" "misc" "nav" "footer";
+    /* the mascot needs to touch .col-main with zero gap; every other
+       boundary gets its normal 14px back via margin-bottom below, since a
+       shared row-gap can't skip just one boundary between rows */
+    row-gap: 0;
+  }
+  .col-main,
+  .col-misc,
+  .col-nav {
+    margin-bottom: 14px;
   }
   .col-nav, .col-misc {
     position: static;
   }
-  .nav-mascot {
+  .nav-mascot.in-nav {
+    display: none;
+  }
+  .nav-mascot.in-shell {
+    display: block;
+    grid-area: mascot;
     justify-self: end;
     max-width: 270px;
     height: 160px;
@@ -637,6 +663,48 @@ h1 {
    the page itself — to stretch past the viewport instead of wrapping. */
 .profile-grid > * {
   min-width: 0;
+}
+
+/* section banner with no pill/bar behind it — just the artwork on its own */
+.section-banner {
+  display: block;
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  margin: 0 auto 8px;
+  filter: drop-shadow(0 3px 6px rgba(26, 18, 46, 0.35));
+}
+
+/* "what is this" article: gemmie_sit illustration + free-form text,
+   same image+text layout as .profile-grid above */
+.article-grid {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 26px;
+  align-items: center;
+}
+.article-grid > * {
+  min-width: 0;
+}
+.article-portrait {
+  max-width: 260px;
+}
+.article-portrait-img {
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 6px 14px rgba(26, 18, 46, 0.3));
+  animation: portrait-float 4s ease-in-out infinite;
+}
+@keyframes portrait-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+@media (max-width: 480px) {
+  .article-grid {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+  }
 }
 
 .avatar-frame {

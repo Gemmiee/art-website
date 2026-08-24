@@ -13,11 +13,14 @@ const { showMisc = true } = Astro.props;
 ---
 
 <main class:list={['wrap', 'layout-grid', !showMisc && 'no-misc']}>
-  <!-- ================= mascot + mood check =================
-       Sits in its own grid row above topics.exe on desktop, and above
-       the main content window on mobile (see .layout-grid's grid-area
-       rules) — same component, just re-anchored per breakpoint. -->
-  <div class="nav-mascot">
+  <!-- ================= mascot + mood check (mobile copy) =================
+       Only visible on mobile (see .nav-mascot.in-shell in global.css) —
+       .col-nav moves far down the page there, so this standalone copy
+       sits above the main content window instead. The desktop copy lives
+       inside NavColumn.astro's .col-nav so it's stuck-together with
+       topics.exe as one unit; see the comment above .nav-mascot in
+       global.css for why there are two. -->
+  <div class="nav-mascot in-shell">
     <div class="nav-mascot-cloud">
       <img class="nav-mascot-cloud-img" src="/images/banners/speech_cloud_inverted.png" alt="" aria-hidden="true" />
       <img class="nav-mascot-cloud-img-night" src="/images/banners/speech_cloud_inverted_night.png" alt="" aria-hidden="true" />
