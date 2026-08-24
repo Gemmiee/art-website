@@ -393,14 +393,14 @@ button:focus-visible {
   }
   .nav-mascot {
     justify-self: end;
-    max-width: 340px;
-    height: 210px;
+    max-width: 270px;
+    height: 160px;
   }
   .nav-mascot-sprite {
-    width: 190px;
+    width: 140px;
   }
   .nav-mascot-cloud {
-    width: 235px;
+    width: 180px;
   }
   .nav-mascot-mood-label {
     font-size: 0.9rem;
