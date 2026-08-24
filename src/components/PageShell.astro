@@ -13,6 +13,22 @@ const { showMisc = true } = Astro.props;
 ---
 
 <main class:list={['wrap', 'layout-grid', !showMisc && 'no-misc']}>
+  <!-- ================= mascot + mood check =================
+       Sits in its own grid row above topics.exe on desktop, and above
+       the main content window on mobile (see .layout-grid's grid-area
+       rules) — same component, just re-anchored per breakpoint. -->
+  <div class="nav-mascot">
+    <div class="nav-mascot-cloud">
+      <img class="nav-mascot-cloud-img" src="/images/banners/speech_cloud_inverted.png" alt="" aria-hidden="true" />
+      <img class="nav-mascot-cloud-img-night" src="/images/banners/speech_cloud_inverted_night.png" alt="" aria-hidden="true" />
+      <div class="nav-mascot-mood">
+        <p class="nav-mascot-mood-label">Today's Mood:</p>
+        <p class="nav-mascot-mood-note">I don't wanna go back to uni :[</p>
+      </div>
+    </div>
+    <img class="nav-mascot-sprite" src="/images/Gemmie_pixel.gif" alt="pixel Gemmie" />
+  </div>
+
   <div class="col-main">
     <slot />
   </div>

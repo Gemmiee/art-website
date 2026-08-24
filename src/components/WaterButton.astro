@@ -99,6 +99,18 @@ const { href, label, waterColor = '#3fbfc7', external = false } = Astro.props;
     user-select: none;
     display: block;
   }
+
+  /* below this, the label can no longer fit on one line without forcing
+     the button (and everything around it) wider than the screen — let it
+     wrap instead; the canvas's own ResizeObserver re-rasters to match. */
+  @media (max-width: 420px) {
+    .water-button {
+      width: 100%;
+    }
+    .water-button-label {
+      white-space: normal;
+    }
+  }
 </style>
 
 <script>
