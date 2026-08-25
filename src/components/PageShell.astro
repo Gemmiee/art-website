@@ -1,7 +1,4 @@
 ---
-// Wraps every page's 3-column (or 2-column) desktop layout: nav column,
-// main content (slotted in), and the misc column — which secondary pages
-// opt out of via showMisc={false}, since they only show nav + main.
 import NavColumn from './NavColumn.astro';
 import MiscColumn from './MiscColumn.astro';
 
@@ -13,7 +10,7 @@ const { showMisc = true } = Astro.props;
 ---
 
 <main class:list={['wrap', 'layout-grid', !showMisc && 'no-misc']}>
-  <!-- ================= mascot + mood check (mobile copy) =================
+  <!-- ================= mascot + mood check =================
        Only visible on mobile (see .nav-mascot.in-shell in global.css) —
        .col-nav moves far down the page there, so this standalone copy
        sits above the main content window instead. The desktop copy lives
@@ -26,7 +23,7 @@ const { showMisc = true } = Astro.props;
       <img class="nav-mascot-cloud-img-night" src="/images/banners/speech_cloud_inverted_night.png" alt="" aria-hidden="true" />
       <div class="nav-mascot-mood">
         <p class="nav-mascot-mood-label">Today's Mood:</p>
-        <p class="nav-mascot-mood-note">I don't wanna go back to uni :[</p>
+        <p class="nav-mascot-mood-note">Life's goood, waiting for my trip (＾▽＾)</p>
       </div>
     </div>
     <img class="nav-mascot-sprite" src="/images/Gemmie_pixel.gif" alt="pixel Gemmie" />

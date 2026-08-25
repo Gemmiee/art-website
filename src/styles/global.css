@@ -723,6 +723,27 @@ h1 {
   }
 }
 
+/* shop: one big clickable illustration opening the ko-fi shop in a new tab */
+.shop-link {
+  display: block;
+  max-width: 640px;
+  margin: 0 auto;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--card-border);
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.shop-link:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 10px 22px rgba(26, 18, 46, 0.3);
+}
+.shop-img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
 .avatar-frame {
   position: relative;
   max-width: 220px;
@@ -870,6 +891,34 @@ h1 {
   display: block;
   width: 618px;
   height: 484px;
+  border: 0;
+}
+/* minesweeper's widget also renders a fixed-pixel canvas (294x400 is its
+   own "mobile" breakpoint render, chosen over its 163x222 "desktop" one
+   since it fills the frame with zero surrounding gutter) — same
+   scale-transform trick as pinball, just a different native size.
+   Unlike pinball's richly-detailed table, minesweeper's chrome (menu bar,
+   LED counters) is thick relative to its actual grid — stretching it to
+   the full column width blows that chrome up into huge empty-looking
+   bars above the fold. Capping the width keeps it a compact, well-
+   proportioned utility window instead, the way the real thing looked. */
+.game-frame--minesweeper {
+  container-type: inline-size;
+  aspect-ratio: 294 / 400;
+  max-width: 440px;
+  margin: 0 auto;
+  background: #c0c0c0;
+}
+.game-frame-scale--minesweeper {
+  width: 294px;
+  height: 400px;
+  flex-shrink: 0;
+  transform: scale(calc(100cqw / 294px));
+}
+.game-frame-iframe--minesweeper {
+  display: block;
+  width: 294px;
+  height: 400px;
   border: 0;
 }
 

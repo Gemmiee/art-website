@@ -1,0 +1,46 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageShell from '../components/PageShell.astro';
+---
+
+<Layout title="Minesweeper ☆ gemmie's corner">
+  <PageShell showMisc={false}>
+    <!-- ================= minesweeper window ================= -->
+    <section class="window main-doc">
+      <div class="title-bar">
+        <span class="title-bar-icon" aria-hidden="true">💣</span>
+        <span class="title-bar-text">minesweeper.exe</span>
+        <div class="title-bar-controls" aria-hidden="true">
+          <span class="tb-btn">_</span>
+          <span class="tb-btn">□</span>
+          <span class="tb-btn close">×</span>
+        </div>
+      </div>
+      <div class="window-body">
+        <div class="doc-section" id="minesweeper">
+          <div class="doc-banner">
+            <span class="bubble-wrap" style="left: 8%; animation-duration: 3.2s; animation-delay: -0.5s;"><img class="bubble-icon" src="/images/bubble.png" alt="" /></span>
+            <span class="bubble-wrap" style="left: 26%; animation-duration: 4s; animation-delay: -2s;"><img class="bubble-icon" src="/images/bubble.png" alt="" /></span>
+            <span class="bubble-wrap" style="left: 46%; animation-duration: 3.5s; animation-delay: -1.2s;"><img class="bubble-icon" src="/images/bubble.png" alt="" /></span>
+            <span class="bubble-wrap" style="left: 66%; animation-duration: 4.5s; animation-delay: -3s;"><img class="bubble-icon" src="/images/bubble.png" alt="" /></span>
+            <span class="bubble-wrap" style="left: 84%; animation-duration: 3.8s; animation-delay: -1.8s;"><img class="bubble-icon" src="/images/bubble.png" alt="" /></span>
+            <img class="doc-banner-img" src="/images/banners/banner_minesweeper.png" alt="Minesweeper" />
+          </div>
+          <p class="hand-note">
+            Click to reveal, left click to flag. I like this one a lot ;p
+          </p>
+          <div class="game-frame game-frame--minesweeper">
+            <div class="game-frame-scale game-frame-scale--minesweeper">
+              <iframe
+                class="game-frame-iframe game-frame-iframe--minesweeper"
+                src="https://mines.vercel.app/"
+                title="Minesweeper"
+                allowfullscreen
+              ></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </PageShell>
+</Layout>
