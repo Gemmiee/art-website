@@ -827,16 +827,33 @@ h1 {
    available width, using every browser's real, current support for
    container query units — no per-breakpoint guessing needed. */
 .game-frame {
-  container-type: inline-size;
-  aspect-ratio: 618 / 484;
   border-radius: 10px;
   overflow: hidden;
   border: 1px solid var(--card-border);
   box-shadow: var(--shadow-soft);
-  background: #3a6ea5;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.game-frame--pinball {
+  container-type: inline-size;
+  aspect-ratio: 618 / 484;
+  background: #3a6ea5;
+}
+/* the spider solitaire widget scales itself responsively (unlike
+   pinball's fixed-pixel canvas), capping out at its own natural 8:5 max
+   size — no scale-transform trickery needed, just a normal responsive box */
+.game-frame--spider {
+  aspect-ratio: 8 / 5;
+  max-width: 880px;
+  margin: 0 auto;
+  background: #009966;
+}
+.game-frame-iframe-responsive {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
 }
 .game-frame-scale {
   width: 618px;

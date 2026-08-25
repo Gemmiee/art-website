@@ -9,13 +9,13 @@ const quickNav = [
 ];
 
 const unlockedGames = [
-  { icon: '🚀', name: 'pinball.exe', href: '/pinball' },
+  { icon: '🚀', name: 'Space Cadet Pinball', href: '/pinball' },
+  { icon: '🕷️', name: 'Spider Solitaire', href: '/spider-solitaire' },
 ];
 
 const lockedGames = [
-  { icon: '🃏', name: 'solitaire.exe' },
-  { icon: '💣', name: 'minesweeper.exe' },
-  { icon: '🐍', name: 'snake.exe' },
+  { icon: '💣', name: 'Minesweeper', href: '/minesweeper' },
+  { icon: '🐍', name: 'Snake', href: '/snake' },
 ];
 
 const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
@@ -69,7 +69,7 @@ const isCurrent = (href: string) => {
       <BubbleDivider class="nav-divider" />
 
       <p class="nav-subheading" id="games"><span aria-hidden="true">🎮</span> mini-games</p>
-      <p class="hand-note">1 unlocked so far, more coming soon ☆</p>
+      <p class="hand-note">2 unlocked so far, more coming soon ☆</p>
       <div class="games-grid">
         {unlockedGames.map((game) => (
           <a
