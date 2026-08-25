@@ -8,7 +8,11 @@ const quickNav = [
   { emoji: '🔗', label: 'Links', href: '/links' },
 ];
 
-const miniGames = [
+const unlockedGames = [
+  { icon: '🚀', name: 'pinball.exe', href: '/pinball' },
+];
+
+const lockedGames = [
   { icon: '🃏', name: 'solitaire.exe' },
   { icon: '💣', name: 'minesweeper.exe' },
   { icon: '🐍', name: 'snake.exe' },
@@ -65,9 +69,19 @@ const isCurrent = (href: string) => {
       <BubbleDivider class="nav-divider" />
 
       <p class="nav-subheading" id="games"><span aria-hidden="true">🎮</span> mini-games</p>
-      <p class="hand-note">coming soon ☆</p>
+      <p class="hand-note">1 unlocked so far, more coming soon ☆</p>
       <div class="games-grid">
-        {miniGames.map((game) => (
+        {unlockedGames.map((game) => (
+          <a
+            class="game-slot game-slot-active"
+            href={game.href}
+            aria-current={isCurrent(game.href) ? 'page' : undefined}
+          >
+            <span class="game-slot-icon">{game.icon}</span>
+            <span class="game-slot-name">{game.name}</span>
+          </a>
+        ))}
+        {lockedGames.map((game) => (
           <div class="game-slot" aria-hidden="true">
             <span class="game-slot-icon">{game.icon}</span>
             <span class="game-slot-lock">🔒</span>
