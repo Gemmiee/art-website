@@ -474,6 +474,19 @@ button:focus-visible {
   height: auto;
   filter: drop-shadow(0 2px 3px rgba(30,25,60,0.4));
 }
+/* text fallback for .doc-banner sections that don't have a custom hand-
+   drawn banner asset yet (swap for a .doc-banner-img the same way the art
+   gallery / "what is this" banners work, once one exists) */
+.doc-banner-text {
+  position: relative;
+  z-index: 2;
+  font-family: var(--font-banner);
+  font-weight: 700;
+  font-size: 1.7rem;
+  color: #ffffff;
+  text-shadow: 0 2px 3px rgba(30, 25, 60, 0.4);
+  letter-spacing: 0.02em;
+}
 .bubble-wrap {
   position: absolute;
   bottom: -20%;
@@ -767,6 +780,39 @@ h1 {
   font-size: 1.4rem;
   color: var(--ink-soft);
   opacity: 0.7;
+}
+
+/* links page: once real entries exist (see src/pages/links.astro) */
+.link-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.link-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  border: 1px solid var(--card-border);
+  background: var(--surface);
+  text-decoration: none;
+  color: var(--ink);
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.link-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(26, 18, 46, 0.28);
+}
+.link-card-name {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--accent-deep);
+}
+.link-card-blurb {
+  font-size: 0.8rem;
+  color: var(--ink-soft);
 }
 
 /* now playing: real Bandcamp embed (Motorslice OST by Pizza Hotline) —
