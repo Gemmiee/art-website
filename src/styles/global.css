@@ -1027,35 +1027,16 @@ h1 {
   transform: translateY(0);
 }
 
-/* guestbook */
-.empty-note {
-  font-size: 0.8rem;
-  color: var(--ink-soft);
-  margin: 0 0 10px;
-}
-.guestbook-input {
-  width: 100%;
-  min-height: 60px;
-  resize: vertical;
-  border: 1px solid var(--card-border);
-  border-radius: 6px;
-  background: var(--surface);
-  color: var(--ink-soft);
-  font-family: var(--font-ui);
-  font-size: 0.82rem;
-  padding: 8px 10px;
-  margin-bottom: 10px;
-}
-.guestbook-input:disabled {
-  cursor: not-allowed;
-}
-.guestbook-btn {
-  width: 100%;
-  text-align: center;
-  font-size: 0.82rem;
-  padding: 8px 12px;
-  opacity: 0.6;
-  cursor: not-allowed;
+/* guestbook: embedded iframe.chat widget */
+.guestbook-iframe {
+  display: block;
+  /* bleeds past .window-body's own 16px padding so it sits flush against
+     the window's edges — the window's own overflow:hidden + border-radius
+     round it off automatically, same trick as .bandcamp-frame */
+  width: calc(100% + 32px);
+  height: 380px;
+  margin: -16px;
+  border: 0;
 }
 
 /* footer */

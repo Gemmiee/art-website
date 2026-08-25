@@ -96,7 +96,7 @@ const embedCode = `<a href="${siteUrl}"><img src="${ownButtonSrc}" width="88" he
   <section class="window compact inactive" id="guestbook">
     <div class="title-bar">
       <span class="title-bar-icon" aria-hidden="true">📖</span>
-      <span class="title-bar-text">guestbook.exe</span>
+      <span class="title-bar-text">chat.exe</span>
       <div class="title-bar-controls" aria-hidden="true">
         <span class="tb-btn">_</span>
         <span class="tb-btn">□</span>
@@ -104,11 +104,22 @@ const embedCode = `<a href="${siteUrl}"><img src="${ownButtonSrc}" width="88" he
       </div>
     </div>
     <div class="window-body">
-      <p class="empty-note">no entries yet. Be the first to sign! (coming soon)</p>
-      <textarea class="guestbook-input" placeholder="leave a note..." disabled></textarea>
-      <button class="aero-btn guestbook-btn" type="button" disabled>sign the guestbook</button>
+      <iframe
+        class="guestbook-iframe"
+        src="https://iframe.chat/embed?chat=10281099"
+        id="chattable"
+        title="gemmie's corner guestbook chat"
+        loading="lazy"
+      ></iframe>
     </div>
   </section>
+
+  <script is:inline src="https://iframe.chat/scripts/main.min.js"></script>
+  <script is:inline>
+    chattable.initialize({
+      stylesheet: "/chattable-kick.css",
+    });
+  </script>
 
   <!-- shared hover tooltip for the social icon buttons - lives outside any
        .window so its position:fixed isn't trapped by a window's own
