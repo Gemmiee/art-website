@@ -870,6 +870,15 @@ h1 {
   margin: 0 auto;
   background: #009966;
 }
+/* jsPaint also scales its whole chrome (toolbar/menu/palette) fluidly like
+   the spider solitaire widget — no scale-transform trickery needed. Left
+   uncapped (unlike spider's max-width) since more width just means more
+   usable canvas, which is a win for an actual drawing tool rather than
+   empty space. */
+.game-frame--paint {
+  aspect-ratio: 4 / 3;
+  background: #c0c0c0;
+}
 .game-frame-iframe-responsive {
   display: block;
   width: 100%;
