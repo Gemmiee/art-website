@@ -114,8 +114,12 @@ const embedCode = `<a href="${siteUrl}"><img src="${ownButtonSrc}" width="88" he
     </div>
   </section>
 
-  <script is:inline src="https://iframe.chat/scripts/main.min.js"></script>
-  <script is:inline>
+  <!-- data-astro-rerun: MiscColumn only renders on pages with showMisc
+       (the home page), so re-arriving here after a client-side navigation
+       elsewhere needs this to actually re-run against the freshly-mounted
+       #chattable iframe, instead of being skipped as "already ran". -->
+  <script is:inline src="https://iframe.chat/scripts/main.min.js" data-astro-rerun></script>
+  <script is:inline data-astro-rerun>
     chattable.initialize({
       stylesheet: "/chattable-kick.css",
     });
@@ -128,65 +132,73 @@ const embedCode = `<a href="${siteUrl}"><img src="${ownButtonSrc}" width="88" he
 </div>
 
 <script>
-  // One shared tooltip element (outside every .window, see the
-  // #icon-tooltip div above) gets repositioned to whichever icon is
-  // hovered/focused. Since it's position:fixed and lives outside any
-  // window's overflow:hidden, it's never clipped by one.
-  const tooltip = document.getElementById('icon-tooltip');
-  if (tooltip) {
-    const hide = () => tooltip.classList.remove('is-visible');
+  // MiscColumn only renders on the home page, so its whole subtree (not
+  // transition:persist'ed) is torn down and rebuilt fresh every time you
+  // navigate away and back. astro:page-load fires after every navigation
+  // (first load included), so re-querying and re-binding in here — rather
+  // than running this once at module scope — keeps it working no matter
+  // how many times you leave and come back within the same visit.
+  document.addEventListener('astro:page-load', () => {
+    // One shared tooltip element (outside every .window, see the
+    // #icon-tooltip div above) gets repositioned to whichever icon is
+    // hovered/focused. Since it's position:fixed and lives outside any
+    // window's overflow:hidden, it's never clipped by one.
+    const tooltip = document.getElementById('icon-tooltip');
+    if (tooltip) {
+      const hide = () => tooltip.classList.remove('is-visible');
 
-    document.querySelectorAll<HTMLElement>('.icon-link').forEach((link) => {
-      const label = link.getAttribute('aria-label') || '';
-      const show = () => {
-        const rect = link.getBoundingClientRect();
-        tooltip.textContent = label;
-        tooltip.style.left = `${rect.left + rect.width / 2}px`;
-        tooltip.style.top = `${rect.top}px`;
-        tooltip.classList.add('is-visible');
-      };
-      link.addEventListener('mouseenter', show);
-      link.addEventListener('mouseleave', hide);
-      link.addEventListener('focus', show);
-      link.addEventListener('blur', hide);
-    });
+      document.querySelectorAll<HTMLElement>('.icon-link').forEach((link) => {
+        const label = link.getAttribute('aria-label') || '';
+        const show = () => {
+          const rect = link.getBoundingClientRect();
+          tooltip.textContent = label;
+          tooltip.style.left = `${rect.left + rect.width / 2}px`;
+          tooltip.style.top = `${rect.top}px`;
+          tooltip.classList.add('is-visible');
+        };
+        link.addEventListener('mouseenter', show);
+        link.addEventListener('mouseleave', hide);
+        link.addEventListener('focus', show);
+        link.addEventListener('blur', hide);
+      });
 
-    // Clicking a target="_blank" icon steals the window's focus for the
-    // new tab without ever firing mouseleave/blur on the icon itself (the
-    // cursor never moves, and blur only fires when focus moves to another
-    // element in the *same* document) — so the tooltip was getting stuck
-    // "on" and, since it's position:fixed, drifting away from its icon as
-    // soon as you scrolled back on this tab. Hide it on any of the ways
-    // that tab-away can happen, plus on scroll so it can't get stranded
-    // at a stale position at all.
-    window.addEventListener('blur', hide);
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden) hide();
-    });
-    window.addEventListener('scroll', hide, { passive: true });
-  }
+      // Clicking a target="_blank" icon steals the window's focus for the
+      // new tab without ever firing mouseleave/blur on the icon itself (the
+      // cursor never moves, and blur only fires when focus moves to another
+      // element in the *same* document) — so the tooltip was getting stuck
+      // "on" and, since it's position:fixed, drifting away from its icon as
+      // soon as you scrolled back on this tab. Hide it on any of the ways
+      // that tab-away can happen, plus on scroll so it can't get stranded
+      // at a stale position at all.
+      window.addEventListener('blur', hide);
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) hide();
+      });
+      window.addEventListener('scroll', hide, { passive: true });
+    }
 
-  // grab-my-button embed snippet: click-to-select the field, and a Copy
-  // button that writes it straight to the clipboard with a quick "Copied!"
-  // confirmation.
-  const embedInput = document.querySelector<HTMLInputElement>('.embed-input');
-  embedInput?.addEventListener('click', () => embedInput.select());
+    // grab-my-button embed snippet: click-to-select the field, and a Copy
+    // button that writes it straight to the clipboard with a quick "Copied!"
+    // confirmation.
+    const embedInput = document.querySelector<HTMLInputElement>('.embed-input');
+    embedInput?.addEventListener('click', () => embedInput.select());
 
-  const copyBtn = document.querySelector<HTMLButtonElement>('.embed-copy-btn');
-  if (copyBtn) {
-    const defaultLabel = copyBtn.textContent || 'Copy';
-    copyBtn.addEventListener('click', async () => {
-      const text = copyBtn.dataset.copyText || '';
-      try {
-        await navigator.clipboard.writeText(text);
-      } catch {
-        embedInput?.select();
-        document.execCommand('copy');
-      }
-      copyBtn.textContent = 'Copied!';
-      setTimeout(() => {
-        copyBtn.textContent = defaultLabel;
-      }, 1500);
-    });
-  }
+    const copyBtn = document.querySelector<HTMLButtonElement>('.embed-copy-btn');
+    if (copyBtn) {
+      const defaultLabel = copyBtn.textContent || 'Copy';
+      copyBtn.addEventListener('click', async () => {
+        const text = copyBtn.dataset.copyText || '';
+        try {
+          await navigator.clipboard.writeText(text);
+        } catch {
+          embedInput?.select();
+          document.execCommand('copy');
+        }
+        copyBtn.textContent = 'Copied!';
+        setTimeout(() => {
+          copyBtn.textContent = defaultLabel;
+        }, 1500);
+      });
+    }
+  });
 </script>

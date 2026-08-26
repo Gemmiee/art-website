@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { ViewTransitions } from 'astro:transitions';
 
 interface Props {
   title?: string;
@@ -27,6 +28,7 @@ const {
     <meta name="description" content={description} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
+    <ViewTransitions />
   </head>
   <body>
     <div class="scene scene-light" aria-hidden="true"></div>
@@ -44,15 +46,34 @@ const {
     <slot />
 
     <script>
-      const themeToggle = document.getElementById('theme-toggle');
-      if (themeToggle) {
-        themeToggle.addEventListener('click', () => {
-          const current = document.documentElement.getAttribute('data-theme');
-          const next = current === 'dark' ? 'light' : 'dark';
-          document.documentElement.setAttribute('data-theme', next);
-          localStorage.setItem('theme', next);
-        });
+      // Every client-side page swap (from enabling ViewTransitions so the
+      // music player can survive navigation) resets <html>'s attributes
+      // back to the new page's raw markup — data-theme="light" — so the
+      // stored theme has to be reapplied right after each swap, not just
+      // on the very first hard load.
+      function applyStoredTheme() {
+        const stored = localStorage.getItem('theme');
+        const theme = stored || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
       }
+      document.addEventListener('astro:after-swap', applyStoredTheme);
+
+      // The toggle button itself is recreated fresh on every page swap
+      // (it isn't transition:persist'ed), so its click listener has to be
+      // reattached every time too — astro:page-load fires after both the
+      // first load and every subsequent navigation, unlike DOMContentLoaded
+      // which only ever fires once per browser session.
+      document.addEventListener('astro:page-load', () => {
+        const themeToggle = document.getElementById('theme-toggle');
+        if (themeToggle) {
+          themeToggle.addEventListener('click', () => {
+            const current = document.documentElement.getAttribute('data-theme');
+            const next = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+          });
+        }
+      });
     </script>
 
     <style>

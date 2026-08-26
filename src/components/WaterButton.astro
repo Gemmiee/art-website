@@ -591,5 +591,12 @@ const { href, label, waterColor = '#3fbfc7', external = false } = Astro.props;
     raf = requestAnimationFrame(loop);
   }
 
-  document.querySelectorAll<HTMLElement>('.water-button').forEach(mountWaterButton);
+  // WaterButton only appears on the home page, so re-arriving here after a
+  // client-side navigation elsewhere gets a freshly-mounted (unmounted)
+  // canvas each time — astro:page-load fires on every navigation, first
+  // load included, so mounting from in here (rather than at module scope)
+  // keeps the water sim alive no matter how many times you come back.
+  document.addEventListener('astro:page-load', () => {
+    document.querySelectorAll<HTMLElement>('.water-button').forEach(mountWaterButton);
+  });
 </script>
