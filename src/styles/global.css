@@ -977,14 +977,12 @@ h1 {
 }
 
 /* nav list (left sidebar) */
-.nav-subheading {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin: 0 0 4px;
-  font-weight: 700;
-  font-size: 0.82rem;
-  color: var(--ink);
+.nav-banner-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0 0 10px;
+  filter: drop-shadow(0 3px 6px rgba(26, 18, 46, 0.3));
 }
 .nav-list {
   list-style: none;
@@ -1037,9 +1035,6 @@ h1 {
   font-size: 0.78rem;
   font-weight: 600;
   color: var(--ink-soft);
-}
-.game-slot-lock {
-  font-size: 0.8rem;
 }
 .game-slot-active {
   background: var(--surface);
@@ -1209,6 +1204,24 @@ h1 {
 }
 
 /* guestbook: embedded iframe.chat widget */
+/* guestbook.astro: smartgb doesn't offer a way to auto-report its own
+   content height back to the parent page, so this is a fixed height with
+   the iframe's own native scrollbar taking over once entries outgrow it —
+   simpler and more robust than guessing a height that grows forever.
+   1030px is tuned so the whole main window's bottom edge lines up with
+   the nav column's (topics.exe + nowplaying.mp3) bottom edge — nav's
+   total height is fixed regardless of viewport width, so this stays
+   aligned unless the nav column's own content changes. */
+.guestbook-page-iframe {
+  display: block;
+  width: 100%;
+  height: 1030px;
+  border-radius: 10px;
+  border: 1px solid var(--card-border);
+  box-shadow: var(--shadow-soft);
+  background: #fff;
+}
+
 .guestbook-iframe {
   display: block;
   /* bleeds past .window-body's own 16px padding so it sits flush against

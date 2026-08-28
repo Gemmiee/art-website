@@ -1,6 +1,5 @@
 ---
 // Left sidebar: site navigation + the music player, present on every page.
-import BubbleDivider from './BubbleDivider.astro';
 
 const quickNav = [
   { emoji: '🙋', label: 'Main Page', href: '/' },
@@ -15,8 +14,8 @@ const unlockedGames = [
   { icon: '💣', name: 'Minesweeper', href: '/minesweeper' },
 ];
 
-const lockedGames = [
-  { icon: '🐍', name: 'Snake' },
+const contactLinks = [
+  { emoji: '📝', label: 'Guestbook', href: '/guestbook' },
 ];
 
 const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
@@ -57,6 +56,7 @@ const isCurrent = (href: string) => {
       </div>
     </div>
     <div class="window-body">
+      <img class="nav-banner-img" src="/images/banners/banner_topics.png" alt="Topics" />
       <ul class="nav-list">
         {quickNav.map((item) => (
           <li>
@@ -71,10 +71,7 @@ const isCurrent = (href: string) => {
         ))}
       </ul>
 
-      <BubbleDivider class="nav-divider" />
-
-      <p class="nav-subheading" id="games"><span aria-hidden="true">🎮</span> mini-games</p>
-      <p class="hand-note">Play some games :]</p>
+      <img class="nav-banner-img" id="games" src="/images/banners/banner_games.png" alt="Games" />
       <div class="games-grid">
         {unlockedGames.map((game) => (
           <a
@@ -86,14 +83,18 @@ const isCurrent = (href: string) => {
             <span class="game-slot-name">{game.name}</span>
           </a>
         ))}
-        {lockedGames.map((game) => (
-          <div class="game-slot" aria-hidden="true">
-            <span class="game-slot-icon">{game.icon}</span>
-            <span class="game-slot-lock">🔒</span>
-            <span class="game-slot-name">{game.name}</span>
-          </div>
-        ))}
       </div>
+
+      <img class="nav-banner-img" src="/images/banners/banner_contact.png" alt="Contact" />
+      <ul class="nav-list">
+        {contactLinks.map((item) => (
+          <li>
+            <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+              <span aria-hidden="true">{item.emoji}</span> {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
     </div>
   </section>
 
@@ -122,7 +123,7 @@ const isCurrent = (href: string) => {
         seamless
         loading="lazy"
       >
-        Motorslice (Original Soundtrack) by Pizza Hotline — listen at pizzahotline.bandcamp.com/album/motorslice-ost
+        Motorslice (Original Soundtrack) by Pizza Hotline, listen at pizzahotline.bandcamp.com/album/motorslice-ost
       </iframe>
     </div>
   </section>
