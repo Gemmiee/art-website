@@ -129,17 +129,8 @@ const embedCode = `<a href="${siteUrl}"><img src="${ownButtonSrc}" width="88" he
 </div>
 
 <script>
-  // MiscColumn only renders on the home page, so its whole subtree (not
-  // transition:persist'ed) is torn down and rebuilt fresh every time you
-  // navigate away and back. astro:page-load fires after every navigation
-  // (first load included), so re-querying and re-binding in here — rather
-  // than running this once at module scope — keeps it working no matter
-  // how many times you leave and come back within the same visit.
+  // MiscColumn only renders on the home page
   document.addEventListener('astro:page-load', () => {
-    // One shared tooltip element (outside every .window, see the
-    // #icon-tooltip div above) gets repositioned to whichever icon is
-    // hovered/focused. Since it's position:fixed and lives outside any
-    // window's overflow:hidden, it's never clipped by one.
     const tooltip = document.getElementById('icon-tooltip');
     if (tooltip) {
       const hide = () => tooltip.classList.remove('is-visible');
@@ -159,14 +150,6 @@ const embedCode = `<a href="${siteUrl}"><img src="${ownButtonSrc}" width="88" he
         link.addEventListener('blur', hide);
       });
 
-      // Clicking a target="_blank" icon steals the window's focus for the
-      // new tab without ever firing mouseleave/blur on the icon itself (the
-      // cursor never moves, and blur only fires when focus moves to another
-      // element in the *same* document) — so the tooltip was getting stuck
-      // "on" and, since it's position:fixed, drifting away from its icon as
-      // soon as you scrolled back on this tab. Hide it on any of the ways
-      // that tab-away can happen, plus on scroll so it can't get stranded
-      // at a stale position at all.
       window.addEventListener('blur', hide);
       document.addEventListener('visibilitychange', () => {
         if (document.hidden) hide();
@@ -174,9 +157,7 @@ const embedCode = `<a href="${siteUrl}"><img src="${ownButtonSrc}" width="88" he
       window.addEventListener('scroll', hide, { passive: true });
     }
 
-    // grab-my-button embed snippet: click-to-select the field, and a Copy
-    // button that writes it straight to the clipboard with a quick "Copied!"
-    // confirmation.
+    // grab-my-button embed snippet
     const embedInput = document.querySelector<HTMLInputElement>('.embed-input');
     embedInput?.addEventListener('click', () => embedInput.select());
 

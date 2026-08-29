@@ -10,10 +10,10 @@ const { showMisc = true } = Astro.props;
 ---
 
 <main class:list={['wrap', 'layout-grid', !showMisc && 'no-misc']}>
-  <!-- ================= mascot + mood check =================
+  <!-- ================= mood check =================
        Only visible on mobile. The desktop one lives
-       inside NavColumn.astro's .col-nav so it's stuck-together with
-       topics.exe as one unit. The mobile version of this looked ugly as heeell
+       inside NavColumn.astro it's stuck-together with
+       topics.exe as one. The mobile version of this looked ugly as heeell
        thus I changed it to be on top of gemmie-site. -->
   <div class="nav-mascot in-shell">
     <div class="nav-mascot-cloud">
@@ -21,7 +21,7 @@ const { showMisc = true } = Astro.props;
       <img class="nav-mascot-cloud-img-night" src="/images/banners/speech_cloud_inverted_night.png" alt="" aria-hidden="true" />
       <div class="nav-mascot-mood">
         <p class="nav-mascot-mood-label">Today's Mood:</p>
-        <p class="nav-mascot-mood-note">Life's goood, waiting for my trip (＾▽＾)</p>
+        <p class="nav-mascot-mood-note">One exam to redo, ggrrr</p>
       </div>
     </div>
     <img class="nav-mascot-sprite" src="/images/Gemmie_pixel.gif" alt="pixel Gemmie" />
