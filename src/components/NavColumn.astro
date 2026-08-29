@@ -5,13 +5,13 @@ const quickNav = [
   { emoji: '🙋', label: 'Main Page', href: '/' },
   { emoji: '🖼️', label: 'Art', href: '/art' },
   { emoji: '🔗', label: 'Links', href: '/links' },
-  { emoji: '🎨', label: 'Paint', href: '/paint' },
 ];
 
 const unlockedGames = [
   { icon: '🚀', name: 'Space Cadet Pinball', href: '/pinball' },
   { icon: '🕷️', name: 'Spider Solitaire', href: '/spider-solitaire' },
   { icon: '💣', name: 'Minesweeper', href: '/minesweeper' },
+  { icon: '🎨', name: 'Paint', href: '/paint' },
 ];
 
 const contactLinks = [
@@ -26,12 +26,7 @@ const isCurrent = (href: string) => {
 ---
 
 <div class="col-nav">
-  <!-- ================= mascot + mood check (desktop copy) =================
-       Lives inside .col-nav itself so it scrolls/sticks as part of the
-       exact same box as topics.exe below it — always touching, since
-       they're literally one sticky unit rather than two elements trying
-       to stay in sync. Hidden on mobile in favor of the standalone copy
-       in PageShell.astro (see .nav-mascot.in-nav in global.css). -->
+  <!-- ================= mascot + mood check (FOR DESKTOP) ================= -->
   <div class="nav-mascot in-nav">
     <div class="nav-mascot-cloud">
       <img class="nav-mascot-cloud-img" src="/images/banners/speech_cloud_inverted.png" alt="" aria-hidden="true" />

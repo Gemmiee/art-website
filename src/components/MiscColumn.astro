@@ -15,9 +15,10 @@ const socials = [
 ];
 
 const friends = [
-  { name: 'Mage', href: 'https://www.instagram.com/mage.236?igsh=eG1rMm4yZDRkcGV2', button: 'button_mage.png' },
+  { name: 'Mage', href: 'https://www.instagram.com/mage.236', button: 'button_mage.png' },
   { name: 'mianimator', href: 'https://www.youtube.com/channel/UCMr9ZRUKxJgv4uBKAtGeM0w', button: 'button_mia.gif' },
   { name: 'Sweetly', href: 'https://linktr.ee/sweetlysours', button: 'button_sweetly.png' },
+  { name: 'Leda', href: 'https://www.instagram.com/kaito_solos_', button: 'button_leda.png' },
 ];
 
 const siteUrl = 'https://artist.gemmiewow.com/';
@@ -70,7 +71,7 @@ const embedCode = `<a href="${siteUrl}"><img src="${ownButtonSrc}" width="88" he
       </div>
     </div>
     <div class="window-body">
-      <p class="hand-note">gathering more friends slowly</p>
+      <p class="hand-note">Cool as heck people</p>
       <div class="friend-grid">
         {friends.map((friend) => (
           <a class="friend-btn" href={friend.href} target="_blank" rel="noopener">
@@ -115,9 +116,7 @@ const embedCode = `<a href="${siteUrl}"><img src="${ownButtonSrc}" width="88" he
   </section>
 
   <!-- data-astro-rerun: MiscColumn only renders on pages with showMisc
-       (the home page), so re-arriving here after a client-side navigation
-       elsewhere needs this to actually re-run against the freshly-mounted
-       #chattable iframe, instead of being skipped as "already ran". -->
+       (aka only the home page)-->
   <script is:inline src="https://iframe.chat/scripts/main.min.js" data-astro-rerun></script>
   <script is:inline data-astro-rerun>
     chattable.initialize({
@@ -125,9 +124,7 @@ const embedCode = `<a href="${siteUrl}"><img src="${ownButtonSrc}" width="88" he
     });
   </script>
 
-  <!-- shared hover tooltip for the social icon buttons - lives outside any
-       .window so its position:fixed isn't trapped by a window's own
-       backdrop-filter/overflow:hidden, and can render above everything -->
+  <!-- so the app bubbles are outside the socials window -->
   <div class="icon-tooltip" id="icon-tooltip" role="tooltip"></div>
 </div>
 
