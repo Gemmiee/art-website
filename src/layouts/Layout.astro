@@ -99,7 +99,17 @@ const {
       }
       .scene {
         position: fixed;
-        inset: 0;
+        top: 0;
+        left: 0;
+        width: 100%;
+        /* On mobile, the address bar/toolbar showing or hiding shrinks and
+           grows the viewport — `inset: 0` (i.e. height: 100vh) would resize
+           with it, visibly rescaling this cover-fit background on every
+           toggle. Sizing to the *largest* possible viewport instead keeps
+           the image itself perfectly still; only how much of it the
+           toolbar currently covers changes, which reads as static. */
+        height: 100vh;
+        height: 100lvh;
         z-index: -3;
         background-repeat: no-repeat;
         background-size: cover;
