@@ -819,6 +819,7 @@ h1 {
 }
 .art-folder-toggle {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 18px;
   width: 100%;
@@ -867,11 +868,22 @@ h1 {
 .art-folder[data-depth="0"] > .art-folder-toggle .art-folder-name {
   font-size: 1.3rem;
 }
+/* a flex sibling of the icon/name/count/chevron (not nested under the name)
+   so it can drop to its own full-width row via flex-wrap — indented to sit
+   under the title text on wide screens, but see the 640px query below where
+   it's pulled flush left to run under the thumbnail too, per the "letters
+   displayed vertically" mobile squeeze this was added to fix. */
 .art-folder-desc {
+  flex-basis: 100%;
+  margin-top: 2px;
+  margin-left: 90px;
   font-size: 0.86rem;
   font-weight: 400;
   color: var(--ink-soft);
   white-space: normal;
+}
+.art-folder[data-depth="0"] > .art-folder-toggle .art-folder-desc {
+  margin-left: 106px;
 }
 .art-folder-count {
   font-size: 0.82rem;
@@ -1037,6 +1049,40 @@ h1 {
 }
 .art-lightbox-next {
   right: 10px;
+}
+
+/* On a narrow phone the icon + count + chevron alone ate most of the row's
+   width, leaving only a sliver for the title/description column — long
+   words wrapped one or two letters per line, reading as vertical text.
+   Shrink the icon and drop the description's indent so it runs the full
+   width of its own row instead of being squeezed. */
+@media (max-width: 640px) {
+  .art-folder-toggle {
+    gap: 12px;
+    padding: 14px 16px;
+  }
+  .art-folder-icon-img {
+    width: 48px;
+    height: 48px;
+  }
+  .art-folder[data-depth="0"] > .art-folder-toggle .art-folder-icon-img {
+    width: 56px;
+    height: 56px;
+  }
+  .art-folder-name {
+    font-size: 0.96rem;
+  }
+  .art-folder[data-depth="0"] > .art-folder-toggle .art-folder-name {
+    font-size: 1.05rem;
+  }
+  .art-folder-count {
+    font-size: 0.72rem;
+  }
+  .art-folder-desc,
+  .art-folder[data-depth="0"] > .art-folder-toggle .art-folder-desc {
+    margin-left: 0;
+    font-size: 0.78rem;
+  }
 }
 
 /* links page: once real entries exist (see src/pages/links.astro) */

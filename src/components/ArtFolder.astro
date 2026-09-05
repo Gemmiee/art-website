@@ -38,10 +38,10 @@ const stripExt = (name: string) => name.replace(/\.[^./]+$/, '');
     )}
     <span class="art-folder-heading">
       <span class="art-folder-name">{folder.name}</span>
-      {folder.description && <span class="art-folder-desc">{folder.description}</span>}
     </span>
     <span class="art-folder-count">{totalCount} {totalCount === 1 ? 'piece' : 'pieces'}</span>
     <span class="art-folder-chevron" aria-hidden="true">▸</span>
+    {folder.description && <span class="art-folder-desc">{folder.description}</span>}
   </button>
 
   <div class="art-folder-body" id={`art-body-${folder.id}`} hidden>
