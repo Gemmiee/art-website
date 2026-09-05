@@ -806,6 +806,239 @@ h1 {
   opacity: 0.7;
 }
 
+/* art gallery: nested, expandable folders scanned straight off
+   public/images/Art at build time (see src/lib/artGallery.ts) — a folder
+   either holds more folders (ArtFolder recurses into itself) or a
+   paginated grid of its own images/videos, never both in practice here,
+   but the markup supports either. */
+.art-folder-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 18px;
+}
+.art-folder-toggle {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  width: 100%;
+  padding: 18px 22px;
+  border-radius: 14px;
+  border: 1px solid var(--card-border);
+  background: var(--surface);
+  box-shadow: var(--shadow-soft);
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.art-folder-toggle:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(26, 18, 46, 0.28);
+}
+.art-folder-icon {
+  font-size: 2rem;
+}
+.art-folder-icon-img {
+  width: 72px;
+  height: 72px;
+  border-radius: 12px;
+  object-fit: cover;
+  border: 1px solid var(--card-border);
+  flex-shrink: 0;
+}
+.art-folder[data-depth="0"] > .art-folder-toggle .art-folder-icon-img {
+  width: 88px;
+  height: 88px;
+  border-radius: 14px;
+}
+.art-folder-heading {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.art-folder-name {
+  font-weight: 700;
+  font-size: 1.08rem;
+  color: var(--ink);
+}
+.art-folder[data-depth="0"] > .art-folder-toggle .art-folder-name {
+  font-size: 1.3rem;
+}
+.art-folder-desc {
+  font-size: 0.86rem;
+  font-weight: 400;
+  color: var(--ink-soft);
+  white-space: normal;
+}
+.art-folder-count {
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+.art-folder-chevron {
+  display: inline-block;
+  transition: transform 0.2s ease;
+  color: var(--ink-soft);
+}
+.art-folder-toggle[aria-expanded="true"] .art-folder-chevron {
+  transform: rotate(90deg);
+}
+.art-folder-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 10px 0 0 14px;
+  padding-left: 14px;
+  border-left: 2px dashed var(--card-border-dashed);
+}
+.art-folder-body[hidden] {
+  display: none;
+}
+
+.art-gallery-page {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 10px;
+}
+.art-gallery-page[hidden] {
+  display: none;
+}
+.art-thumb {
+  position: relative;
+  aspect-ratio: 1;
+  padding: 0;
+  overflow: hidden;
+  border-radius: 8px;
+  border: 1px solid var(--card-border);
+  background: var(--surface-faint);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.art-thumb:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 16px rgba(26, 18, 46, 0.3);
+}
+.art-thumb img,
+.art-thumb video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.art-thumb-play {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  color: #fff;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.art-pager {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 12px;
+}
+.art-pager-btn {
+  min-width: 30px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--card-border);
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.art-pager-btn[aria-current="page"] {
+  background: var(--accent-deep);
+  border-color: var(--accent-deep);
+  color: #fff;
+}
+
+/* shared lightbox, one instance reused for every thumbnail on the page */
+.art-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.art-lightbox[hidden] {
+  display: none;
+}
+.art-lightbox-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(20, 16, 36, 0.78);
+}
+.art-lightbox-frame {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  max-width: min(90vw, 900px);
+  max-height: 90vh;
+}
+.art-lightbox-body {
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+  background: var(--surface);
+}
+.art-lightbox-body img,
+.art-lightbox-body video {
+  display: block;
+  max-width: 100%;
+  max-height: calc(90vh - 80px);
+  border-radius: 6px;
+}
+.art-lightbox-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--card-border);
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 1.5rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+.art-lightbox-nav:hover {
+  background: var(--accent-deep);
+  color: #fff;
+  transform: translateY(-50%) scale(1.08);
+}
+.art-lightbox-nav[hidden] {
+  display: none;
+}
+.art-lightbox-prev {
+  left: 10px;
+}
+.art-lightbox-next {
+  right: 10px;
+}
+
 /* links page: once real entries exist (see src/pages/links.astro) */
 .link-grid {
   display: flex;
