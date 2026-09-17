@@ -1,0 +1,50 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageShell from '../components/PageShell.astro';
+---
+
+<Layout title="Metal Slug X ☆ gemmie's corner">
+  <PageShell showMisc={false}>
+    <!-- ================= metal slug x window ================= -->
+    <section class="window main-doc">
+      <div class="title-bar">
+        <span class="title-bar-icon" aria-hidden="true">🔫</span>
+        <span class="title-bar-text">metal-slug-x.exe</span>
+        <div class="title-bar-controls" aria-hidden="true">
+          <span class="tb-btn">_</span>
+          <span class="tb-btn">□</span>
+          <span class="tb-btn close">×</span>
+        </div>
+      </div>
+      <div class="window-body">
+        <div class="doc-section" id="metal-slug-x">
+          <div class="doc-banner">
+            <span class="bubble-wrap" style="left: 8%; animation-duration: 3.2s; animation-delay: -0.5s;"><img class="bubble-icon" src="/images/bubble.png" alt="" /></span>
+            <span class="bubble-wrap" style="left: 26%; animation-duration: 4s; animation-delay: -2s;"><img class="bubble-icon" src="/images/bubble.png" alt="" /></span>
+            <span class="bubble-wrap" style="left: 46%; animation-duration: 3.5s; animation-delay: -1.2s;"><img class="bubble-icon" src="/images/bubble.png" alt="" /></span>
+            <span class="bubble-wrap" style="left: 66%; animation-duration: 4.5s; animation-delay: -3s;"><img class="bubble-icon" src="/images/bubble.png" alt="" /></span>
+            <span class="bubble-wrap" style="left: 84%; animation-duration: 3.8s; animation-delay: -1.8s;"><img class="bubble-icon" src="/images/bubble.png" alt="" /></span>
+            <img class="doc-banner-img" src="/images/banners/banner_metalslugX.png" alt="Metal Slug X" />
+
+          </div>
+          <p class="hand-note">
+            Metal Slug X ☆ embedded from retrogames.cc — click into the game window
+            first so it gets keyboard focus.
+            <br/>
+            <br/> Controls: Arrow keys to move, Z to shoot, X to jump, S to throw grenades, Enter to start.
+          </p>
+          <div class="game-frame game-frame--metalslug">
+            <div class="game-frame-scale game-frame-scale--metalslug">
+              <iframe
+                class="game-frame-iframe game-frame-iframe--metalslug"
+                src="https://www.retrogames.cc/embed/9170-metal-slug-x-super-vehicle-001-ngm-2500-ngh-2500.html"
+                title="Metal Slug X - Super Vehicle-001"
+                allowfullscreen
+              ></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </PageShell>
+</Layout>

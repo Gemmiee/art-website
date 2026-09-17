@@ -1209,6 +1209,40 @@ h1 {
   height: 400px;
   border: 0;
 }
+/* metal slug x's retrogames.cc embed only actually works when the iframe's
+   own real box is left at the 600x450 it was given to us at — asking it to
+   render at a physically bigger native size (tried: 1200x900) broke the
+   embed outright (gray screen), so that's reverted. All the "bigger"/
+   "cropped" sizing below is done purely with a CSS transform on top of the
+   still-600x450 iframe instead: a transform never changes what the iframe's
+   own page thinks its viewport is, so it can't trip whatever broke before. */
+.game-frame--metalslug {
+  container-type: inline-size;
+  aspect-ratio: 600 / 450;
+  max-width: 760px;
+  margin: 0 auto;
+  background: #000;
+}
+.game-frame-scale--metalslug {
+  width: 600px;
+  height: 450px;
+  flex-shrink: 0;
+  /* retrogames.cc's own embed reserves some of its chrome (loading/control
+     UI) around the actual play area, showing as black bars we can't reach
+     into and restyle (cross-origin iframe). Zooming in a bit crops that
+     off along with a sliver of the game's own edges — .game-frame's
+     overflow:hidden clips whatever this pushes past the visible box.
+     1.15 is a guess (untested against the real running emulator); nudge it
+     if it's cropping too much or too little of the actual game view. */
+  --metalslug-zoom: 1.15;
+  transform: scale(calc((100cqw / 600px) * var(--metalslug-zoom)));
+}
+.game-frame-iframe--metalslug {
+  display: block;
+  width: 600px;
+  height: 450px;
+  border: 0;
+}
 
 /* now playing: real Bandcamp embed (Motorslice OST by Pizza Hotline) —
    bgcol/linkcol are fixed to a warm cream + deep purple rather than the
