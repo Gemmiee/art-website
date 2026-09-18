@@ -1,0 +1,297 @@
+---
+// Commission tiers + examples. Each tier pairs one pricing-sheet graphic
+// (public/images/commissions/1.png, 2.png, ...) with its own explanatory
+// text and its own examples pulled from a matching subfolder under
+// public/images/commissions/examples/ — matched by keyword since the sheet
+// files themselves carry no text we can read at build time (the pricing
+// info is baked into the image). Adding a 5th tier means adding both a new
+// numbered sheet file AND an entry in TIERS below with the right keywords.
+import fs from 'node:fs';
+import path from 'node:path';
+import Layout from '../../layouts/Layout.astro';
+import PageShell from '../../components/PageShell.astro';
+import BubbleDivider from '../../components/BubbleDivider.astro';
+
+const COMMISSIONS_OPEN = false;
+
+const IMAGE_EXTS = new Set(['.png', '.jpg', '.jpeg', '.gif']);
+
+const commissionsDir = path.join(process.cwd(), 'public', 'images', 'commissions');
+const examplesDir = path.join(commissionsDir, 'examples');
+
+const TIERS = [
+  {
+    sheetFile: '1.png',
+    label: 'Fully Rendered',
+    exampleKeywords: ['rendered'],
+    text: "🌱₊ My normal fully render style, aka the full package. Comes with a transparent background or a background of your choice. Complex backgrounds, like sceneries, will alter the price based on the difficulty.",
+  },
+  {
+    sheetFile: '2.png',
+    label: 'Crayon Doodle',
+    exampleKeywords: ['crayon'],
+    text: "🌱₊ A slightly simpler style where I use my crayon brush to give your drawing the crayon feeling. This is rendered in a more minimal way.",
+  },
+  {
+    sheetFile: '3.gif',
+    label: 'Paperwork Chibi / RPG Sprite',
+    exampleKeywords: ['chibi', 'rpg'],
+    text: "🌱₊ Paperwork Chibi style makes your character look like realistic cutouts! The RPG Sprite style gives an animated sprite of your character as if they are from a game.",
+  },
+  {
+    sheetFile: '4.png',
+    label: 'Terms & What I Can Do',
+    exampleKeywords: [] as string[],
+    text: 'Please read my terms first here ;p',
+  },
+];
+
+const exampleSubfolders = fs.existsSync(examplesDir)
+  ? fs.readdirSync(examplesDir, { withFileTypes: true }).filter((entry) => entry.isDirectory())
+  : [];
+
+function loadExamples(keywords: string[]) {
+  if (keywords.length === 0) return [];
+  const matchingFolders = exampleSubfolders.filter((folder) =>
+    keywords.some((keyword) => folder.name.toLowerCase().includes(keyword))
+  );
+  return matchingFolders
+    .flatMap((folder) => {
+      const absDir = path.join(examplesDir, folder.name);
+      return fs
+        .readdirSync(absDir, { withFileTypes: true })
+        .filter((entry) => entry.isFile() && IMAGE_EXTS.has(path.extname(entry.name).toLowerCase()))
+        .map((entry) => ({
+          name: entry.name.replace(/\.[^./]+$/, '').replace(/_/g, ' '),
+          url: `/images/commissions/examples/${encodeURIComponent(folder.name)}/${encodeURIComponent(entry.name)}`,
+        }));
+    })
+    .sort((a, b) => a.name.localeCompare(b.name));
+}
+
+const tiers = TIERS.map((tier) => {
+  const sheetAbsPath = path.join(commissionsDir, tier.sheetFile);
+  return {
+    sheetUrl: fs.existsSync(sheetAbsPath) ? `/images/commissions/${encodeURIComponent(tier.sheetFile)}` : null,
+    label: tier.label,
+    text: tier.text,
+    examples: loadExamples(tier.exampleKeywords),
+  };
+}).filter((tier) => tier.sheetUrl !== null);
+
+// The Terms sheet gets its own layout below (sheet + Gemmie/speech-cloud
+// mascot instead of text + examples), so it's split out of the main list.
+const termsTier = tiers.find((tier) => tier.label === 'Terms & What I Can Do') ?? null;
+const styleTiers = tiers.filter((tier) => tier !== termsTier);
+---
+
+<Layout title="Commissions ☆ gemmie's corner">
+  <PageShell showMisc={false}>
+    <!-- ================= commissions window ================= -->
+    <section class="window main-doc">
+      <div class="title-bar">
+        <span class="title-bar-icon" aria-hidden="true">💌</span>
+        <span class="title-bar-text">commissions.exe</span>
+        <div class="title-bar-controls" aria-hidden="true">
+          <span class="tb-btn">_</span>
+          <span class="tb-btn">□</span>
+          <span class="tb-btn close">×</span>
+        </div>
+      </div>
+      <div class="window-body">
+        <div class="doc-section" id="commissions">
+          <div class="doc-banner">
+            <span class="bubble-wrap" style="left: 8%; animation-duration: 3.2s; animation-delay: -0.5s;"><img class="bubble-icon" src="/images/bubble.png" alt="" /></span>
+            <span class="bubble-wrap" style="left: 26%; animation-duration: 4s; animation-delay: -2s;"><img class="bubble-icon" src="/images/bubble.png" alt="" /></span>
+            <span class="bubble-wrap" style="left: 46%; animation-duration: 3.5s; animation-delay: -1.2s;"><img class="bubble-icon" src="/images/bubble.png" alt="" /></span>
+            <span class="bubble-wrap" style="left: 66%; animation-duration: 4.5s; animation-delay: -3s;"><img class="bubble-icon" src="/images/bubble.png" alt="" /></span>
+            <span class="bubble-wrap" style="left: 84%; animation-duration: 3.8s; animation-delay: -1.8s;"><img class="bubble-icon" src="/images/bubble.png" alt="" /></span>
+            <img class="doc-banner-img" src="/images/banners/banner_commissions.png" alt="Commissions" />
+          </div>
+
+          <div class="article-grid comm-intro-grid">
+            <div>
+              <div class="comm-status">
+                <img class="comm-status-label" src="/images/banners/banner_status.png" alt="Status:" />
+                <img
+                  class="comm-status-value"
+                  src={COMMISSIONS_OPEN ? '/images/banners/banner_open.png' : '/images/banners/banner_closed.png'}
+                  alt={COMMISSIONS_OPEN ? 'Open!' : 'Closed'}
+                />
+              </div>
+              <p class="blurb">
+                💌 <strong>Contact me for commissions!</strong>
+                <br/>╰┈➤ 📎 Discord: gemmieclone
+                <br/>╰┈➤ 🌺 Instagram: <a href="https://www.instagram.com/gemmie_wow/" target="_blank" rel="noopener noreferrer">@gemmie_wow</a>
+                <br/>・・・・・・・・・・・・・・・
+                <br/>
+                <br/>٭˚🍊୨˚ <strong>TIME:</strong> It really depends, sometimes I take time due to university. More detailed projects
+                will most likely take longer, but I keep you updated on the progress of your commission.
+                <br/>
+                <br/>٭˚🍊୨˚ You will receive a sketch from which you can request changes.
+                After that, no major changes will be made.
+                <br/>٭˚🍊୨˚ I have the right to deny a request.
+                <br/>٭˚🍊୨˚ No refunds (unless I haven't started drawing yet).
+              </p>
+            </div>
+            <div class="article-portrait">
+              <img class="article-portrait-img" src="/images/GemmiePencil.png" alt="Gemmie holding a giant pencil" />
+            </div>
+          </div>
+
+          <BubbleDivider />
+
+          <div class="comm-tier-list">
+            {styleTiers.map((tier) => (
+              <div class="comm-tier">
+                <button class="comm-sheet-thumb" type="button" data-full={tier.sheetUrl!} data-kind="image" data-name={tier.label}>
+                  <img src={tier.sheetUrl!} alt={tier.label} loading="lazy" />
+                </button>
+                <div class="comm-tier-info">
+                  <p class="comm-tier-text">{tier.text}</p>
+                  {tier.examples.length > 0 && (
+                    <div class="art-gallery">
+                      <div class="art-gallery-page" data-page-index="0">
+                        {tier.examples.map((item) => (
+                          <button class="art-thumb" type="button" data-full={item.url} data-kind="image" data-name={item.name}>
+                            <img src={item.url} alt={item.name} loading="lazy" />
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {termsTier && (
+            <>
+              <BubbleDivider />
+
+              <div class="comm-tier">
+                <button class="comm-sheet-thumb" type="button" data-full={termsTier.sheetUrl!} data-kind="image" data-name={termsTier.label}>
+                  <img src={termsTier.sheetUrl!} alt={termsTier.label} loading="lazy" />
+                </button>
+                <div class="comm-terms-mascot">
+                  <div class="comm-terms-cloud">
+                    <img class="comm-terms-cloud-img" src="/images/banners/speech_cloud2.png" alt="" aria-hidden="true" />
+                    <img class="comm-terms-cloud-img-night" src="/images/banners/speech_cloud2_night.png" alt="" aria-hidden="true" />
+                    <div class="comm-terms-cloud-text">
+                      <p>
+                        💌 <strong>Contact me for commissions!</strong>
+                        <br/>╰┈➤ 📎 Discord: gemmieclone
+                        <br/>╰┈➤ 🌺 Instagram: <a href="https://www.instagram.com/gemmie_wow/" target="_blank" rel="noopener noreferrer">@gemmie_wow</a>
+                        <br/>
+                        <br/> Thank you for checking out! Make sure to check out my shop below!
+                      </p>
+                    </div>
+                  </div>
+                  <img class="comm-terms-baby" src="/images/GemmieBaby.png" alt="Baby Gemmie holding a lollipop" />
+                </div>
+              </div>
+            </>
+          )}
+
+          <BubbleDivider />
+
+          <!-- ---- shop ---- -->
+          <div class="doc-section" id="shop">
+            <img class="section-banner" src="/images/banners/banner_shop.png" alt="Click for shop" />
+            <a class="shop-link" href="https://ko-fi.com/gemmiewow/" target="_blank" rel="noopener noreferrer">
+              <img class="shop-img" src="/images/banners/Gemmie_shop.png" alt="Gemmie's Ko-fi shop" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- shared lightbox for the examples galleries -->
+    <div class="art-lightbox" id="art-lightbox" hidden>
+      <div class="art-lightbox-backdrop" data-close></div>
+      <div class="art-lightbox-frame window">
+        <div class="title-bar">
+          <span class="title-bar-icon" aria-hidden="true">💌</span>
+          <span class="title-bar-text" id="art-lightbox-title"></span>
+          <div class="title-bar-controls" aria-hidden="true">
+            <span class="tb-btn close" data-close>×</span>
+          </div>
+        </div>
+        <div class="art-lightbox-body" id="art-lightbox-body"></div>
+        <button class="art-lightbox-nav art-lightbox-prev" type="button" id="art-lightbox-prev" aria-label="Previous image">‹</button>
+        <button class="art-lightbox-nav art-lightbox-next" type="button" id="art-lightbox-next" aria-label="Next image">›</button>
+      </div>
+    </div>
+  </PageShell>
+</Layout>
+
+<script>
+  // Same lightbox + prev/next pattern as the main art gallery page
+  // (src/pages/art.astro) — just without the folder-expand/pagination
+  // pieces these flat per-tier example galleries don't need. Each tier's
+  // examples sit in their own .art-gallery, so prev/next (scoped via
+  // thumb.closest('.art-gallery')) stays within that tier only.
+  document.addEventListener('astro:page-load', () => {
+    const lightbox = document.getElementById('art-lightbox');
+    const lightboxBody = document.getElementById('art-lightbox-body');
+    const lightboxTitle = document.getElementById('art-lightbox-title');
+    const prevBtn = document.getElementById('art-lightbox-prev') as HTMLButtonElement | null;
+    const nextBtn = document.getElementById('art-lightbox-next') as HTMLButtonElement | null;
+    if (!lightbox || !lightboxBody || !lightboxTitle || !prevBtn || !nextBtn) return;
+
+    let currentThumbs: HTMLButtonElement[] = [];
+    let currentIndex = -1;
+
+    const renderCurrent = () => {
+      const thumb = currentThumbs[currentIndex];
+      if (!thumb) return;
+      const { full, name } = thumb.dataset;
+      lightboxTitle.textContent = name || '';
+      lightboxBody.innerHTML = `<img src="${full}" alt="${name || ''}" />`;
+    };
+
+    const step = (delta: number) => {
+      if (currentThumbs.length === 0) return;
+      currentIndex = (currentIndex + delta + currentThumbs.length) % currentThumbs.length;
+      renderCurrent();
+    };
+
+    const closeLightbox = () => {
+      lightbox.hidden = true;
+      lightboxBody.innerHTML = '';
+      currentThumbs = [];
+      currentIndex = -1;
+    };
+
+    // Sheet buttons (.comm-sheet-thumb) aren't inside a .art-gallery, so
+    // they naturally fall back to a single-item "gallery" with prev/next
+    // hidden — exactly right, since each is its own standalone image.
+    document.querySelectorAll<HTMLButtonElement>('.art-thumb, .comm-sheet-thumb').forEach((thumb) => {
+      thumb.addEventListener('click', () => {
+        const gallery = thumb.closest('.art-gallery');
+        currentThumbs = gallery
+          ? Array.from(gallery.querySelectorAll<HTMLButtonElement>('.art-thumb'))
+          : [thumb];
+        currentIndex = currentThumbs.indexOf(thumb);
+        renderCurrent();
+        lightbox.hidden = false;
+        const hasMultiple = currentThumbs.length > 1;
+        prevBtn.hidden = !hasMultiple;
+        nextBtn.hidden = !hasMultiple;
+      });
+    });
+
+    prevBtn.addEventListener('click', () => step(-1));
+    nextBtn.addEventListener('click', () => step(1));
+
+    lightbox.querySelectorAll<HTMLElement>('[data-close]').forEach((el) => {
+      el.addEventListener('click', closeLightbox);
+    });
+    document.addEventListener('keydown', (e) => {
+      if (lightbox.hidden) return;
+      if (e.key === 'Escape') closeLightbox();
+      else if (e.key === 'ArrowLeft') step(-1);
+      else if (e.key === 'ArrowRight') step(1);
+    });
+  });
+</script>
