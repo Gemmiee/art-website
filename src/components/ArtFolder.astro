@@ -56,7 +56,7 @@ const stripExt = (name: string) => name.replace(/\.[^./]+$/, '');
             {pageItems.map((item) => (
               item.kind === 'image' ? (
                 <button class="art-thumb" type="button" data-full={item.url} data-kind="image" data-name={stripExt(item.name)}>
-                  <img src={item.url} alt={stripExt(item.name)} loading="lazy" />
+                  <img src={item.thumbUrl ?? item.url} alt={stripExt(item.name)} loading="lazy" />
                 </button>
               ) : (
                 <button class="art-thumb art-thumb-video" type="button" data-full={item.url} data-kind="video" data-name={stripExt(item.name)}>

@@ -5,7 +5,7 @@ import ArtFolder from '../components/ArtFolder.astro';
 import WaterButton from '../components/WaterButton.astro';
 import { scanArtGallery } from '../lib/artGallery';
 
-const folders = scanArtGallery();
+const folders = await scanArtGallery();
 ---
 
 <Layout title="Art Gallery ☆ gemmie's corner">

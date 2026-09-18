@@ -5,12 +5,14 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { execFileSync } from 'node:child_process';
+import { getImageThumb } from './imageThumb';
 
 export interface ArtItem {
   name: string;
   url: string;
   kind: 'image' | 'video';
   posterUrl?: string;
+  thumbUrl?: string;
 }
 
 export interface ArtFolderNode {
@@ -103,7 +105,13 @@ function toUrl(segments: string[]): string {
   return '/images/Art/' + segments.map(encodeSegment).join('/');
 }
 
-function scan(absDir: string, segments: string[]): ArtFolderNode {
+// Grid thumbnails and folder icons only ever need to look good at the tiny
+// sizes they're actually displayed at, so both are generated much smaller
+// than the multi-megabyte originals they're standing in for.
+const GALLERY_THUMB_WIDTH = 480;
+const FOLDER_ICON_WIDTH = 160;
+
+async function scan(absDir: string, segments: string[]): Promise<ArtFolderNode> {
   const entries = fs.readdirSync(absDir, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name));
 
   const items: ArtItem[] = [];
@@ -113,7 +121,7 @@ function scan(absDir: string, segments: string[]): ArtFolderNode {
 
   for (const entry of entries) {
     if (entry.isDirectory()) {
-      const child = scan(path.join(absDir, entry.name), [...segments, entry.name]);
+      const child = await scan(path.join(absDir, entry.name), [...segments, entry.name]);
       // Skip subfolders that end up with nothing displayable inside them
       // (e.g. a folder holding only unsupported .heic files) rather than
       // showing an empty, clickable dead end.
@@ -126,11 +134,12 @@ function scan(absDir: string, segments: string[]): ArtFolderNode {
     const ext = path.extname(entry.name).toLowerCase();
     const baseName = path.basename(entry.name, ext).toLowerCase();
     const fileSegments = [...segments, entry.name];
+    const absFilePath = path.join(absDir, entry.name);
 
     // A file named "Thumbnail" becomes the folder's icon
     // "Description" text file becomes the folder's blurb
     if (baseName === 'thumbnail' && IMAGE_EXTS.has(ext)) {
-      thumbnailUrl = toUrl(fileSegments);
+      thumbnailUrl = (await getImageThumb(absFilePath, FOLDER_ICON_WIDTH)) ?? toUrl(fileSegments);
       continue;
     }
     if (baseName === 'description' && ext === '.txt') {
@@ -139,13 +148,18 @@ function scan(absDir: string, segments: string[]): ArtFolderNode {
     }
 
     if (IMAGE_EXTS.has(ext)) {
-      items.push({ name: entry.name, url: toUrl(fileSegments), kind: 'image' });
+      items.push({
+        name: entry.name,
+        url: toUrl(fileSegments),
+        kind: 'image',
+        thumbUrl: await getImageThumb(absFilePath, GALLERY_THUMB_WIDTH),
+      });
     } else if (VIDEO_EXTS.has(ext)) {
       items.push({
         name: entry.name,
         url: toUrl(fileSegments),
         kind: 'video',
-        posterUrl: getVideoPoster(path.join(absDir, entry.name)),
+        posterUrl: getVideoPoster(absFilePath),
       });
     }
     // Anything else (.heic, etc.) is silently skipped — browsers can't
@@ -162,8 +176,8 @@ function scan(absDir: string, segments: string[]): ArtFolderNode {
   };
 }
 
-export function scanArtGallery(): ArtFolderNode[] {
+export async function scanArtGallery(): Promise<ArtFolderNode[]> {
   if (!fs.existsSync(ART_ROOT)) return [];
-  const root = scan(ART_ROOT, []);
+  const root = await scan(ART_ROOT, []);
   return root.subfolders;
 }

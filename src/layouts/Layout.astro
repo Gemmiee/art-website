@@ -11,7 +11,7 @@ interface Props {
 const {
   title = "Gemmie's Aero Art Site",
   description = 'Art, animation, music, guestbook, games and more!',
-  image = '/images/banner.png',
+  image = '/images/banner.webp',
 } = Astro.props;
 
 // Chat apps/social platforms unfurling a shared link need an absolute image
@@ -58,7 +58,7 @@ const ogUrl = new URL(Astro.url.pathname, Astro.site).toString();
     </button>
 
     <div class="site-banner">
-      <img src="/images/banner.png" alt="Gemmie's corner banner — gemmiewow.com" />
+      <img src="/images/banner.webp" alt="Gemmie's corner banner — gemmiewow.com" />
     </div>
 
     <slot />
@@ -137,22 +137,22 @@ const ogUrl = new URL(Astro.url.pathname, Astro.site).toString();
       }
       .scene-light {
         background-image:
-          url('/images/wallpaper/light/light_lampost.png'),
-          url('/images/wallpaper/light/light_field.png'),
-          url('/images/wallpaper/light/light_clouds.png'),
-          url('/images/wallpaper/light/light_sea.png'),
-          url('/images/wallpaper/light/light_sun.png'),
-          url('/images/wallpaper/light/light_sky.png');
+          url('/images/wallpaper/light/light_lampost.webp'),
+          url('/images/wallpaper/light/light_field.webp'),
+          url('/images/wallpaper/light/light_clouds.webp'),
+          url('/images/wallpaper/light/light_sea.webp'),
+          url('/images/wallpaper/light/light_sun.webp'),
+          url('/images/wallpaper/light/light_sky.webp');
         opacity: 1;
       }
       .scene-dark {
         background-image:
-          url('/images/wallpaper/dark/dark_lampost.png'),
-          url('/images/wallpaper/dark/dark_field.png'),
-          url('/images/wallpaper/dark/dark_clouds.png'),
-          url('/images/wallpaper/dark/dark_sea.png'),
-          url('/images/wallpaper/dark/dark_moon.png'),
-          url('/images/wallpaper/dark/dark_sky.png');
+          url('/images/wallpaper/dark/dark_lampost.webp'),
+          url('/images/wallpaper/dark/dark_field.webp'),
+          url('/images/wallpaper/dark/dark_clouds.webp'),
+          url('/images/wallpaper/dark/dark_sea.webp'),
+          url('/images/wallpaper/dark/dark_moon.webp'),
+          url('/images/wallpaper/dark/dark_sky.webp');
         opacity: 0;
       }
       :root[data-theme="dark"] .scene-light {

@@ -4,6 +4,7 @@ import path from 'node:path';
 import Layout from '../../layouts/Layout.astro';
 import PageShell from '../../components/PageShell.astro';
 import BubbleDivider from '../../components/BubbleDivider.astro';
+import { getImageThumb } from '../../lib/imageThumb';
 
 const COMMISSIONS_OPEN = false;  // TRUE AND FALSE -> OPEN CLOSE COMMISSIONS
 
@@ -47,40 +48,52 @@ const exampleSubfolders = fs.existsSync(examplesDir)
   ? fs.readdirSync(examplesDir, { withFileTypes: true }).filter((entry) => entry.isDirectory())
   : [];
 
-function loadExamples(keywords: string[]) {
+const EXAMPLE_THUMB_WIDTH = 480;
+
+async function loadExamples(keywords: string[]) {
   if (keywords.length === 0) return [];
   const matchingFolders = exampleSubfolders.filter((folder) =>
     keywords.some((keyword) => folder.name.toLowerCase().includes(keyword))
   );
-  return matchingFolders
-    .flatMap((folder) => {
-      const absDir = path.join(examplesDir, folder.name);
-      return fs
-        .readdirSync(absDir, { withFileTypes: true })
-        .filter((entry) => entry.isFile() && IMAGE_EXTS.has(path.extname(entry.name).toLowerCase()))
-        .map((entry) => ({
-          name: entry.name.replace(/\.[^./]+$/, '').replace(/_/g, ' '),
-          url: `/images/commissions/examples/${encodeURIComponent(folder.name)}/${encodeURIComponent(entry.name)}`,
-        }));
-    })
-    .sort((a, b) => a.name.localeCompare(b.name));
+  const files = matchingFolders.flatMap((folder) => {
+    const absDir = path.join(examplesDir, folder.name);
+    return fs
+      .readdirSync(absDir, { withFileTypes: true })
+      .filter((entry) => entry.isFile() && IMAGE_EXTS.has(path.extname(entry.name).toLowerCase()))
+      .map((entry) => ({
+        name: entry.name.replace(/\.[^./]+$/, '').replace(/_/g, ' '),
+        url: `/images/commissions/examples/${encodeURIComponent(folder.name)}/${encodeURIComponent(entry.name)}`,
+        absPath: path.join(absDir, entry.name),
+      }));
+  });
+
+  const withThumbs = await Promise.all(
+    files.map(async ({ absPath, ...rest }) => ({
+      ...rest,
+      thumbUrl: await getImageThumb(absPath, EXAMPLE_THUMB_WIDTH),
+    }))
+  );
+  return withThumbs.sort((a, b) => a.name.localeCompare(b.name));
 }
 
-const tiers = TIERS.map((tier) => {
-  const sheetAbsPath = path.join(commissionsDir, tier.sheetFile);
-  return {
-    sheetUrl: fs.existsSync(sheetAbsPath) ? `/images/commissions/${encodeURIComponent(tier.sheetFile)}` : null,
-    label: tier.label,
-    titleBanner: tier.titleBanner,
-    text: tier.text,
-    examples: loadExamples(tier.exampleKeywords),
-  };
-}).filter((tier) => tier.sheetUrl !== null);
+const tiers = await Promise.all(
+  TIERS.map(async (tier) => {
+    const sheetAbsPath = path.join(commissionsDir, tier.sheetFile);
+    return {
+      sheetUrl: fs.existsSync(sheetAbsPath) ? `/images/commissions/${encodeURIComponent(tier.sheetFile)}` : null,
+      label: tier.label,
+      titleBanner: tier.titleBanner,
+      text: tier.text,
+      examples: await loadExamples(tier.exampleKeywords),
+    };
+  })
+);
+const visibleTiers = tiers.filter((tier) => tier.sheetUrl !== null);
 
 // The Terms sheet gets its own layout below (sheet + Gemmie/speech-cloud
 // mascot instead of text + examples), so it's split out of the main list.
-const termsTier = tiers.find((tier) => tier.label === 'Terms & What I Can Do') ?? null;
-const styleTiers = tiers.filter((tier) => tier !== termsTier);
+const termsTier = visibleTiers.find((tier) => tier.label === 'Terms & What I Can Do') ?? null;
+const styleTiers = visibleTiers.filter((tier) => tier !== termsTier);
 ---
 
 <Layout title="Commissions ☆ gemmie's corner" image="/images/site/site_commissions.png">
@@ -141,7 +154,7 @@ const styleTiers = tiers.filter((tier) => tier !== termsTier);
                         <div class="art-gallery-page" data-page-index="0">
                           {tier.examples.map((item) => (
                             <button class="art-thumb" type="button" data-full={item.url} data-kind="image" data-name={item.name}>
-                              <img src={item.url} alt={item.name} loading="lazy" />
+                              <img src={item.thumbUrl ?? item.url} alt={item.name} loading="lazy" />
                             </button>
                           ))}
                         </div>
