@@ -60,7 +60,6 @@ const isCurrent = (href: string) => {
             <a
               href={item.href}
               aria-current={isCurrent(item.href) ? 'page' : undefined}
-              data-astro-reload={item.href === '/' ? true : undefined}
             >
               <span aria-hidden="true">{item.emoji}</span> {item.label}
             </a>

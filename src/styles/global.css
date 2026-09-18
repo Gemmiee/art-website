@@ -934,11 +934,7 @@ h1 {
   animation: baby-tilt 4s ease-in-out infinite;
   filter: drop-shadow(0 4px 8px rgba(26, 18, 46, 0.35));
 }
-/* same gentle rock-on-her-feet tilt as .bio-doodle's doodle-tilt (see
-   gemmie_doodle.png on the main page) — a fresh keyframe rather than
-   reusing that one directly, since its baked-in translateY(-50%) is only
-   there to keep that absolutely-centered element in place and would
-   knock this one, which isn't positioned the same way, out of place. */
+
 @keyframes baby-tilt {
   0%, 100% { transform: rotate(-8deg); }
   50% { transform: rotate(8deg); }
