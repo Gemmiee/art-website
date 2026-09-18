@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import PageShell from '../components/PageShell.astro';
 import ArtFolder from '../components/ArtFolder.astro';
+import WaterButton from '../components/WaterButton.astro';
 import { scanArtGallery } from '../lib/artGallery';
 
 const folders = scanArtGallery();
@@ -42,7 +43,11 @@ const folders = scanArtGallery();
             for stopping by! (❁´◡`❁)ﾉ
           </p>
 
-          <a class="comm-callout" href="/art/commissions">💌 Interested in a commission? See my info + examples here!</a>
+          <WaterButton
+            href="/art/commissions"
+            label="💌 Interested in a commission? See my info + examples here!"
+            waterColor="#ff6fa5"
+          />
 
           <div class="art-folder-list">
             {folders.map((folder) => (

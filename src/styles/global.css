@@ -795,6 +795,7 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
   gap: 14px;
   margin: 0 0 20px;
 }
@@ -803,6 +804,12 @@ h1 {
   display: block;
   height: 66px;
   width: auto;
+}
+@media (max-width: 480px) {
+  .comm-status-label,
+  .comm-status-value {
+    height: 46px;
+  }
 }
 
 /* one row per pricing tier — the sheet graphic covers one side, an
@@ -947,24 +954,6 @@ h1 {
 @keyframes baby-tilt {
   0%, 100% { transform: rotate(-8deg); }
   50% { transform: rotate(8deg); }
-}
-.comm-callout {
-  display: inline-block;
-  margin: 14px 0 4px;
-  padding: 10px 18px;
-  border-radius: 999px;
-  border: 1px solid var(--card-border);
-  background: var(--surface);
-  box-shadow: var(--shadow-soft);
-  color: var(--ink);
-  font-weight: 700;
-  font-size: 0.86rem;
-  text-decoration: none;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-.comm-callout:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 8px 18px rgba(26, 18, 46, 0.28);
 }
 
 /* art gallery */
