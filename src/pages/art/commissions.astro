@@ -1,11 +1,4 @@
 ---
-// Commission tiers + examples. Each tier pairs one pricing-sheet graphic
-// (public/images/commissions/1.png, 2.png, ...) with its own explanatory
-// text and its own examples pulled from a matching subfolder under
-// public/images/commissions/examples/ — matched by keyword since the sheet
-// files themselves carry no text we can read at build time (the pricing
-// info is baked into the image). Adding a 5th tier means adding both a new
-// numbered sheet file AND an entry in TIERS below with the right keywords.
 import fs from 'node:fs';
 import path from 'node:path';
 import Layout from '../../layouts/Layout.astro';
@@ -23,24 +16,28 @@ const TIERS = [
   {
     sheetFile: '1.png',
     label: 'Fully Rendered',
+    titleBanner: '/images/banners/banner_fully_rendered.png',
     exampleKeywords: ['rendered'],
     text: "🌱₊ My normal fully render style, aka the full package. Comes with a transparent background or a background of your choice. Complex backgrounds, like sceneries, will alter the price based on the difficulty.",
   },
   {
     sheetFile: '2.png',
     label: 'Crayon Doodle',
+    titleBanner: '/images/banners/banner_crayon.png',
     exampleKeywords: ['crayon'],
     text: "🌱₊ A slightly simpler style where I use my crayon brush to give your drawing the crayon feeling. This is rendered in a more minimal way.",
   },
   {
     sheetFile: '3.gif',
     label: 'Paperwork Chibi / RPG Sprite',
+    titleBanner: '/images/banners/banner_chibi_rpg.png',
     exampleKeywords: ['chibi', 'rpg'],
     text: "🌱₊ Paperwork Chibi style makes your character look like realistic cutouts! The RPG Sprite style gives an animated sprite of your character as if they are from a game.",
   },
   {
     sheetFile: '4.png',
     label: 'Terms & What I Can Do',
+    titleBanner: null as string | null,
     exampleKeywords: [] as string[],
     text: 'Please read my terms first here ;p',
   },
@@ -74,6 +71,7 @@ const tiers = TIERS.map((tier) => {
   return {
     sheetUrl: fs.existsSync(sheetAbsPath) ? `/images/commissions/${encodeURIComponent(tier.sheetFile)}` : null,
     label: tier.label,
+    titleBanner: tier.titleBanner,
     text: tier.text,
     examples: loadExamples(tier.exampleKeywords),
   };
@@ -109,88 +107,69 @@ const styleTiers = tiers.filter((tier) => tier !== termsTier);
             <img class="doc-banner-img" src="/images/banners/banner_commissions.png" alt="Commissions" />
           </div>
 
-          <div class="article-grid comm-intro-grid">
-            <div>
-              <div class="comm-status">
-                <img class="comm-status-label" src="/images/banners/banner_status.png" alt="Status:" />
-                <img
-                  class="comm-status-value"
-                  src={COMMISSIONS_OPEN ? '/images/banners/banner_open.png' : '/images/banners/banner_closed.png'}
-                  alt={COMMISSIONS_OPEN ? 'Open!' : 'Closed'}
-                />
-              </div>
-              <p class="blurb">
-                💌 <strong>Contact me for commissions!</strong>
-                <br/>╰┈➤ 📎 Discord: gemmieclone
-                <br/>╰┈➤ 🌺 Instagram: <a href="https://www.instagram.com/gemmie_wow/" target="_blank" rel="noopener noreferrer">@gemmie_wow</a>
-                <br/>・・・・・・・・・・・・・・・
-                <br/>
-                <br/>٭˚🍊୨˚ <strong>TIME:</strong> It really depends, sometimes I take time due to university. More detailed projects
-                will most likely take longer, but I keep you updated on the progress of your commission.
-                <br/>
-                <br/>٭˚🍊୨˚ You will receive a sketch from which you can request changes.
-                After that, no major changes will be made.
-                <br/>٭˚🍊୨˚ I have the right to deny a request.
-                <br/>٭˚🍊୨˚ No refunds (unless I haven't started drawing yet).
-              </p>
-            </div>
-            <div class="article-portrait">
-              <img class="article-portrait-img" src="/images/GemmiePencil.png" alt="Gemmie holding a giant pencil" />
-            </div>
+          <div class="comm-status">
+            <img class="comm-status-label" src="/images/banners/banner_status.png" alt="Status:" />
+            <img
+              class="comm-status-value"
+              src={COMMISSIONS_OPEN ? '/images/banners/banner_open.png' : '/images/banners/banner_closed.png'}
+              alt={COMMISSIONS_OPEN ? 'Open!' : 'Closed'}
+            />
           </div>
 
           <BubbleDivider />
 
           <div class="comm-tier-list">
             {styleTiers.map((tier) => (
-              <div class="comm-tier">
-                <button class="comm-sheet-thumb" type="button" data-full={tier.sheetUrl!} data-kind="image" data-name={tier.label}>
-                  <img src={tier.sheetUrl!} alt={tier.label} loading="lazy" />
-                </button>
-                <div class="comm-tier-info">
-                  <p class="comm-tier-text">{tier.text}</p>
-                  {tier.examples.length > 0 && (
-                    <div class="art-gallery">
-                      <div class="art-gallery-page" data-page-index="0">
-                        {tier.examples.map((item) => (
-                          <button class="art-thumb" type="button" data-full={item.url} data-kind="image" data-name={item.name}>
-                            <img src={item.url} alt={item.name} loading="lazy" />
-                          </button>
-                        ))}
+              <div class="comm-tier-block">
+                {tier.titleBanner && (
+                  <img class="comm-tier-title" src={tier.titleBanner} alt={tier.label} />
+                )}
+                <div class="comm-tier">
+                  <button class="comm-sheet-thumb" type="button" data-full={tier.sheetUrl!} data-kind="image" data-name={tier.label}>
+                    <img src={tier.sheetUrl!} alt={tier.label} loading="lazy" />
+                  </button>
+                  <div class="comm-tier-info">
+                    <p class="comm-tier-text">{tier.text}</p>
+                    {tier.examples.length > 0 && (
+                      <div class="art-gallery">
+                        <div class="art-gallery-page" data-page-index="0">
+                          {tier.examples.map((item) => (
+                            <button class="art-thumb" type="button" data-full={item.url} data-kind="image" data-name={item.name}>
+                              <img src={item.url} alt={item.name} loading="lazy" />
+                            </button>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </div>
               </div>
             ))}
           </div>
 
-          {termsTier && (
-            <>
-              <BubbleDivider />
+          <BubbleDivider />
 
-              <div class="comm-tier">
-                <button class="comm-sheet-thumb" type="button" data-full={termsTier.sheetUrl!} data-kind="image" data-name={termsTier.label}>
-                  <img src={termsTier.sheetUrl!} alt={termsTier.label} loading="lazy" />
-                </button>
-                <div class="comm-terms-mascot">
-                  <div class="comm-terms-cloud">
-                    <img class="comm-terms-cloud-img" src="/images/banners/speech_cloud2.png" alt="" aria-hidden="true" />
-                    <img class="comm-terms-cloud-img-night" src="/images/banners/speech_cloud2_night.png" alt="" aria-hidden="true" />
-                    <div class="comm-terms-cloud-text">
-                      <p>
-                        💌 <strong>Contact me for commissions!</strong>
-                        <br/>╰┈➤ 📎 Discord: gemmieclone
-                        <br/>╰┈➤ 🌺 Instagram: <a href="https://www.instagram.com/gemmie_wow/" target="_blank" rel="noopener noreferrer">@gemmie_wow</a>
-                        <br/>
-                        <br/> Thank you for checking out! Make sure to check out my shop below!
-                      </p>
-                    </div>
+          {termsTier && (
+            <div class="comm-tier">
+              <button class="comm-sheet-thumb" type="button" data-full={termsTier.sheetUrl!} data-kind="image" data-name={termsTier.label}>
+                <img src={termsTier.sheetUrl!} alt={termsTier.label} loading="lazy" />
+              </button>
+              <div class="comm-terms-mascot">
+                <div class="comm-terms-cloud">
+                  <img class="comm-terms-cloud-img" src="/images/banners/speech_cloud2.png" alt="" aria-hidden="true" />
+                  <img class="comm-terms-cloud-img-night" src="/images/banners/speech_cloud2_night.png" alt="" aria-hidden="true" />
+                  <div class="comm-terms-cloud-text">
+                    <p>
+                      💌 <strong>Contact me for commissions!</strong>
+                      <br/>╰┈➤ 📎 <strong>Discord: </strong>gemmieclone
+                      <br/>╰┈➤ 🌺 <strong>Instagram: </strong><a href="https://www.instagram.com/gemmie_wow/" target="_blank" rel="noopener noreferrer">@gemmie_wow</a>
+                      <br/>╰┈➤ 🌸 <strong>Email: </strong><a href="mailto:gemmie.dares407@passinbox.com">gemmie.dares407@passinbox.com</a>
+                    </p>
                   </div>
-                  <img class="comm-terms-baby" src="/images/GemmieBaby.png" alt="Baby Gemmie holding a lollipop" />
                 </div>
+                <img class="comm-terms-baby" src="/images/GemmieBaby.png" alt="Baby Gemmie holding a lollipop" />
               </div>
-            </>
+            </div>
           )}
 
           <BubbleDivider />

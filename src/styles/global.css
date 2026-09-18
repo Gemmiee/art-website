@@ -715,18 +715,6 @@ h1 {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-10px); }
 }
-/* mirrors .article-grid's column order — portrait on the right, text
-   snug on the left — for sections that want the floating character
-   on the opposite side (commissions page intro). Sized up a bit from the
-   shared 260px default and nudged left with a negative margin so she
-   doesn't sit flush against the edge. */
-.comm-intro-grid {
-  grid-template-columns: 1fr 300px;
-}
-.comm-intro-grid .article-portrait {
-  max-width: 300px;
-  margin-left: -20px;
-}
 @media (max-width: 480px) {
   .article-grid {
     grid-template-columns: 1fr;
@@ -801,20 +789,19 @@ h1 {
 
 /* commissions page (src/pages/art/commissions.astro): open/closed status
    banners sit inline at a shared height since the source images share the
-   same 200px canvas height at different widths. Lives at the top of the
-   intro grid's text column (left-aligned with that text), not centered
-   across the whole page. */
+   same 200px canvas height at different widths. Centered under the main
+   banner at every width. */
 .comm-status {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  gap: 12px;
-  margin: 0 0 14px;
+  justify-content: center;
+  gap: 14px;
+  margin: 0 0 20px;
 }
 .comm-status-label,
 .comm-status-value {
   display: block;
-  height: 56px;
+  height: 66px;
   width: auto;
 }
 
@@ -828,7 +815,23 @@ h1 {
   gap: 20px;
   margin-top: 22px;
 }
+/* wraps one title banner + its .comm-tier row — the title spans/centers
+   over BOTH columns as a heading for the pair, rather than sitting only
+   above the sheet image, so the sheet and its text line up on one row. */
+.comm-tier-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.comm-tier-title {
+  display: block;
+  height: 54px;
+  width: auto;
+  max-width: 90%;
+  margin: 0 0 14px;
+}
 .comm-tier {
+  width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
@@ -875,6 +878,12 @@ h1 {
 @media (max-width: 720px) {
   .comm-tier {
     grid-template-columns: 1fr;
+  }
+  /* .comm-sheet-thumb's 88% width has no auto margin since on desktop it
+     sits flush against its text column on purpose — but stacked full-width
+     on mobile that same flush-left alignment reads as oddly off-center. */
+  .comm-sheet-thumb {
+    margin: 0 auto;
   }
 }
 
