@@ -112,7 +112,6 @@ const embedCode = `<a href="${siteUrl}"><img src="${ownButtonSrc}" width="88" he
         src="https://iframe.chat/embed?chat=10281099"
         id="chattable"
         title="gemmie's corner guestbook chat"
-        loading="lazy"
       ></iframe>
     </div>
   </section>
@@ -121,9 +120,21 @@ const embedCode = `<a href="${siteUrl}"><img src="${ownButtonSrc}" width="88" he
        (aka only the home page)-->
   <script is:inline src="https://iframe.chat/scripts/main.min.js" data-astro-rerun></script>
   <script is:inline data-astro-rerun>
-    chattable.initialize({
-      stylesheet: "/chattable-kick.css",
-    });
+    // On a soft (client-side) navigation back to this page, main.min.js
+    // above sometimes hasn't finished defining window.chattable by the
+    // time this runs, throwing "chattable.initialize is not a function" —
+    // a hard page load never hit this since the browser blocks on
+    // synchronous <script src> before continuing. Poll briefly instead of
+    // assuming it's ready.
+    (function initChattable() {
+      if (window.chattable && typeof window.chattable.initialize === 'function') {
+        window.chattable.initialize({
+          stylesheet: "/chattable-kick.css",
+        });
+      } else {
+        setTimeout(initChattable, 50);
+      }
+    })();
   </script>
 
   <!-- so the app bubbles are outside the socials window -->
