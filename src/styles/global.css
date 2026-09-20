@@ -1433,7 +1433,10 @@ h1 {
 .game-frame--metalslug {
   container-type: inline-size;
   aspect-ratio: 600 / 450;
-  max-width: 760px;
+  /* never taller than the screen (minus room for the window chrome), so the
+     whole game fits without its bottom edge running off the viewport */
+  max-width: min(680px, calc((100vh - 110px) * 4 / 3));
+  max-width: min(680px, calc((100svh - 110px) * 4 / 3));
   margin: 0 auto;
   background: #000;
 }
@@ -1446,9 +1449,9 @@ h1 {
      into and restyle (cross-origin iframe). Zooming in a bit crops that
      off along with a sliver of the game's own edges — .game-frame's
      overflow:hidden clips whatever this pushes past the visible box.
-     1.15 is a guess (untested against the real running emulator); nudge it
-     if it's cropping too much or too little of the actual game view. */
-  --metalslug-zoom: 1.15;
+     Kept small: at 1.15 the embed's "PLAY NOW" button got sliced by the
+     bottom border. */
+  --metalslug-zoom: 1.05;
   transform: scale(calc((100cqw / 600px) * var(--metalslug-zoom)));
 }
 .game-frame-iframe--metalslug {
