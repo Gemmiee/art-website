@@ -1,6 +1,40 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import PageShell from '../components/PageShell.astro';
+import BubbleDivider from '../components/BubbleDivider.astro';
+import fs from 'node:fs';
+import path from 'node:path';
+import { getImageThumb } from '../lib/imageThumb';
+
+// Drop a file named "Made_By_<Artist>.png" into public/images/MsPaintDrawings
+// and it shows up here, credited to that artist — nothing to edit per piece.
+const DRAWINGS_DIR = path.join(process.cwd(), 'public', 'images', 'MsPaintDrawings');
+const IMAGE_EXTS = new Set(['.png', '.jpg', '.jpeg', '.gif', '.webp']);
+const encodeSegment = (s: string) => encodeURIComponent(s).replace(/%3A/g, ':');
+
+function creditFor(fileName: string): string | null {
+  const base = fileName.replace(/\.[^./]+$/, '');
+  const match = base.match(/^made[\s_-]*by[\s_-]*(.+)$/i);
+  if (!match) return null;
+  // "Made_By_Turtle_2" → "Turtle": trailing numbers just keep filenames unique
+  return match[1].replace(/[\s_-]*\d+$/, '').replace(/[_]+/g, ' ').trim() || null;
+}
+
+const drawingFiles = fs.existsSync(DRAWINGS_DIR)
+  ? fs
+      .readdirSync(DRAWINGS_DIR, { withFileTypes: true })
+      .filter((entry) => entry.isFile() && IMAGE_EXTS.has(path.extname(entry.name).toLowerCase()))
+      .map((entry) => entry.name)
+      .sort((a, b) => a.localeCompare(b))
+  : [];
+
+const drawings = await Promise.all(
+  drawingFiles.map(async (fileName) => ({
+    url: `/images/MsPaintDrawings/${encodeSegment(fileName)}`,
+    thumbUrl: await getImageThumb(path.join(DRAWINGS_DIR, fileName), 480),
+    credit: creditFor(fileName),
+  }))
+);
 ---
 
 <Layout title="Paint ☆ gemmie's corner">
@@ -37,8 +71,104 @@ import PageShell from '../components/PageShell.astro';
               allowfullscreen
             ></iframe>
           </div>
+
+          <BubbleDivider />
+
+          <p class="hand-note paint-invite">
+            <strong>✏️ Send me your drawings and I will upload them on my page!</strong>
+            <br/> Email me at <a href="mailto:gemmie.dares407@passinbox.com">gemmie.dares407@passinbox.com</a> !
+          </p>
+
+          {drawings.length > 0 && (
+            <div class="paint-gallery">
+              {drawings.map((drawing) => (
+                <figure class="paint-card">
+                  <button
+                    class="paint-thumb"
+                    type="button"
+                    data-full={drawing.url}
+                    data-name={drawing.credit ? `Made by: ${drawing.credit}` : 'MS Paint drawing'}
+                  >
+                    <img
+                      src={drawing.thumbUrl ?? drawing.url}
+                      alt={drawing.credit ? `MS Paint drawing made by ${drawing.credit}` : 'MS Paint drawing'}
+                      loading="lazy"
+                    />
+                  </button>
+                  {drawing.credit && <figcaption class="paint-credit">Made by: {drawing.credit}</figcaption>}
+                </figure>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </section>
+
+    <!-- lightbox for the drawings above (same markup/styles as the art page's) -->
+    <div class="art-lightbox" id="art-lightbox" hidden>
+      <div class="art-lightbox-backdrop" data-close></div>
+      <div class="art-lightbox-frame window">
+        <div class="title-bar">
+          <span class="title-bar-icon" aria-hidden="true">🎨</span>
+          <span class="title-bar-text" id="art-lightbox-title"></span>
+          <div class="title-bar-controls" aria-hidden="true">
+            <span class="tb-btn close" data-close>×</span>
+          </div>
+        </div>
+        <div class="art-lightbox-body" id="art-lightbox-body"></div>
+        <button class="art-lightbox-nav art-lightbox-prev" type="button" id="art-lightbox-prev" aria-label="Previous drawing">‹</button>
+        <button class="art-lightbox-nav art-lightbox-next" type="button" id="art-lightbox-next" aria-label="Next drawing">›</button>
+      </div>
+    </div>
   </PageShell>
 </Layout>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const lightbox = document.getElementById('art-lightbox');
+    const body = document.getElementById('art-lightbox-body');
+    const title = document.getElementById('art-lightbox-title');
+    const prevBtn = document.getElementById('art-lightbox-prev') as HTMLButtonElement | null;
+    const nextBtn = document.getElementById('art-lightbox-next') as HTMLButtonElement | null;
+    const thumbs = Array.from(document.querySelectorAll<HTMLButtonElement>('.paint-thumb'));
+    if (!lightbox || !body || !title || !prevBtn || !nextBtn || thumbs.length === 0) return;
+
+    let index = -1;
+    const render = () => {
+      const { full, name } = thumbs[index].dataset;
+      title.textContent = name || '';
+      body.innerHTML = '';
+      const img = document.createElement('img');
+      img.src = full || '';
+      img.alt = name || '';
+      body.appendChild(img);
+    };
+    const step = (delta: number) => {
+      index = (index + delta + thumbs.length) % thumbs.length;
+      render();
+    };
+    const close = () => {
+      lightbox.hidden = true;
+      body.innerHTML = '';
+      index = -1;
+    };
+
+    thumbs.forEach((thumb, i) => {
+      thumb.addEventListener('click', () => {
+        index = i;
+        render();
+        lightbox.hidden = false;
+        prevBtn.hidden = nextBtn.hidden = thumbs.length < 2;
+      });
+    });
+    prevBtn.addEventListener('click', () => step(-1));
+    nextBtn.addEventListener('click', () => step(1));
+    lightbox.querySelectorAll<HTMLElement>('[data-close]').forEach((el) => el.addEventListener('click', close));
+    document.addEventListener('keydown', (e) => {
+      if (lightbox.hidden) return;
+      if (e.key === 'Escape') close();
+      else if (e.key === 'ArrowLeft') step(-1);
+      else if (e.key === 'ArrowRight') step(1);
+    });
+  });
+</script>
