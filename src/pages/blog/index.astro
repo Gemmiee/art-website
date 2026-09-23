@@ -1,0 +1,176 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageShell from '../../components/PageShell.astro';
+import { getCollection } from 'astro:content';
+import path from 'node:path';
+import { getImageThumb } from '../../lib/imageThumb';
+import { tagHue } from '../../lib/tagColor';
+
+const BLOG_IMAGES_DIR = path.join(process.cwd(), 'public', 'images', 'blog');
+const THUMB_WIDTH = 480;
+
+const allPosts = (await getCollection('blog')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+
+const posts = await Promise.all(
+  allPosts.map(async (post) => ({
+    slug: post.slug,
+    title: post.data.title,
+    excerpt: post.data.excerpt,
+    tags: post.data.tags,
+    thumbUrl:
+      (await getImageThumb(path.join(BLOG_IMAGES_DIR, post.data.thumbnail), THUMB_WIDTH)) ??
+      `/images/blog/${encodeURIComponent(post.data.thumbnail)}`,
+  }))
+);
+
+const allTags = Array.from(new Set(allPosts.flatMap((post) => post.data.tags))).sort((a, b) =>
+  a.localeCompare(b)
+);
+
+const feedUrl = 'https://gemmiewow.com/blog/rss.xml';
+---
+
+<Layout title="Blog ☆ gemmie's corner" feedUrl="/blog/rss.xml">
+  <PageShell showMisc={false}>
+    <!-- ================= blog window ================= -->
+    <section class="window main-doc">
+      <div class="title-bar">
+        <span class="title-bar-icon" aria-hidden="true">📰</span>
+        <span class="title-bar-text">gemmies-blog.exe</span>
+        <div class="title-bar-controls" aria-hidden="true">
+          <span class="tb-btn">_</span>
+          <span class="tb-btn">□</span>
+          <span class="tb-btn close">×</span>
+        </div>
+      </div>
+      <div class="window-body">
+        <div class="doc-section" id="blog">
+          <div class="doc-banner">
+            <span class="bubble-wrap" style="left: 8%; animation-duration: 3.2s; animation-delay: -0.5s;"><img class="bubble-icon" src="/images/bubble.png" alt="" /></span>
+            <span class="bubble-wrap" style="left: 26%; animation-duration: 4s; animation-delay: -2s;"><img class="bubble-icon" src="/images/bubble.png" alt="" /></span>
+            <span class="bubble-wrap" style="left: 46%; animation-duration: 3.5s; animation-delay: -1.2s;"><img class="bubble-icon" src="/images/bubble.png" alt="" /></span>
+            <span class="bubble-wrap" style="left: 66%; animation-duration: 4.5s; animation-delay: -3s;"><img class="bubble-icon" src="/images/bubble.png" alt="" /></span>
+            <span class="bubble-wrap" style="left: 84%; animation-duration: 3.8s; animation-delay: -1.8s;"><img class="bubble-icon" src="/images/bubble.png" alt="" /></span>
+            <img class="doc-banner-img" src="/images/banners/banner_blog.png" alt="My Blog" />
+          </div>
+
+          <p class="hand-note">
+            📰 Stuff about me, games, characters I love, art advice and more!
+            Articles may contain <strong>soundboard</strong>, so keep that volume low.
+          </p>
+
+          <div class="blog-subscribe">
+            <p class="blog-subscribe-text">
+              📡 Want an email whenever I post? Copy the link below and paste it into a free
+              service like <a href="https://blogtrottr.com/" target="_blank" rel="noopener noreferrer">Blogtrottr</a>
+              or <a href="https://follow.it/" target="_blank" rel="noopener noreferrer">Follow.it</a> along with your
+              email, no account needed on your end. Prefer an RSS reader instead? The same link works there too.
+            </p>
+            <div class="embed-row">
+              <input class="embed-input" type="text" readonly value={feedUrl} />
+              <button class="embed-copy-btn" type="button" data-copy-text={feedUrl}>Copy</button>
+            </div>
+          </div>
+
+          {allTags.length > 0 && (
+            <div class="blog-tag-filters" role="group" aria-label="Filter posts by tag">
+              <button class="blog-tag-filter is-active" type="button" data-tag="__all__">All</button>
+              {allTags.map((tag) => (
+                <button
+                  class="blog-tag-filter"
+                  type="button"
+                  data-tag={tag}
+                  style={`--tag-hue:${tagHue(tag)}`}
+                >
+                  #{tag}
+                </button>
+              ))}
+            </div>
+          )}
+
+          {posts.length > 0 ? (
+            <div class="blog-grid">
+              {posts.map((post) => (
+                <a class="blog-card" href={`/blog/${post.slug}`} data-tags={post.tags.join('|')}>
+                  <img class="blog-card-thumb" src={post.thumbUrl} alt="" loading="lazy" />
+                  <div class="blog-card-body">
+                    <h2 class="blog-card-title">{post.title}</h2>
+                    <p class="blog-card-excerpt">{post.excerpt}</p>
+                    {post.tags.length > 0 && (
+                      <div class="blog-tag-row">
+                        {post.tags.map((tag) => (
+                          <span class="blog-tag" style={`--tag-hue:${tagHue(tag)}`}>#{tag}</span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </a>
+              ))}
+            </div>
+          ) : (
+            <p class="hand-note">No posts yet — check back soon!</p>
+          )}
+        </div>
+      </div>
+    </section>
+  </PageShell>
+</Layout>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const filterBtns = Array.from(document.querySelectorAll<HTMLButtonElement>('.blog-tag-filter'));
+    const cards = Array.from(document.querySelectorAll<HTMLElement>('.blog-card'));
+    if (filterBtns.length === 0 || cards.length === 0) return;
+
+    const active = new Set<string>();
+
+    const applyFilter = () => {
+      cards.forEach((card) => {
+        const tags = (card.dataset.tags || '').split('|').filter(Boolean);
+        card.hidden = active.size > 0 && !tags.some((tag) => active.has(tag));
+      });
+    };
+
+    filterBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const tag = btn.dataset.tag!;
+        if (tag === '__all__') {
+          active.clear();
+        } else if (active.has(tag)) {
+          active.delete(tag);
+        } else {
+          active.add(tag);
+        }
+        filterBtns.forEach((b) => {
+          const isAll = b.dataset.tag === '__all__';
+          b.classList.toggle('is-active', isAll ? active.size === 0 : active.has(b.dataset.tag!));
+        });
+        applyFilter();
+      });
+    });
+
+    // feed-link copy button (same pattern as the webring embed snippet)
+    const feedInput = document.querySelector<HTMLInputElement>('.blog-subscribe .embed-input');
+    feedInput?.addEventListener('click', () => feedInput.select());
+
+    const copyBtn = document.querySelector<HTMLButtonElement>('.blog-subscribe .embed-copy-btn');
+    if (copyBtn) {
+      const defaultLabel = copyBtn.textContent || 'Copy';
+      copyBtn.addEventListener('click', async () => {
+        const text = copyBtn.dataset.copyText || '';
+        try {
+          await navigator.clipboard.writeText(text);
+        } catch {
+          feedInput?.select();
+          document.execCommand('copy');
+        }
+        copyBtn.textContent = 'Copied!';
+        setTimeout(() => {
+          copyBtn.textContent = defaultLabel;
+        }, 1500);
+      });
+    }
+  });
+</script>

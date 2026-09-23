@@ -1,0 +1,105 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageShell from '../../components/PageShell.astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
+import { tagHue } from '../../lib/tagColor';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+
+const formattedDate = post.data.date.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+const thumbnailUrl = `/images/blog/${encodeURIComponent(post.data.thumbnail)}`;
+---
+
+<Layout title={`${post.data.title} ☆ gemmie's corner`} description={post.data.excerpt} image={thumbnailUrl} feedUrl="/blog/rss.xml">
+  <PageShell showMisc={false}>
+    <!-- ================= blog post window ================= -->
+    <section class="window main-doc">
+      <div class="title-bar">
+        <span class="title-bar-icon" aria-hidden="true">📰</span>
+        <span class="title-bar-text">gemmies-blog.exe</span>
+        <div class="title-bar-controls" aria-hidden="true">
+          <span class="tb-btn">_</span>
+          <span class="tb-btn">□</span>
+          <span class="tb-btn close">×</span>
+        </div>
+      </div>
+      <div class="window-body">
+        <div class="doc-section" id="blog-post">
+          <div class="doc-banner">
+            <span class="bubble-wrap" style="left: 8%; animation-duration: 3.2s; animation-delay: -0.5s;"><img class="bubble-icon" src="/images/bubble.png" alt="" /></span>
+            <span class="bubble-wrap" style="left: 26%; animation-duration: 4s; animation-delay: -2s;"><img class="bubble-icon" src="/images/bubble.png" alt="" /></span>
+            <span class="bubble-wrap" style="left: 46%; animation-duration: 3.5s; animation-delay: -1.2s;"><img class="bubble-icon" src="/images/bubble.png" alt="" /></span>
+            <span class="bubble-wrap" style="left: 66%; animation-duration: 4.5s; animation-delay: -3s;"><img class="bubble-icon" src="/images/bubble.png" alt="" /></span>
+            <span class="bubble-wrap" style="left: 84%; animation-duration: 3.8s; animation-delay: -1.8s;"><img class="bubble-icon" src="/images/bubble.png" alt="" /></span>
+            <img class="doc-banner-img" src="/images/banners/banner_blog.png" alt="My Blog" />
+          </div>
+
+          <a class="blog-back-link" href="/blog">‹ Back to Blog</a>
+
+          <article class="blog-article">
+            <img class="blog-hero-img" src={thumbnailUrl} alt="" />
+            <h1 class="blog-title">{post.data.title}</h1>
+            <div class="blog-meta">
+              <span class="blog-date">{formattedDate}</span>
+              {post.data.tags.length > 0 && (
+                <div class="blog-tag-row">
+                  {post.data.tags.map((tag) => (
+                    <span class="blog-tag" style={`--tag-hue:${tagHue(tag)}`}>#{tag}</span>
+                  ))}
+                </div>
+              )}
+            </div>
+            <div class="blog-article-body">
+              <Content />
+            </div>
+          </article>
+
+          <a class="blog-back-link" href="/blog">‹ Back to Blog</a>
+        </div>
+      </div>
+    </section>
+  </PageShell>
+</Layout>
+
+<script>
+  // Lets a post embed a click-to-play sound button just by writing plain
+  // HTML in its Markdown body, e.g.:
+  //   <button class="sound-btn" data-sound="glass-breaking.mp3">🔊 Glass breaking</button>
+  // `data-sound` is a filename inside public/images/blog/ (or a full /path
+  // if it lives elsewhere). Audio elements are cached per src so repeat
+  // clicks (or several different sound buttons) don't re-fetch each time.
+  document.addEventListener('astro:page-load', () => {
+    const audioCache = new Map<string, HTMLAudioElement>();
+    document.querySelectorAll<HTMLElement>('.blog-article-body .sound-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const file = btn.dataset.sound;
+        if (!file) return;
+        const src = file.startsWith('/') ? file : `/images/blog/${file}`;
+        let audio = audioCache.get(src);
+        if (!audio) {
+          audio = new Audio(src);
+          audioCache.set(src, audio);
+        }
+        audio.currentTime = 0;
+        void audio.play();
+      });
+    });
+  });
+</script>

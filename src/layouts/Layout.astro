@@ -6,12 +6,14 @@ interface Props {
   title?: string;
   description?: string;
   image?: string;
+  feedUrl?: string;
 }
 
 const {
   title = "Gemmie's Aero Art Site",
   description = 'Art, animation, music, guestbook, games and more!',
   image = '/images/banner.webp',
+  feedUrl,
 } = Astro.props;
 
 // Chat apps/social platforms unfurling a shared link need an absolute image
@@ -34,6 +36,7 @@ const ogUrl = new URL(Astro.url.pathname, Astro.site).toString();
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    {feedUrl && <link rel="alternate" type="application/rss+xml" title="gemmie's corner — Blog" href={feedUrl} />}
     <title>{title}</title>
 
     <meta property="og:type" content="website" />
