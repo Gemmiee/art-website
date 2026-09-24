@@ -108,36 +108,37 @@ const embedCode = `<a href="${siteUrl}"><img src="${ownButtonSrc}" width="88" he
       </div>
     </div>
     <div class="window-body">
+      <!-- The chat box's own content was already sandboxed, but
+           iframe.chat's loader script (below) used to run directly on
+           THIS page with full, unsandboxed privileges — a <script> tag
+           can't carry a sandbox attribute the way an iframe can, so that
+           script (not the chat box itself) was the more likely source of
+           a "malware popup blocked" warning some visitors saw. Wrapping
+           the loader script AND the chat iframe together inside one
+           sandboxed wrapper iframe (via srcdoc) sandboxes the script too,
+           not just the widget it controls. Being a srcdoc'd iframe, this
+           also loads fresh every time — no data-astro-rerun juggling
+           needed the way a plain <script> tag required. -->
       <iframe
         class="guestbook-iframe"
-        src="https://iframe.chat/embed?chat=10281099"
-        id="chattable"
         title="gemmie's corner guestbook chat"
         sandbox="allow-scripts allow-same-origin allow-forms allow-modals"
+        srcdoc={`<!doctype html><html><head><style>html,body{margin:0;padding:0;height:100%;}</style></head><body>
+<iframe id="chattable" src="https://iframe.chat/embed?chat=10281099" sandbox="allow-scripts allow-same-origin allow-forms allow-modals" style="display:block;width:100%;height:100%;border:0;"></iframe>
+<script src="https://iframe.chat/scripts/main.min.js"></script>
+<script>
+  (function initChattable() {
+    if (window.chattable && typeof window.chattable.initialize === 'function') {
+      window.chattable.initialize({ stylesheet: "/chattable-kick.css" });
+    } else {
+      setTimeout(initChattable, 50);
+    }
+  })();
+</script>
+</body></html>`}
       ></iframe>
     </div>
   </section>
-
-  <!-- data-astro-rerun: MiscColumn only renders on pages with showMisc
-       (aka only the home page)-->
-  <script is:inline src="https://iframe.chat/scripts/main.min.js" data-astro-rerun></script>
-  <script is:inline data-astro-rerun>
-    // On a soft (client-side) navigation back to this page, main.min.js
-    // above sometimes hasn't finished defining window.chattable by the
-    // time this runs, throwing "chattable.initialize is not a function" —
-    // a hard page load never hit this since the browser blocks on
-    // synchronous <script src> before continuing. Poll briefly instead of
-    // assuming it's ready.
-    (function initChattable() {
-      if (window.chattable && typeof window.chattable.initialize === 'function') {
-        window.chattable.initialize({
-          stylesheet: "/chattable-kick.css",
-        });
-      } else {
-        setTimeout(initChattable, 50);
-      }
-    })();
-  </script>
 
   <!-- so the app bubbles are outside the socials window -->
   <div class="icon-tooltip" id="icon-tooltip" role="tooltip"></div>

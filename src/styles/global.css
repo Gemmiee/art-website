@@ -1025,6 +1025,31 @@ h1 {
 .blog-article-body .sound-btn:active {
   opacity: 0.55;
 }
+/* spoiler tags — plain <details><summary>...</summary>spoiler text</details>
+   HTML pasted directly into a post's markdown body, no JS needed since
+   <details> is natively interactive */
+.blog-article-body details {
+  margin: 0 0 14px;
+  border: 1px dashed var(--card-border-dashed);
+  border-radius: 8px;
+  padding: 10px 14px;
+  background: var(--surface-faint);
+}
+.blog-article-body details[open] {
+  padding-bottom: 12px;
+}
+.blog-article-body summary {
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--accent-deep);
+  user-select: none;
+}
+.blog-article-body summary::marker {
+  color: var(--accent-deep);
+}
+.blog-article-body details[open] summary {
+  margin-bottom: 8px;
+}
 
 @media (max-width: 480px) {
   .blog-grid {
