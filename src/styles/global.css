@@ -166,6 +166,16 @@ button:focus-visible {
 .window + .window {
   margin-top: 26px;
 }
+/* .col-nav/.col-misc already space their stacked windows via their own
+   flex `gap` — without this override, the generic rule above stacks an
+   extra 26px on top of that gap between every window pair in these
+   columns (topics.exe -> nowplaying.mp3, socials.txt -> friend-links.htm
+   -> chat.exe), making them far wider than the rest of the column's
+   spacing rhythm. */
+.col-nav .window + .window,
+.col-misc .window + .window {
+  margin-top: 0;
+}
 
 .title-bar {
   display: flex;
@@ -280,7 +290,8 @@ button:focus-visible {
      something padding/height can fix */
   grid-template-columns: 265px minmax(0, 1fr) 265px;
   grid-template-areas: "nav main misc" "footer footer footer";
-  gap: 14px;
+  column-gap: 8px;
+  row-gap: 14px;
   align-items: start;
 }
 .layout-grid.no-misc {
@@ -292,7 +303,7 @@ button:focus-visible {
   grid-area: nav;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 8px;
   position: sticky;
   top: 20px;
 }
@@ -300,7 +311,7 @@ button:focus-visible {
   grid-area: misc;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 8px;
   position: sticky;
   top: 20px;
 }
@@ -327,8 +338,8 @@ button:focus-visible {
 }
 .nav-mascot.in-nav {
   display: block;
-  /* cancels .col-nav's own 24px flex gap so the sprite touches topics.exe */
-  margin-bottom: -24px;
+  /* cancels .col-nav's own 8px flex gap so the sprite touches topics.exe */
+  margin-bottom: -8px;
 }
 .nav-mascot.in-shell {
   display: none;
