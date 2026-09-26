@@ -35,12 +35,14 @@ export async function getImageThumb(absPath: string, maxWidth: number): Promise<
   if (!fs.existsSync(thumbAbsPath)) {
     fs.mkdirSync(THUMB_DIR, { recursive: true });
     const tmpPath = `${thumbAbsPath}.${process.pid}.tmp`;
+    // Reading a GIF with `animated: true` keeps every frame instead of just
+    // the first, so resizing it below carries the animation through into
+    // the output webp too — the grid thumbnail actually plays instead of
+    // showing a freeze-frame. Anything else (a still image) just ignores
+    // this option.
+    const isGif = path.extname(absPath).toLowerCase() === '.gif';
     try {
-      // Multi-frame GIFs resolve to their first frame here (no
-      // `animated: true`) — a still preview is exactly what a grid
-      // thumbnail wants; the original animated file is still what the
-      // lightbox opens.
-      await sharp(absPath)
+      await sharp(absPath, isGif ? { animated: true } : {})
         .resize({ width: maxWidth, withoutEnlargement: true })
         .webp({ quality: 78 })
         .toFile(tmpPath);
