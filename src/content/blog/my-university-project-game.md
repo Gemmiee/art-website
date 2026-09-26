@@ -53,3 +53,5 @@ We got a final grade of 9/10 which was fair enough since we promised to add more
 
 
 *💌 End of article. Thank you for reading! 💌*
+
+![doodle](/images/blog/assets/GemWasHere-1.webp)

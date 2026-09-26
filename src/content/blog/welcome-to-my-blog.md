@@ -47,3 +47,5 @@ And many many more. I'm also a CD and cassette enjoyer--fully promote the idea o
 
 
 *💌 That's it! Thank you for reading my first article! 💌*
+
+![doodle](/images/blog/assets/GemWasHere-1.webp)
