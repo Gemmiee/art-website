@@ -889,6 +889,13 @@ h1 {
   color: inherit;
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
+/* the tag filter script sets the `hidden` attribute on non-matching cards,
+   but the browser's default "[hidden] { display: none }" rule is lower
+   specificity than .blog-card's own `display: flex` above and loses to it
+   — without this, a "hidden" card still renders at full size. */
+.blog-card[hidden] {
+  display: none;
+}
 .blog-card:hover {
   transform: translateY(-3px);
   box-shadow: 0 10px 22px rgba(26, 18, 46, 0.3);

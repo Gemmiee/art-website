@@ -41,12 +41,12 @@ Aaand just like that, this idea went through, EVEN THOUGH the professor still wa
 
 ### Some game screenshots:
 
-![screenshot1](/images/image28.png)
-![screenshot2](/images/image20.png)
-![screenshot3](/images/image19.png)
+![screenshot1](/images/blog/assets/image28.png)
+![screenshot2](/images/blog/assets/image20.png)
+![screenshot3](/images/blog/assets/image19.png)
 
 ### Plus a doodle:
-![doodle](/images/universifight_doodle.png)
+![doodle](/images/blog/assets/universifight_doodle.png)
 
 <br/>
 We got a final grade of 9/10 which was fair enough since we promised to add more stuff but unfortunately did not have enough time. Big shoutout and thanks to my group friends Bill and Leda (aka the knight and elf in the game) :p
