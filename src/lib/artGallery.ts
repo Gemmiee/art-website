@@ -5,7 +5,15 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { execFileSync } from 'node:child_process';
+import ffmpegStaticPath from 'ffmpeg-static';
 import { getImageThumb } from './imageThumb';
+
+// Cloudflare Pages' build image doesn't have a system `ffmpeg` on PATH (the
+// build log showed "[artGallery] ffmpeg not found" and every video silently
+// fell back to a plain play icon instead of a real poster frame) — bundling
+// a prebuilt binary via the ffmpeg-static npm package sidesteps that
+// entirely, no Cloudflare build/deploy config changes needed.
+const FFMPEG_BIN = ffmpegStaticPath ?? 'ffmpeg';
 
 export interface ArtItem {
   name: string;
@@ -34,7 +42,7 @@ let ffmpegAvailable: boolean | undefined;
 function hasFfmpeg(): boolean {
   if (ffmpegAvailable === undefined) {
     try {
-      execFileSync('ffmpeg', ['-version'], { stdio: 'ignore' });
+      execFileSync(FFMPEG_BIN, ['-version'], { stdio: 'ignore' });
       ffmpegAvailable = true;
     } catch {
       ffmpegAvailable = false;
@@ -58,7 +66,7 @@ function getVideoPoster(absVideoPath: string): string | undefined {
   if (!fs.existsSync(posterAbsPath)) {
     fs.mkdirSync(POSTER_DIR, { recursive: true });
     try {
-      execFileSync('ffmpeg', [
+      execFileSync(FFMPEG_BIN, [
         '-y',
         '-ss', '00:00:01',
         '-i', absVideoPath,
@@ -69,7 +77,7 @@ function getVideoPoster(absVideoPath: string): string | undefined {
     } catch {
       // Video may be shorter than 1 second — fall back to the very first frame.
       try {
-        execFileSync('ffmpeg', [
+        execFileSync(FFMPEG_BIN, [
           '-y',
           '-i', absVideoPath,
           '-frames:v', '1',
