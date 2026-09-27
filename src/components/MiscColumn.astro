@@ -75,12 +75,20 @@ const embedCode = `<a href="${siteUrl}"><img src="${ownButtonSrc}" width="88" he
     </div>
     <div class="window-body">
       <p class="hand-note">Cool as heck people</p>
-      <div class="friend-grid">
-        {friends.map((friend) => (
-          <a class="friend-btn" href={friend.href} target="_blank" rel="noopener">
-            <img src={`/images/friends/${friend.button}`} width="88" height="31" alt={friend.name} />
-          </a>
-        ))}
+      <div class="friend-marquee">
+        <div class="friend-marquee-track">
+          {friends.map((friend) => (
+            <a class="friend-btn" href={friend.href} target="_blank" rel="noopener">
+              <img src={`/images/friends/${friend.button}`} width="88" height="31" alt={friend.name} />
+            </a>
+          ))}
+          {/* repeat the buttons so the marquee can loop seamlessly */}
+          {friends.map((friend) => (
+            <a class="friend-btn" href={friend.href} target="_blank" rel="noopener" aria-hidden="true" tabindex="-1">
+              <img src={`/images/friends/${friend.button}`} width="88" height="31" alt="" />
+            </a>
+          ))}
+        </div>
       </div>
 
       <BubbleDivider />

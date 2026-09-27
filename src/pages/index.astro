@@ -23,9 +23,8 @@ const updates = [
 ];
 
 const announcements = [
+  'Made a little bit of a revamp: friends list now moooves, plus added a new thinner banner :p',
   'YO blog is finally here! 📰 Fr cant believe it, more posts will come soon!',
-  'Art tutorials will be coming soon :]',
-  'Art gallery is now open! 🎨',
   'Site is perpetually a work in progress',
 ];
 ---
@@ -86,8 +85,8 @@ const announcements = [
               <div class="update-card-banner">
                 <img src="/images/banners/banner_site_updates.png" alt="Site Updates" />
               </div>
-              <div class="update-card-body card-ocean">
-                <div class="update-card-scroll scroll-ocean">
+              <div class="update-card-body card-border">
+                <div class="update-card-scroll scroll-border">
                   <ul class="update-list">
                     {updates.map((u) => (
                       <li><span class="update-date">{u.date}</span> {u.text}</li>

@@ -561,9 +561,6 @@ button:focus-visible {
   background-position: center;
   overflow: hidden;
 }
-.card-ocean {
-  background-image: url('/images/cards/card_ocean.png');
-}
 .card-border {
   background-image: url('/images/cards/card_border.png');
 }
@@ -575,20 +572,6 @@ button:focus-visible {
 }
 .update-card-scroll .update-list {
   font-size: 0.85rem;
-}
-/* card_ocean's art is busy edge-to-edge, so the text gets its own frosted panel
-   that follows the theme tokens (was a hardcoded white rgba, which stayed
-   white in dark mode while the text above it flipped to light ink) */
-.scroll-ocean {
-  top: 22%;
-  left: 8%;
-  right: 8%;
-  bottom: 12%;
-  background: var(--glass-fill-strong);
-  backdrop-filter: blur(3px);
-  -webkit-backdrop-filter: blur(3px);
-  box-shadow: 0 2px 8px rgba(26,18,46,0.2);
-  transition: background var(--theme-transition) ease;
 }
 /* card_border already has a pale interior, so text sits straight on it */
 .scroll-border {
@@ -1955,15 +1938,40 @@ h1 {
   transform: translate(-50%, calc(-100% - 11px)) scale(1);
 }
 
-/* friend links / webring buttons — classic 88x31s */
-.friend-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+/* friend links / webring buttons — classic 88x31s, scrolling right-to-left
+   like an old-web marquee. The track holds the button list twice back to
+   back (see MiscColumn.astro); animating it left by exactly one copy's
+   width means the instant it "runs out," the second copy is already sitting
+   exactly where the first one started, so the loop has no visible seam. */
+.friend-marquee {
+  overflow: hidden;
   margin-bottom: 4px;
+  /* soft fade at both edges instead of an abrupt clip, so buttons ease in
+     from the right and out to the left rather than popping in/out */
+  mask-image: linear-gradient(to right, transparent, black 20px, black calc(100% - 20px), transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 20px, black calc(100% - 20px), transparent);
+}
+.friend-marquee-track {
+  display: flex;
+  width: max-content;
+  gap: 8px;
+  animation: friend-marquee-scroll 24s linear infinite;
+}
+.friend-marquee:hover .friend-marquee-track {
+  animation-play-state: paused;
+}
+@keyframes friend-marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .friend-marquee-track {
+    animation: none;
+  }
 }
 .friend-btn {
   display: block;
+  flex-shrink: 0;
   width: 88px;
   height: 31px;
   border-radius: 3px;
@@ -1979,6 +1987,17 @@ h1 {
 .friend-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(26, 18, 46, 0.3);
+}
+
+/* BubbleDivider's own default (26px top+bottom) is sized for the wider main
+   content column — inside this narrow sidebar window it reads as a big gap
+   next to "grab my button". #friend-links needs an ID in the selector (not
+   just .bubble-divider) to reliably outrank the component's own scoped
+   style, which Astro compiles to something like
+   .bubble-divider[data-astro-cid-xxx] — higher specificity than a bare
+   class selector would have. */
+#friend-links .bubble-divider {
+  margin: 10px 0;
 }
 
 /* grab-my-button embed snippet */
