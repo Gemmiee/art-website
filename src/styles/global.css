@@ -306,6 +306,7 @@ button:focus-visible {
   gap: 8px;
   position: sticky;
   top: 20px;
+  min-width: 0;
 }
 .col-misc {
   grid-area: misc;
@@ -314,6 +315,12 @@ button:focus-visible {
   gap: 8px;
   position: sticky;
   top: 20px;
+  /* without this, the friend-links marquee's non-wrapping max-content
+     track (see .friend-marquee-track) drags this flex column's own
+     intrinsic width out to the track's full unrolled width — and since
+     mobile stacks nav/main/misc into one shared 1fr grid column, that
+     dragged the ENTIRE page out to ~1370px wide instead of the viewport */
+  min-width: 0;
 }
 .footer { grid-area: footer; }
 
