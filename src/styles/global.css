@@ -806,8 +806,22 @@ h1 {
   color: var(--accent-deep);
   font-weight: 700;
 }
+.blog-subscribe-rss-note {
+  margin: 14px 0 8px;
+  font-size: 0.84rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
 .blog-subscribe .embed-row {
   margin: 0;
+}
+.blog-subscribe .embed-input {
+  font-size: 0.82rem;
+  padding: 9px 12px;
+}
+.blog-subscribe .embed-copy-btn {
+  font-size: 0.82rem;
+  padding: 9px 16px;
 }
 
 .blog-tag-filters,
