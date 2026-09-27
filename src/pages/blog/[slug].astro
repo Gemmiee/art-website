@@ -27,7 +27,7 @@ const formattedDate = post.data.date.toLocaleDateString('en-US', {
 const thumbnailUrl = `/images/blog/${encodeURIComponent(post.data.thumbnail)}`;
 ---
 
-<Layout title={`${post.data.title} ☆ gemmie's corner`} description={post.data.excerpt} image={thumbnailUrl} feedUrl="/blog/rss.xml">
+<Layout title={`${post.data.title} ☆ Gemmie's corner`} description={post.data.excerpt} image={thumbnailUrl} feedUrl="/blog/rss.xml">
   <PageShell showMisc={false}>
     <!-- ================= blog post window ================= -->
     <section class="window main-doc">
