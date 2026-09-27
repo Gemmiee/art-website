@@ -25,6 +25,10 @@ const isCurrent = (href: string) => {
   const target = href.replace(/\/$/, '') || '/';
   return target === currentPath;
 };
+
+// On every page except the home page, the nav's banner sections (Topics,
+// Games, Contact) start collapsed so the sidebar takes up less room.
+const startExpanded = currentPath === '/';
 ---
 
 <div class="col-nav">
@@ -53,44 +57,56 @@ const isCurrent = (href: string) => {
       </div>
     </div>
     <div class="window-body">
-      <img class="nav-banner-img" src="/images/banners/banner_topics.png" alt="Topics" />
-      <ul class="nav-list">
-        {quickNav.map((item) => (
-          <li>
-            <a
-              href={item.href}
-              aria-current={isCurrent(item.href) ? 'page' : undefined}
-            >
-              <span aria-hidden="true">{item.emoji}</span> {item.label}
-            </a>
-          </li>
-        ))}
-      </ul>
-
-      <img class="nav-banner-img" id="games" src="/images/banners/banner_games.png" alt="Games" />
-      <div class="games-grid">
-        {unlockedGames.map((game) => (
-          <a
-            class="game-slot game-slot-active"
-            href={game.href}
-            aria-current={isCurrent(game.href) ? 'page' : undefined}
-          >
-            <span class="game-slot-icon">{game.icon}</span>
-            <span class="game-slot-name">{game.name}</span>
-          </a>
-        ))}
+      <div class="nav-section">
+        <button class="nav-section-toggle" type="button" aria-expanded={startExpanded ? 'true' : 'false'} aria-controls="nav-sec-topics">
+          <img class="nav-banner-img" src="/images/banners/banner_topics.png" alt="Topics" />
+        </button>
+        <ul class:list={['nav-list', 'nav-section-content', !startExpanded && 'is-collapsed']} id="nav-sec-topics">
+          {quickNav.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                aria-current={isCurrent(item.href) ? 'page' : undefined}
+              >
+                <span aria-hidden="true">{item.emoji}</span> {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
       </div>
 
-      <img class="nav-banner-img" src="/images/banners/banner_contact.png" alt="Contact" />
-      <ul class="nav-list">
-        {contactLinks.map((item) => (
-          <li>
-            <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
-              <span aria-hidden="true">{item.emoji}</span> {item.label}
+      <div class="nav-section">
+        <button class="nav-section-toggle" type="button" aria-expanded={startExpanded ? 'true' : 'false'} aria-controls="nav-sec-games">
+          <img class="nav-banner-img" id="games" src="/images/banners/banner_games.png" alt="Games" />
+        </button>
+        <div class:list={['games-grid', 'nav-section-content', !startExpanded && 'is-collapsed']} id="nav-sec-games">
+          {unlockedGames.map((game) => (
+            <a
+              class="game-slot game-slot-active"
+              href={game.href}
+              aria-current={isCurrent(game.href) ? 'page' : undefined}
+            >
+              <span class="game-slot-icon">{game.icon}</span>
+              <span class="game-slot-name">{game.name}</span>
             </a>
-          </li>
-        ))}
-      </ul>
+          ))}
+        </div>
+      </div>
+
+      <div class="nav-section">
+        <button class="nav-section-toggle" type="button" aria-expanded={startExpanded ? 'true' : 'false'} aria-controls="nav-sec-contact">
+          <img class="nav-banner-img" src="/images/banners/banner_contact.png" alt="Contact" />
+        </button>
+        <ul class:list={['nav-list', 'nav-section-content', !startExpanded && 'is-collapsed']} id="nav-sec-contact">
+          {contactLinks.map((item) => (
+            <li>
+              <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+                <span aria-hidden="true">{item.emoji}</span> {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   </section>
 
@@ -124,3 +140,16 @@ const isCurrent = (href: string) => {
     </div>
   </section>
 </div>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    document.querySelectorAll<HTMLButtonElement>('.nav-section-toggle').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const expanded = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', String(!expanded));
+        const content = document.getElementById(btn.getAttribute('aria-controls') || '');
+        content?.classList.toggle('is-collapsed', expanded);
+      });
+    });
+  });
+</script>
