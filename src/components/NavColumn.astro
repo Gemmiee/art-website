@@ -59,7 +59,7 @@ const startExpanded = currentPath === '/';
     <div class="window-body">
       <div class="nav-section">
         <button class="nav-section-toggle" type="button" aria-expanded={startExpanded ? 'true' : 'false'} aria-controls="nav-sec-topics">
-          <img class="nav-banner-img" src="/images/banners/banner_topics.png" alt="Topics" />
+          <img class="nav-banner-img" src="/images/banners/banner_topics.webp" alt="Topics" />
         </button>
         <ul class:list={['nav-list', 'nav-section-content', !startExpanded && 'is-collapsed']} id="nav-sec-topics">
           {quickNav.map((item) => (
@@ -77,7 +77,7 @@ const startExpanded = currentPath === '/';
 
       <div class="nav-section">
         <button class="nav-section-toggle" type="button" aria-expanded={startExpanded ? 'true' : 'false'} aria-controls="nav-sec-games">
-          <img class="nav-banner-img" id="games" src="/images/banners/banner_games.png" alt="Games" />
+          <img class="nav-banner-img" id="games" src="/images/banners/banner_games.webp" alt="Games" />
         </button>
         <div class:list={['games-grid', 'nav-section-content', !startExpanded && 'is-collapsed']} id="nav-sec-games">
           {unlockedGames.map((game) => (
@@ -95,7 +95,7 @@ const startExpanded = currentPath === '/';
 
       <div class="nav-section">
         <button class="nav-section-toggle" type="button" aria-expanded={startExpanded ? 'true' : 'false'} aria-controls="nav-sec-contact">
-          <img class="nav-banner-img" src="/images/banners/banner_contact.png" alt="Contact" />
+          <img class="nav-banner-img" src="/images/banners/banner_contact.webp" alt="Contact" />
         </button>
         <ul class:list={['nav-list', 'nav-section-content', !startExpanded && 'is-collapsed']} id="nav-sec-contact">
           {contactLinks.map((item) => (
