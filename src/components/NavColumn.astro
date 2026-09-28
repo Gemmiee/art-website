@@ -1,5 +1,8 @@
 ---
 // Left sidebar: site navigation + the music player, present on every page.
+import { musicAlbums } from '../data/musicAlbums';
+
+const defaultAlbum = musicAlbums[0];
 
 const quickNav = [
   { emoji: '🙋', label: 'Main Page', href: '/' },
@@ -7,6 +10,7 @@ const quickNav = [
   { emoji: '💌', label: 'Commissions', href: '/art/commissions' },
   { emoji: '📰', label: 'Blog', href: '/blog' },
   { emoji: '🔗', label: 'Links', href: '/links' },
+  { emoji: '🎶', label: 'Music', href: '/music' },
 ];
 
 const unlockedGames = [
@@ -123,22 +127,25 @@ const startExpanded = currentPath === '/';
         <span class="tb-btn close">×</span>
       </div>
     </div>
-    <div class="window-body bandcamp-body">
+    <div class="window-body bandcamp-body" id="now-playing-widget">
+      <a class="now-playing-change-link" href="/music">📀🎶 Change the music here!</a>
       <img
         class="bandcamp-cover"
-        src="https://f4.bcbits.com/img/a3714087150_10.jpg"
-        alt="Motorslice OST album cover"
+        id="now-playing-cover"
+        src={defaultAlbum.coverUrl}
+        alt={`${defaultAlbum.title} album cover`}
         loading="lazy"
       />
-      <iframe
-        class="bandcamp-frame"
-        title="Motorslice OST by Pizza Hotline — Bandcamp player"
-        src="https://bandcamp.com/EmbeddedPlayer/album=44696348/size=large/bgcol=faf3ea/linkcol=4b3a7a/tracklist=false/artwork=none/"
-        seamless
-        loading="lazy"
-      >
-        Motorslice (Original Soundtrack) by Pizza Hotline, listen at pizzahotline.bandcamp.com/album/motorslice-ost
-      </iframe>
+      <p class="now-playing-label" id="now-playing-label">{defaultAlbum.title} — {defaultAlbum.artist}</p>
+      <!-- This is a placeholder, not the real player: a live iframe reloads
+           the instant a browser detaches + reattaches it, which is exactly
+           what Astro's page-swap does to everything on the page (including
+           transition:persist'ed elements — proven by testing, not assumed).
+           The actual iframe is created once by client JS and lives directly
+           on document.body, completely outside anything Astro re-renders or
+           swaps, then visually pinned on top of this slot's position — so it
+           never gets detached, and playback survives every navigation. -->
+      <div class="bandcamp-frame bandcamp-frame-slot" id="now-playing-iframe-slot" aria-hidden="true"></div>
     </div>
   </section>
 </div>
@@ -153,5 +160,122 @@ const startExpanded = currentPath === '/';
         content?.classList.toggle('is-collapsed', expanded);
       });
     });
+  });
+</script>
+
+<script define:vars={{ musicAlbums }} is:inline>
+  // The floating Bandcamp player: see the comment on #now-playing-iframe-slot
+  // in the markup above for why this can't just be a normal iframe in the
+  // page. This block runs after every navigation (astro:page-load fires on
+  // hard loads AND every soft client-side nav) — the one-time setup (creating
+  // the floating iframe, wiring the window listener) is guarded so it only
+  // happens once per session, but repositioning + resyncing the visible
+  // cover/label has to happen on every single nav, since the slot and the
+  // cover/label elements are ordinary Astro-rendered nodes that get freshly
+  // recreated (reset to the default album) on every page.
+  document.addEventListener('astro:page-load', () => {
+    const cover = document.getElementById('now-playing-cover');
+    const label = document.getElementById('now-playing-label');
+    if (!cover || !label) return;
+
+    const bandcampEmbedSrc = (albumId) =>
+      `https://bandcamp.com/EmbeddedPlayer/album=${albumId}/size=large/bgcol=faf3ea/linkcol=4b3a7a/tracklist=false/artwork=none/`;
+    const findAlbum = (id) => musicAlbums.find((a) => a.id === id);
+    // Re-queries the DOM every call rather than closing over cover/label —
+    // the gemmie:play-album listener below is only ever attached once (see
+    // the init guard further down), so its closure would otherwise keep
+    // pointing at whatever page happened to be live at that first attach,
+    // which is a stale, disconnected node on every later page.
+    const renderInfo = (album) => {
+      const coverEl = document.getElementById('now-playing-cover');
+      const labelEl = document.getElementById('now-playing-label');
+      if (coverEl) {
+        coverEl.src = album.coverUrl;
+        coverEl.alt = `${album.title} album cover`;
+      }
+      if (labelEl) {
+        labelEl.textContent = `${album.title} — ${album.artist}`;
+      }
+    };
+
+    if (!window.__gemmieFloatingFrame) {
+      const frame = document.createElement('iframe');
+      frame.id = 'now-playing-frame';
+      frame.className = 'bandcamp-frame bandcamp-frame-floating';
+      frame.setAttribute('seamless', '');
+      // Appended to <html> itself, NOT document.body — Astro's page-swap
+      // replaces the whole <body> element wholesale on every navigation (not
+      // a fine-grained diff of its children), so anything living inside body
+      // gets wiped along with it regardless of how it got there. A sibling
+      // of <body> is untouched by that swap. position:fixed below doesn't
+      // care about DOM ancestry, so this has no visual effect.
+      document.documentElement.appendChild(frame);
+      window.__gemmieFloatingFrame = frame;
+
+      const syncPosition = () => {
+        const slot = document.getElementById('now-playing-iframe-slot');
+        if (!slot) {
+          frame.style.display = 'none';
+          return;
+        }
+        const rect = slot.getBoundingClientRect();
+        const visible = rect.width > 0 && rect.height > 0;
+        frame.style.display = visible ? 'block' : 'none';
+        if (visible) {
+          frame.style.top = `${rect.top}px`;
+          frame.style.left = `${rect.left}px`;
+          frame.style.width = `${rect.width}px`;
+          frame.style.height = `${rect.height}px`;
+        }
+      };
+      window.__gemmieSyncNowPlaying = syncPosition;
+
+      window.addEventListener('scroll', syncPosition, { passive: true });
+      window.addEventListener('resize', syncPosition);
+      const navCol = document.querySelector('.col-nav');
+      if (navCol) new ResizeObserver(syncPosition).observe(navCol);
+    }
+
+    const frame = window.__gemmieFloatingFrame;
+
+    const setAlbum = (album, { persist = true } = {}) => {
+      renderInfo(album);
+      // Reassigning an iframe's src to the SAME url still restarts it in
+      // some browsers, which would kill playback whenever this runs again —
+      // this guard is what makes "do nothing when it's already playing"
+      // possible. window.__gemmieCurrentAlbumId (not a DOM attribute) is the
+      // source of truth here since the DOM nodes themselves get recreated
+      // fresh by Astro on every navigation.
+      if (window.__gemmieCurrentAlbumId === album.id) return;
+      window.__gemmieCurrentAlbumId = album.id;
+      frame.src = bandcampEmbedSrc(album.id);
+      frame.title = `${album.title} by ${album.artist} — Bandcamp player`;
+      if (persist) {
+        try {
+          localStorage.setItem('gemmie-now-playing-album', album.id);
+        } catch {}
+      }
+    };
+
+    if (!window.__gemmieNowPlayingInit) {
+      window.__gemmieNowPlayingInit = true;
+      let initialAlbum = musicAlbums[0];
+      try {
+        const savedId = localStorage.getItem('gemmie-now-playing-album');
+        const saved = savedId && findAlbum(savedId);
+        if (saved) initialAlbum = saved;
+      } catch {}
+      setAlbum(initialAlbum, { persist: false });
+
+      window.addEventListener('gemmie:play-album', (e) => setAlbum(e.detail));
+    } else {
+      // Not the first load this session — the iframe is untouched and still
+      // playing, but the cover/label are fresh nodes showing the default
+      // album again, so resync them to whatever's actually still playing.
+      const current = findAlbum(window.__gemmieCurrentAlbumId);
+      if (current) renderInfo(current);
+    }
+
+    window.__gemmieSyncNowPlaying?.();
   });
 </script>

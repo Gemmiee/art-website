@@ -26,5 +26,5 @@ function copyGeneratedDir(dirName) {
 
 export default defineConfig({
   site: 'https://gemmiewow.com',
-  integrations: [copyGeneratedDir('video-posters'), copyGeneratedDir('thumbs')],
+  integrations: [copyGeneratedDir('video-posters'), copyGeneratedDir('thumbs'), copyGeneratedDir('music-covers')],
 });
