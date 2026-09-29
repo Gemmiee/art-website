@@ -190,12 +190,42 @@ const startExpanded = currentPath === '/';
 
 <script>
   document.addEventListener('astro:page-load', () => {
+    // Main page always shows every section expanded (see startExpanded in
+    // the frontmatter) regardless of what's remembered below — this just
+    // has to match that same "is it home" check so the two never disagree.
+    const path = window.location.pathname.replace(/\/$/, '') || '/';
+    const isHome = path === '/';
+
+    const setSection = (btn: HTMLButtonElement, expanded: boolean) => {
+      btn.setAttribute('aria-expanded', String(expanded));
+      const content = document.getElementById(btn.getAttribute('aria-controls') || '');
+      content?.classList.toggle('is-collapsed', !expanded);
+    };
+
     document.querySelectorAll<HTMLButtonElement>('.nav-section-toggle').forEach((btn) => {
+      const sectionId = btn.getAttribute('aria-controls') || '';
+      const storageKey = `gemmie-nav-expanded:${sectionId}`;
+
+      // Restore whatever was last chosen for this section on any OTHER
+      // page — skipped on home, which always renders fully expanded
+      // server-side already (startExpanded), so there's nothing to restore.
+      if (!isHome) {
+        try {
+          const saved = localStorage.getItem(storageKey);
+          if (saved !== null) {
+            setSection(btn, saved === 'true');
+          }
+        } catch {}
+      }
+
       btn.addEventListener('click', () => {
-        const expanded = btn.getAttribute('aria-expanded') === 'true';
-        btn.setAttribute('aria-expanded', String(!expanded));
-        const content = document.getElementById(btn.getAttribute('aria-controls') || '');
-        content?.classList.toggle('is-collapsed', expanded);
+        const nowExpanded = btn.getAttribute('aria-expanded') !== 'true';
+        setSection(btn, nowExpanded);
+        // Saved even when clicked on home, so the choice is there waiting
+        // the next time a non-home page loads.
+        try {
+          localStorage.setItem(storageKey, String(nowExpanded));
+        } catch {}
       });
     });
   });
