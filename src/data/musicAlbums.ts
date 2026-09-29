@@ -33,20 +33,7 @@ export const musicAlbums: MusicAlbum[] = [
     coverUrl: 'https://f4.bcbits.com/img/a3090449752_1x1_700.avif',
     albumUrl: 'https://lacedrecords.bandcamp.com/album/vampire-survivors-vol-1-original-soundtrack-1',
   },
-  {
-    id: '938443282',
-    title: 'Enter the Gungeon (Original Soundtrack)',
-    artist: 'Doseone',
-    coverUrl: 'https://f4.bcbits.com/img/a2168908028_1x1_700.avif',
-    albumUrl: 'https://doseone.bandcamp.com/album/enter-the-gungeon-original-soundtrack',
-  },
-  {
-    id: '2955245981',
-    title: 'Undertale Soundtrack',
-    artist: 'Toby Fox',
-    coverUrl: 'https://f4.bcbits.com/img/a2854475053_1x1_700.avif',
-    albumUrl: 'https://tobyfox.bandcamp.com/album/undertale-soundtrack',
-  },
+
   {
     id: '1420100316',
     title: 'Plants vs. Zombies Soundtrack',
@@ -68,13 +55,7 @@ export const musicAlbums: MusicAlbum[] = [
     coverUrl: 'https://f4.bcbits.com/img/a1112985681_1x1_700.avif',
     albumUrl: 'https://c418.bandcamp.com/album/minecraft-volume-beta',
   },
-  {
-    id: '2136659789',
-    title: 'Smash Hit (Original Soundtrack)',
-    artist: 'Douglas Holmquist',
-    coverUrl: 'https://f4.bcbits.com/img/a2540284740_1x1_700.avif',
-    albumUrl: 'https://douglasholmquist.bandcamp.com/album/smash-hit-ost',
-  },
+
   {
     id: '1525965313',
     title: 'Cuphead (Original Soundtrack)',
@@ -82,13 +63,7 @@ export const musicAlbums: MusicAlbum[] = [
     coverUrl: 'https://f4.bcbits.com/img/a2164104584_1x1_700.avif',
     albumUrl: 'https://studiomdhr.bandcamp.com/album/cuphead-original-soundtrack',
   },
-  {
-    id: '2306704082',
-    title: 'Hollow Knight (Original Soundtrack)',
-    artist: 'Christopher Larkin',
-    coverUrl: 'https://f4.bcbits.com/img/a0907743342_10.jpg',
-    albumUrl: 'https://christopherlarkin.bandcamp.com/album/hollow-knight-original-soundtrack',
-  },
+
   {
     id: '2141448418',
     title: 'Hollow Knight (Gods Nightmares)',
@@ -96,20 +71,7 @@ export const musicAlbums: MusicAlbum[] = [
     coverUrl: 'https://f4.bcbits.com/img/a854956843_1x1_700.avif',
     albumUrl: 'https://christopherlarkin.bandcamp.com/album/hollow-knight-gods-nightmares',
   },
-  {
-    id: '1076001632',
-    title: 'Shadowlorn',
-    artist: 'CryoCrypt',
-    coverUrl: 'https://f4.bcbits.com/img/a2769087990_1x1_700.avif',
-    albumUrl: 'https://cryocrypt.bandcamp.com/album/shadowlorn',
-  },
-  {
-    id: '591133039',
-    title: 'Struggles of a King',
-    artist: 'CryoCrypt',
-    coverUrl: 'https://f4.bcbits.com/img/a3202840965_1x1_700.avif',
-    albumUrl: 'https://cryocrypt.bandcamp.com/album/struggles-of-a-king',
-  }
+
 ];
 
 export function bandcampEmbedSrc(albumId: string): string {
