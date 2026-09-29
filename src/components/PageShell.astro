@@ -11,10 +11,7 @@ const { showMisc = true } = Astro.props;
 
 <main class:list={['wrap', 'layout-grid', !showMisc && 'no-misc']}>
   <!-- ================= mood check (FOR MOBILE) =================
-       Only visible on mobile, yes its a double mood check. The desktop one lives
-       inside NavColumn.astro it's stuck-together with
-       topics.exe as one. The mobile version of this looked ugly as heeell
-       thus I changed it to be on top of gemmie-site. -->
+       Only visible on mobile  -->
   <div class="nav-mascot in-shell">
     <div class="nav-mascot-cloud">
       <img class="nav-mascot-cloud-img" src="/images/banners/speech_cloud_inverted.png" alt="" aria-hidden="true" />
