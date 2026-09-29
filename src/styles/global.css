@@ -276,6 +276,18 @@ button:focus-visible {
   color: var(--accent-orange);
 }
 
+/* inline "sticker" images (see public/images/stickers + Sticker.astro) —
+   sized in em so the same tag looks right whether it's sitting in a small
+   nav link or a full-size paragraph, without hand-tuning width/height
+   every time one gets dropped somewhere new */
+.sticker {
+  display: inline-block;
+  height: 1.4em;
+  width: auto;
+  vertical-align: middle;
+  margin: 0 1px;
+}
+
 /* ============================================
    page shell: 3-column desktop layout
    (shared by every page — see PageShell.astro,

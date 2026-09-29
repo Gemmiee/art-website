@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import PageShell from '../components/PageShell.astro';
+import Sticker from '../components/Sticker.astro';
 
 // Sites gemmie enjoys or that helped her out along the way — add real
 // entries here as { name, href, blurb }
@@ -54,7 +55,7 @@ const links: { name: string; href: string; blurb: string }[] = [
     <!-- ================= links window ================= -->
     <section class="window main-doc">
       <div class="title-bar">
-        <span class="title-bar-icon" aria-hidden="true">🔗</span>
+        <span class="title-bar-icon" aria-hidden="true"><Sticker name="black_computer.gif" /></span>
         <span class="title-bar-text">gemmies-links.exe</span>
         <div class="title-bar-controls" aria-hidden="true">
           <span class="tb-btn">_</span>

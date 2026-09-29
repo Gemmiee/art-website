@@ -1,0 +1,23 @@
+---
+// Drops in one of the sticker images from public/images/stickers — pass
+// just the filename, e.g. <Sticker name="blue_cd.png" />. Usable anywhere
+// in a .astro file: nav labels, blurbs, cards, wherever a little inline
+// sticker fits next to text. For raw markdown text (blog posts etc.),
+// paste an <img class="sticker" src="/images/stickers/whatever.gif" alt="">
+// directly instead — same sizing, no component needed there.
+interface Props {
+  name: string;
+  alt?: string;
+  size?: number;
+}
+
+const { name, alt = '', size } = Astro.props;
+---
+
+<img
+  class="sticker"
+  src={`/images/stickers/${name}`}
+  alt={alt}
+  loading="lazy"
+  style={size ? `height: ${size}px;` : undefined}
+/>

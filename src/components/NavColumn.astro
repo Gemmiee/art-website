@@ -1,27 +1,48 @@
 ---
 // Left sidebar: site navigation + the music player, present on every page.
 import { musicAlbums } from '../data/musicAlbums';
+import Sticker from './Sticker.astro';
 
 const defaultAlbum = musicAlbums[0];
 
-const quickNav = [
-  { emoji: '🙋', label: 'Main Page', href: '/' },
-  { emoji: '🖼️', label: 'Art', href: '/art' },
-  { emoji: '💌', label: 'Commissions', href: '/art/commissions' },
-  { emoji: '📰', label: 'Blog', href: '/blog' },
-  { emoji: '🔗', label: 'Links', href: '/links' },
-  { emoji: '🎶', label: 'Music', href: '/music' },
+// Either `emoji` or `sticker` (a filename from public/images/stickers) works
+// per link — sticker takes priority when both would somehow be set.
+interface NavLink {
+  label: string;
+  href: string;
+  emoji?: string;
+  sticker?: string;
+}
+
+const topicsLinks: NavLink[] = [
+  { sticker: 'yellow_sunflower.gif', label: 'Main Page', href: '/' },
+  { sticker: 'blue_letter.gif', label: 'Blog', href: '/blog' },
+  { sticker: 'black_cd.gif', label: 'Music', href: '/music' },
+  { sticker: 'blue_teddybear.gif', label: 'Guestbook', href: '/guestbook' },
 ];
 
-const unlockedGames = [
-  { icon: '🚀', name: 'Space Cadet Pinball', href: '/pinball' },
-  { icon: '🕷️', name: 'Spider Solitaire', href: '/spider-solitaire' },
-  { icon: '🎨', name: 'Paint', href: '/paint' },
-  { icon: '🔫', name: 'Metal Slug X', href: '/metal-slug-x' },
+const artLinks: NavLink[] = [
+  { sticker: 'blue_cinnamonroll.gif', label: 'Art', href: '/art' },
+  { sticker: 'blue_exclamations.gif', label: 'Commissions', href: '/art/commissions' },
 ];
 
-const contactLinks = [
-  { emoji: '📝', label: 'Guestbook', href: '/guestbook' },
+interface GameLink {
+  name: string;
+  href: string;
+  emoji?: string;
+  sticker?: string;
+}
+
+const unlockedGames: GameLink[] = [
+  { sticker: 'yellow_bee.gif', name: 'Space Cadet Pinball', href: '/pinball' },
+  { sticker: 'yellow_pompompurin.gif', name: 'Spider Solitaire', href: '/spider-solitaire' },
+  { sticker: 'blue_sea.gif', name: 'Paint', href: '/paint' },
+  { sticker: 'blue_console.gif', name: 'Metal Slug X', href: '/metal-slug-x' },
+];
+
+// Grows over time as more standalone pages get added (Clipboard, Blinkies, etc.)
+const otherLinks: NavLink[] = [
+  { sticker: 'black_computer.gif', label: 'Links', href: '/links' },
 ];
 
 const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
@@ -52,7 +73,7 @@ const startExpanded = currentPath === '/';
   <!-- ================= navigation ================= -->
   <section class="window compact inactive">
     <div class="title-bar">
-      <span class="title-bar-icon" aria-hidden="true">📁</span>
+      <span class="title-bar-icon" aria-hidden="true"><Sticker name="black_cursor.gif" /></span>
       <span class="title-bar-text">topics.exe</span>
       <div class="title-bar-controls" aria-hidden="true">
         <span class="tb-btn">_</span>
@@ -63,18 +84,35 @@ const startExpanded = currentPath === '/';
     <div class="window-body">
 
       <div class="nav-section">
-        
         <button class="nav-section-toggle" type="button" aria-expanded={startExpanded ? 'true' : 'false'} aria-controls="nav-sec-topics">
-          <img class="nav-banner-img" src="/images/banners/banner_topics.webp" alt="Topics" />
+          <img class="nav-banner-img" src="/images/banners/banner_nav_topics.webp" alt="Topics" />
         </button>
         <ul class:list={['nav-list', 'nav-section-content', !startExpanded && 'is-collapsed']} id="nav-sec-topics">
-          {quickNav.map((item) => (
+          {topicsLinks.map((item) => (
             <li>
               <a
                 href={item.href}
                 aria-current={isCurrent(item.href) ? 'page' : undefined}
               >
-                <span aria-hidden="true">{item.emoji}</span> {item.label}
+                {item.sticker ? <Sticker name={item.sticker} /> : <span aria-hidden="true">{item.emoji}</span>} {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <button class="nav-section-toggle" type="button" aria-expanded={startExpanded ? 'true' : 'false'} aria-controls="nav-sec-art">
+          <img class="nav-banner-img" src="/images/banners/banner_nav_art.webp" alt="Art" />
+        </button>
+        <ul class:list={['nav-list', 'nav-section-content', !startExpanded && 'is-collapsed']} id="nav-sec-art">
+          {artLinks.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                aria-current={isCurrent(item.href) ? 'page' : undefined}
+              >
+                {item.sticker ? <Sticker name={item.sticker} /> : <span aria-hidden="true">{item.emoji}</span>} {item.label}
               </a>
             </li>
           ))}
@@ -83,7 +121,7 @@ const startExpanded = currentPath === '/';
 
       <div class="nav-section">
         <button class="nav-section-toggle" type="button" aria-expanded={startExpanded ? 'true' : 'false'} aria-controls="nav-sec-games">
-          <img class="nav-banner-img" id="games" src="/images/banners/banner_games.webp" alt="Games" />
+          <img class="nav-banner-img" src="/images/banners/banner_nav_games.webp" alt="Games" />
         </button>
         <div class:list={['games-grid', 'nav-section-content', !startExpanded && 'is-collapsed']} id="nav-sec-games">
           {unlockedGames.map((game) => (
@@ -92,7 +130,7 @@ const startExpanded = currentPath === '/';
               href={game.href}
               aria-current={isCurrent(game.href) ? 'page' : undefined}
             >
-              <span class="game-slot-icon">{game.icon}</span>
+              {game.sticker ? <Sticker name={game.sticker} /> : <span class="game-slot-icon" aria-hidden="true">{game.emoji}</span>}
               <span class="game-slot-name">{game.name}</span>
             </a>
           ))}
@@ -100,14 +138,14 @@ const startExpanded = currentPath === '/';
       </div>
 
       <div class="nav-section">
-        <button class="nav-section-toggle" type="button" aria-expanded={startExpanded ? 'true' : 'false'} aria-controls="nav-sec-contact">
-          <img class="nav-banner-img" src="/images/banners/banner_contact.webp" alt="Contact" />
+        <button class="nav-section-toggle" type="button" aria-expanded={startExpanded ? 'true' : 'false'} aria-controls="nav-sec-other">
+          <img class="nav-banner-img" src="/images/banners/banner_nav_other.webp" alt="Other" />
         </button>
-        <ul class:list={['nav-list', 'nav-section-content', !startExpanded && 'is-collapsed']} id="nav-sec-contact">
-          {contactLinks.map((item) => (
+        <ul class:list={['nav-list', 'nav-section-content', !startExpanded && 'is-collapsed']} id="nav-sec-other">
+          {otherLinks.map((item) => (
             <li>
               <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
-                <span aria-hidden="true">{item.emoji}</span> {item.label}
+                {item.sticker ? <Sticker name={item.sticker} /> : <span aria-hidden="true">{item.emoji}</span>} {item.label}
               </a>
             </li>
           ))}
@@ -119,7 +157,7 @@ const startExpanded = currentPath === '/';
   <!-- ================= now playing ================= -->
   <section class="window compact inactive" id="now-playing">
     <div class="title-bar">
-      <span class="title-bar-icon" aria-hidden="true">♫</span>
+      <span class="title-bar-icon" aria-hidden="true"><Sticker name="black_cd.gif" /></span>
       <span class="title-bar-text">nowplaying.mp3</span>
       <div class="title-bar-controls" aria-hidden="true">
         <span class="tb-btn">_</span>
@@ -128,7 +166,7 @@ const startExpanded = currentPath === '/';
       </div>
     </div>
     <div class="window-body bandcamp-body" id="now-playing-widget">
-      <a class="now-playing-change-link" href="/music">📀🎶 Change the music here!</a>
+      <a class="now-playing-change-link" href="/music"><Sticker name="blue_cd.png" /> Change the music here!</a>
       <img
         class="bandcamp-cover"
         id="now-playing-cover"

@@ -5,6 +5,7 @@ import { getCollection } from 'astro:content';
 import path from 'node:path';
 import { getImageThumb } from '../../lib/imageThumb';
 import { tagHue } from '../../lib/tagColor';
+import Sticker from '../../components/Sticker.astro';
 
 const BLOG_IMAGES_DIR = path.join(process.cwd(), 'public', 'images', 'blog');
 const THUMB_WIDTH = 480;
@@ -37,7 +38,7 @@ const feedUrl = 'https://gemmiewow.com/blog/rss.xml';
     <!-- ================= blog window ================= -->
     <section class="window main-doc">
       <div class="title-bar">
-        <span class="title-bar-icon" aria-hidden="true">📰</span>
+        <span class="title-bar-icon" aria-hidden="true"><Sticker name="blue_letter.gif" /></span>
         <span class="title-bar-text">gemmies-blog.exe</span>
         <div class="title-bar-controls" aria-hidden="true">
           <span class="tb-btn">_</span>
@@ -216,7 +217,7 @@ const feedUrl = 'https://gemmiewow.com/blog/rss.xml';
             </div>
 
             <p class="blog-subscribe-rss-note">
-              📶 Prefer an RSS reader instead? The feed link works there too:
+              <Sticker name="blue_friends.gif" /> Prefer an RSS reader instead? The feed link works there too:
             </p>
             <div class="embed-row">
               <input class="embed-input" type="text" readonly value={feedUrl} />

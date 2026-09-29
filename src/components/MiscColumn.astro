@@ -2,6 +2,7 @@
 // Right sidebar: socials, friend links, guestbook. Only rendered on pages
 // that opt in via <PageShell showMisc> — secondary pages keep just nav + main.
 import BubbleDivider from './BubbleDivider.astro';
+import Sticker from './Sticker.astro';
 
 const socials = [
   { emoji: '🛍️', label: 'Ko-fi Shop', href: 'https://ko-fi.com/gemmiewow/', icon: 'icon_kofi.png' },
@@ -33,7 +34,7 @@ const embedCode = `<a href="${siteUrl}"><img src="${ownButtonSrc}" width="88" he
   <!-- ================= socials ================= -->
   <section class="window compact inactive" id="socials">
     <div class="title-bar">
-      <span class="title-bar-icon" aria-hidden="true">☆</span>
+      <span class="title-bar-icon" aria-hidden="true"><img class="sticker" src="/images/stickers/blue_fish.gif" alt="" /></span>
       <span class="title-bar-text">socials.txt</span>
       <div class="title-bar-controls" aria-hidden="true">
         <span class="tb-btn">_</span>
@@ -65,7 +66,7 @@ const embedCode = `<a href="${siteUrl}"><img src="${ownButtonSrc}" width="88" he
   <!-- ================= friend links / webring ================= -->
   <section class="window compact inactive" id="friend-links">
     <div class="title-bar">
-      <span class="title-bar-icon" aria-hidden="true">🔗</span>
+      <span class="title-bar-icon" aria-hidden="true"><Sticker name="pink_nintendo.gif" /></span>
       <span class="title-bar-text">friend-links.htm</span>
       <div class="title-bar-controls" aria-hidden="true">
         <span class="tb-btn">_</span>
@@ -107,7 +108,7 @@ const embedCode = `<a href="${siteUrl}"><img src="${ownButtonSrc}" width="88" he
   <!-- ================= guestbook ================= -->
   <section class="window compact inactive" id="guestbook">
     <div class="title-bar">
-      <span class="title-bar-icon" aria-hidden="true">📖</span>
+      <span class="title-bar-icon" aria-hidden="true"><Sticker name="marije_blanket.png" /></span>
       <span class="title-bar-text">chat.exe</span>
       <div class="title-bar-controls" aria-hidden="true">
         <span class="tb-btn">_</span>
