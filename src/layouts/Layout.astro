@@ -8,6 +8,7 @@ interface Props {
   description?: string;
   image?: string;
   feedUrl?: string;
+  verifyMeta?: string;
 }
 
 const {
@@ -15,6 +16,7 @@ const {
   description = 'Art, animation, music, guestbook, games and more!',
   image = '/images/banner.webp',
   feedUrl,
+  verifyMeta,
 } = Astro.props;
 
 // Chat apps/social platforms unfurling a shared link need an absolute image
@@ -38,6 +40,7 @@ const ogUrl = new URL(Astro.url.pathname, Astro.site).toString();
     <meta name="description" content={description} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     {feedUrl && <link rel="alternate" type="application/rss+xml" title="Gemmie's corner — Blog" href={feedUrl} />}
+    {verifyMeta && <meta name="follow.it-verification-code" content={verifyMeta} />}
     <title>{title}</title>
 
     <meta property="og:type" content="website" />
