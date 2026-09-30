@@ -997,6 +997,9 @@ h1 {
 .blog-article-body p {
   margin: 0 0 14px;
 }
+.blog-article-body .text-center {
+  text-align: center;
+}
 .blog-article-body h2,
 .blog-article-body h3 {
   font-family: var(--font-banner);
@@ -1021,6 +1024,31 @@ h1 {
   height: auto;
   border-radius: 10px;
   margin: 14px 0;
+}
+/* Optional size classes for individual images written as raw HTML in the
+   markdown body, e.g. <img src="..." class="img-small" />. */
+.blog-article-body img.img-small {
+  max-width: 250px;
+}
+.blog-article-body img.img-medium {
+  max-width: 450px;
+}
+.blog-article-body img.img-center {
+  margin-left: auto;
+  margin-right: auto;
+}
+/* Wrap two (or more) <img> tags in <div class="img-row"> to lay them out
+   side by side instead of stacked. */
+.blog-article-body .img-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 14px 0;
+}
+.blog-article-body .img-row img {
+  flex: 1 1 0;
+  min-width: 0;
+  margin: 0;
 }
 .blog-article-body blockquote {
   margin: 0 0 14px;
@@ -1049,7 +1077,7 @@ h1 {
   font-size: inherit;
   font-weight: 700;
   text-decoration: underline;
-  color: var(--accent-deep);
+  color: var(--accent-teal);
   cursor: pointer;
   transition: opacity 0.15s ease;
 }
