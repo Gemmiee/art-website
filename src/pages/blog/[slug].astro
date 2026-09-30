@@ -75,6 +75,24 @@ const thumbnailUrl = `/images/blog/${encodeURIComponent(post.data.thumbnail)}`;
         </div>
       </div>
     </section>
+
+    <!-- shared lightbox — same pattern as src/pages/art.astro / art/shop.astro.
+         Every image in the post body is clickable, no per-image markup needed. -->
+    <div class="art-lightbox" id="art-lightbox" hidden>
+      <div class="art-lightbox-backdrop" data-close></div>
+      <div class="art-lightbox-frame window">
+        <div class="title-bar">
+          <span class="title-bar-icon" aria-hidden="true">🖼️</span>
+          <span class="title-bar-text" id="art-lightbox-title"></span>
+          <div class="title-bar-controls" aria-hidden="true">
+            <span class="tb-btn close" data-close>×</span>
+          </div>
+        </div>
+        <div class="art-lightbox-body" id="art-lightbox-body"></div>
+        <button class="art-lightbox-nav art-lightbox-prev" type="button" id="art-lightbox-prev" aria-label="Previous image">‹</button>
+        <button class="art-lightbox-nav art-lightbox-next" type="button" id="art-lightbox-next" aria-label="Next image">›</button>
+      </div>
+    </div>
   </PageShell>
 </Layout>
 
@@ -101,5 +119,63 @@ const thumbnailUrl = `/images/blog/${encodeURIComponent(post.data.thumbnail)}`;
         void audio.play();
       });
     });
+
+    // Click-to-enlarge for every image written into a post's body — no
+    // per-image markup needed, this just wires up whatever <img> tags the
+    // post happens to contain. `.sticker` (inline text stickers) are
+    // excluded since those are decorative, not photos worth zooming.
+    const lightbox = document.getElementById('art-lightbox');
+    const lightboxBody = document.getElementById('art-lightbox-body');
+    const lightboxTitle = document.getElementById('art-lightbox-title');
+    const prevBtn = document.getElementById('art-lightbox-prev') as HTMLButtonElement | null;
+    const nextBtn = document.getElementById('art-lightbox-next') as HTMLButtonElement | null;
+    const images = Array.from(
+      document.querySelectorAll<HTMLImageElement>('.blog-article-body img:not(.sticker)')
+    );
+
+    if (lightbox && lightboxBody && lightboxTitle && prevBtn && nextBtn && images.length > 0) {
+      let currentIndex = -1;
+
+      const renderCurrent = () => {
+        const img = images[currentIndex];
+        if (!img) return;
+        lightboxTitle.textContent = img.alt || '';
+        lightboxBody.innerHTML = `<img src="${img.currentSrc || img.src}" alt="${img.alt || ''}" />`;
+      };
+
+      const step = (delta: number) => {
+        currentIndex = (currentIndex + delta + images.length) % images.length;
+        renderCurrent();
+      };
+
+      const closeLightbox = () => {
+        lightbox.hidden = true;
+        lightboxBody.innerHTML = '';
+        currentIndex = -1;
+      };
+
+      images.forEach((img, i) => {
+        img.addEventListener('click', () => {
+          currentIndex = i;
+          renderCurrent();
+          lightbox.hidden = false;
+          const hasMultiple = images.length > 1;
+          prevBtn.hidden = !hasMultiple;
+          nextBtn.hidden = !hasMultiple;
+        });
+      });
+
+      prevBtn.addEventListener('click', () => step(-1));
+      nextBtn.addEventListener('click', () => step(1));
+      lightbox.querySelectorAll<HTMLElement>('[data-close]').forEach((el) => {
+        el.addEventListener('click', closeLightbox);
+      });
+      document.addEventListener('keydown', (e) => {
+        if (lightbox.hidden) return;
+        if (e.key === 'Escape') closeLightbox();
+        else if (e.key === 'ArrowLeft') step(-1);
+        else if (e.key === 'ArrowRight') step(1);
+      });
+    }
   });
 </script>

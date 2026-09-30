@@ -1025,13 +1025,23 @@ h1 {
   border-radius: 10px;
   margin: 14px 0;
 }
+.blog-article-body img:not(.sticker) {
+  cursor: zoom-in;
+  transition: opacity 0.15s ease;
+}
+.blog-article-body img:not(.sticker):hover {
+  opacity: 0.85;
+}
 /* Optional size classes for individual images written as raw HTML in the
    markdown body, e.g. <img src="..." class="img-small" />. */
 .blog-article-body img.img-small {
-  max-width: 250px;
+  /* min() so the fixed cap never wins over the viewport on narrow phones —
+     a plain 250px would otherwise override the base rule's 100% cap above
+     (higher specificity) and overflow the screen. */
+  max-width: min(250px, 100%);
 }
 .blog-article-body img.img-medium {
-  max-width: 450px;
+  max-width: min(450px, 100%);
 }
 .blog-article-body img.img-center {
   margin-left: auto;
