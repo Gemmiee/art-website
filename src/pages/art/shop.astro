@@ -1,0 +1,238 @@
+---
+import fs from 'node:fs';
+import path from 'node:path';
+import Layout from '../../layouts/Layout.astro';
+import PageShell from '../../components/PageShell.astro';
+import BubbleDivider from '../../components/BubbleDivider.astro';
+import { getImageThumb } from '../../lib/imageThumb';
+import Sticker from '../../components/Sticker.astro';
+import { shopProducts, KOFI_SHOP_URL } from '../../data/shopProducts';
+
+const IMAGE_EXTS = new Set(['.png', '.jpg', '.jpeg', '.gif', '.webp']);
+const shopDir = path.join(process.cwd(), 'public', 'images', 'shop');
+const THUMB_WIDTH = 500;
+
+const shopFiles = fs.existsSync(shopDir)
+  ? fs.readdirSync(shopDir, { withFileTypes: true }).filter((entry) => entry.isFile())
+  : [];
+
+async function loadImages(id: string) {
+  const matches = shopFiles
+    .map((entry) => {
+      const ext = path.extname(entry.name).toLowerCase();
+      if (!IMAGE_EXTS.has(ext)) return null;
+      const base = entry.name.slice(0, -ext.length);
+      const match = base.match(new RegExp(`^${id}(\\d*)$`, 'i'));
+      if (!match) return null;
+      const order = match[1] ? parseInt(match[1], 10) : 1;
+      return { order, name: entry.name };
+    })
+    .filter((v): v is { order: number; name: string } => v !== null)
+    .sort((a, b) => a.order - b.order);
+
+  return Promise.all(
+    matches.map(async ({ name }) => {
+      const absPath = path.join(shopDir, name);
+      const url = `/images/shop/${encodeURIComponent(name)}`;
+      return {
+        url,
+        thumbUrl: (await getImageThumb(absPath, THUMB_WIDTH)) ?? url,
+      };
+    })
+  );
+}
+
+const products = await Promise.all(
+  shopProducts.map(async (product) => ({
+    ...product,
+    images: await loadImages(product.id),
+  }))
+);
+---
+
+<Layout title="Shop ☆ Gemmie's corner" description="Physical art prints and canvases available in my Ko-fi shop.">
+  <PageShell showMisc={false}>
+    <!-- ================= shop window ================= -->
+    <section class="window main-doc">
+      <div class="title-bar">
+        <span class="title-bar-icon" aria-hidden="true"><Sticker name="yellow_money.gif" /></span>
+        <span class="title-bar-text">gemmies-shop.exe</span>
+        <div class="title-bar-controls" aria-hidden="true">
+          <span class="tb-btn">_</span>
+          <span class="tb-btn">□</span>
+          <span class="tb-btn close">×</span>
+        </div>
+      </div>
+      <div class="window-body">
+        <div class="doc-section" id="shop">
+          <div class="doc-banner">
+            <span class="bubble-wrap" style="left: 8%; animation-duration: 3.2s; animation-delay: -0.5s;"><img class="bubble-icon" src="/images/bubble.png" alt="" /></span>
+            <span class="bubble-wrap" style="left: 26%; animation-duration: 4s; animation-delay: -2s;"><img class="bubble-icon" src="/images/bubble.png" alt="" /></span>
+            <span class="bubble-wrap" style="left: 46%; animation-duration: 3.5s; animation-delay: -1.2s;"><img class="bubble-icon" src="/images/bubble.png" alt="" /></span>
+            <span class="bubble-wrap" style="left: 66%; animation-duration: 4.5s; animation-delay: -3s;"><img class="bubble-icon" src="/images/bubble.png" alt="" /></span>
+            <span class="bubble-wrap" style="left: 84%; animation-duration: 3.8s; animation-delay: -1.8s;"><img class="bubble-icon" src="/images/bubble.png" alt="" /></span>
+            <img class="doc-banner-img" src="/images/banners/banner_kofi.png" alt="Shop" />
+          </div>
+
+          <p class="hand-note">
+            🎨 Physical canvases I've made! All items ship out from my Ko-fi shop!
+          </p>
+
+          <!-- <BubbleDivider /> -->
+
+          <div class="shop-product-list">
+            {products.map((product) => (
+              <div class="shop-product-card">
+                <div class="shop-product-gallery">
+                  <div class="shop-carousel">
+                    <div class="shop-carousel-track">
+                      {product.images.map((img, i) => (
+                        <button
+                          class:list={['shop-thumb', 'shop-carousel-slide', { 'is-active': i === 0 }]}
+                          type="button"
+                          data-full={img.url}
+                          data-kind="image"
+                          data-name={product.title}
+                        >
+                          <img src={img.thumbUrl} alt={product.title} loading="lazy" />
+                        </button>
+                      ))}
+                    </div>
+                    {product.images.length > 1 && (
+                      <>
+                        <button class="shop-carousel-nav shop-carousel-prev" type="button" aria-label="Previous image" data-carousel-prev>‹</button>
+                        <button class="shop-carousel-nav shop-carousel-next" type="button" aria-label="Next image" data-carousel-next>›</button>
+                        <div class="shop-carousel-dots">
+                          {product.images.map((_, i) => (
+                            <span class:list={['shop-carousel-dot', { 'is-active': i === 0 }]}></span>
+                          ))}
+                        </div>
+                      </>
+                    )}
+                  </div>
+                </div>
+                <div class="shop-product-info">
+                  <h2 class="shop-product-title">{product.title}</h2>
+                  <p class="shop-product-price">{product.price}</p>
+                  <p class="shop-product-summary">{product.summary}</p>
+                  {product.bullets.length > 0 && (
+                    <ul class="shop-product-bullets">
+                      {product.bullets.map((line) => <li>{line}</li>)}
+                    </ul>
+                  )}
+                  {product.note && (
+                    <div class="shop-product-note">
+                      <p class="shop-product-note-heading">» {product.note.heading} «</p>
+                      <ul class="shop-product-bullets">
+                        {product.note.bullets.map((line) => <li>{line}</li>)}
+                      </ul>
+                    </div>
+                  )}
+                  <a class="shop-kofi-btn" href={KOFI_SHOP_URL} target="_blank" rel="noopener noreferrer">
+                    Get this from my Ko-fi shop ↗
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- shared lightbox — same pattern as src/pages/art.astro / art/commissions.astro -->
+    <div class="art-lightbox" id="art-lightbox" hidden>
+      <div class="art-lightbox-backdrop" data-close></div>
+      <div class="art-lightbox-frame window">
+        <div class="title-bar">
+          <span class="title-bar-icon" aria-hidden="true">💌</span>
+          <span class="title-bar-text" id="art-lightbox-title"></span>
+          <div class="title-bar-controls" aria-hidden="true">
+            <span class="tb-btn close" data-close>×</span>
+          </div>
+        </div>
+        <div class="art-lightbox-body" id="art-lightbox-body"></div>
+        <button class="art-lightbox-nav art-lightbox-prev" type="button" id="art-lightbox-prev" aria-label="Previous image">‹</button>
+        <button class="art-lightbox-nav art-lightbox-next" type="button" id="art-lightbox-next" aria-label="Next image">›</button>
+      </div>
+    </div>
+  </PageShell>
+</Layout>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    // per-product image carousel (left column) — independent of the
+    // shared full-screen lightbox below, which still opens on clicking
+    // whichever slide is currently active.
+    document.querySelectorAll<HTMLElement>('.shop-carousel').forEach((carousel) => {
+      const slides = Array.from(carousel.querySelectorAll<HTMLElement>('.shop-carousel-slide'));
+      const dots = Array.from(carousel.querySelectorAll<HTMLElement>('.shop-carousel-dot'));
+      let index = 0;
+      const show = (next: number) => {
+        index = (next + slides.length) % slides.length;
+        slides.forEach((slide, i) => slide.classList.toggle('is-active', i === index));
+        dots.forEach((dot, i) => dot.classList.toggle('is-active', i === index));
+      };
+      carousel.querySelector('[data-carousel-prev]')?.addEventListener('click', () => show(index - 1));
+      carousel.querySelector('[data-carousel-next]')?.addEventListener('click', () => show(index + 1));
+    });
+
+    const lightbox = document.getElementById('art-lightbox');
+    const lightboxBody = document.getElementById('art-lightbox-body');
+    const lightboxTitle = document.getElementById('art-lightbox-title');
+    const prevBtn = document.getElementById('art-lightbox-prev') as HTMLButtonElement | null;
+    const nextBtn = document.getElementById('art-lightbox-next') as HTMLButtonElement | null;
+    if (!lightbox || !lightboxBody || !lightboxTitle || !prevBtn || !nextBtn) return;
+
+    let currentThumbs: HTMLButtonElement[] = [];
+    let currentIndex = -1;
+
+    const renderCurrent = () => {
+      const thumb = currentThumbs[currentIndex];
+      if (!thumb) return;
+      const { full, name } = thumb.dataset;
+      lightboxTitle.textContent = name || '';
+      lightboxBody.innerHTML = `<img src="${full}" alt="${name || ''}" />`;
+    };
+
+    const step = (delta: number) => {
+      if (currentThumbs.length === 0) return;
+      currentIndex = (currentIndex + delta + currentThumbs.length) % currentThumbs.length;
+      renderCurrent();
+    };
+
+    const closeLightbox = () => {
+      lightbox.hidden = true;
+      lightboxBody.innerHTML = '';
+      currentThumbs = [];
+      currentIndex = -1;
+    };
+
+    document.querySelectorAll<HTMLButtonElement>('.shop-thumb').forEach((thumb) => {
+      thumb.addEventListener('click', () => {
+        const gallery = thumb.closest('.shop-carousel-track');
+        currentThumbs = gallery
+          ? Array.from(gallery.querySelectorAll<HTMLButtonElement>('.shop-thumb'))
+          : [thumb];
+        currentIndex = currentThumbs.indexOf(thumb);
+        renderCurrent();
+        lightbox.hidden = false;
+        const hasMultiple = currentThumbs.length > 1;
+        prevBtn.hidden = !hasMultiple;
+        nextBtn.hidden = !hasMultiple;
+      });
+    });
+
+    prevBtn.addEventListener('click', () => step(-1));
+    nextBtn.addEventListener('click', () => step(1));
+
+    lightbox.querySelectorAll<HTMLElement>('[data-close]').forEach((el) => {
+      el.addEventListener('click', closeLightbox);
+    });
+    document.addEventListener('keydown', (e) => {
+      if (lightbox.hidden) return;
+      if (e.key === 'Escape') closeLightbox();
+      else if (e.key === 'ArrowLeft') step(-1);
+      else if (e.key === 'ArrowRight') step(1);
+    });
+  });
+</script>
