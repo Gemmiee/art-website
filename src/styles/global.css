@@ -818,6 +818,30 @@ h1 {
   color: var(--accent-deep);
   font-weight: 700;
 }
+/* Buttondown's embed is a cross-origin iframe, so its internal fonts/colors
+   can't be reached by our CSS — only the frame around it. In dark mode its
+   plain white page would otherwise sit like a hole punched in the layout,
+   so it gets inverted (closer to the site's dark surfaces) rather than left
+   stark white. */
+.buttondown-embed-frame {
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--card-border);
+  box-shadow: var(--shadow-soft);
+  background: #fff;
+}
+.buttondown-embed-frame iframe {
+  display: block;
+  width: 100%;
+  height: 220px;
+  border: 0;
+}
+:root[data-theme="dark"] .buttondown-embed-frame iframe {
+  /* full invert (not partial) + brightness boost — a partial invert left the
+     button's own white "SUBSCRIBE" label too close in tone to its now-dark
+     fill to read clearly. */
+  filter: invert(1) hue-rotate(180deg) brightness(1.3);
+}
 .blog-subscribe-rss-note {
   margin: 14px 0 8px;
   font-size: 0.84rem;

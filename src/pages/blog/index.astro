@@ -33,7 +33,7 @@ const allTags = Array.from(new Set(allPosts.flatMap((post) => post.data.tags))).
 const feedUrl = 'https://gemmiewow.com/blog/rss.xml';
 ---
 
-<Layout title="Blog ☆ Gemmie's corner" feedUrl="/blog/rss.xml" verifyMeta="QD8Y4Xm8a0u7BBnG5lek">
+<Layout title="Blog ☆ Gemmie's corner" feedUrl="/blog/rss.xml">
   <PageShell showMisc={false}>
     <!-- ================= blog window ================= -->
     <section class="window main-doc">
@@ -105,115 +105,13 @@ const feedUrl = 'https://gemmiewow.com/blog/rss.xml';
         </div>
 
         <div class="blog-subscribe">
-            <style>
-              .followit--follow-form-container[attr-a][attr-b][attr-c][attr-d][attr-e][attr-f] .form-preview {
-                display: flex !important;
-                flex-direction: column !important;
-                justify-content: center !important;
-                margin-top: 4px !important;
-                padding: clamp(17px, 5%, 40px) clamp(17px, 7%, 50px) !important;
-                max-width: none !important;
-                border-radius: 6px !important;
-                box-shadow: var(--shadow-soft) !important;
-              }
-              .followit--follow-form-container[attr-a][attr-b][attr-c][attr-d][attr-e][attr-f] .form-preview,
-              .followit--follow-form-container[attr-a][attr-b][attr-c][attr-d][attr-e][attr-f] .form-preview * {
-                box-sizing: border-box !important;
-              }
-              .followit--follow-form-container[attr-a][attr-b][attr-c][attr-d][attr-e][attr-f] .form-preview .preview-heading {
-                width: 100% !important;
-              }
-              .followit--follow-form-container[attr-a][attr-b][attr-c][attr-d][attr-e][attr-f] .form-preview .preview-heading h5 {
-                margin-top: 0 !important;
-                margin-bottom: 0 !important;
-              }
-              .followit--follow-form-container[attr-a][attr-b][attr-c][attr-d][attr-e][attr-f] .form-preview .preview-input-field {
-                margin-top: 20px !important;
-                width: 100% !important;
-              }
-              .followit--follow-form-container[attr-a][attr-b][attr-c][attr-d][attr-e][attr-f] .form-preview .preview-input-field input {
-                width: 100% !important;
-                height: 40px !important;
-                border-radius: 6px !important;
-                border: 1px solid var(--card-border) !important;
-                background-color: var(--surface-hover);
-                outline: none !important;
-              }
-              .followit--follow-form-container[attr-a][attr-b][attr-c][attr-d][attr-e][attr-f] .form-preview .preview-input-field input {
-                color: var(--ink) !important;
-                font-family: var(--font-ui) !important;
-                font-size: 14px;
-                font-weight: 400;
-                line-height: 20px;
-                text-align: center;
-              }
-              .followit--follow-form-container[attr-a][attr-b][attr-c][attr-d][attr-e][attr-f] .form-preview .preview-input-field input::placeholder {
-                color: var(--ink-soft) !important;
-                opacity: 1 !important;
-              }
-              .followit--follow-form-container[attr-a][attr-b][attr-c][attr-d][attr-e][attr-f] .form-preview .preview-input-field input:-ms-input-placeholder {
-                color: var(--ink-soft) !important;
-              }
-              .followit--follow-form-container[attr-a][attr-b][attr-c][attr-d][attr-e][attr-f] .form-preview .preview-input-field input::-ms-input-placeholder {
-                color: var(--ink-soft) !important;
-              }
-              .followit--follow-form-container[attr-a][attr-b][attr-c][attr-d][attr-e][attr-f] .form-preview .preview-submit-button {
-                margin-top: 10px !important;
-                width: 100% !important;
-              }
-              .followit--follow-form-container[attr-a][attr-b][attr-c][attr-d][attr-e][attr-f] .form-preview .preview-submit-button button {
-                width: 100% !important;
-                height: 40px !important;
-                border: 0 !important;
-                border-radius: 6px !important;
-                line-height: 0px !important;
-                background: linear-gradient(180deg, #ffffff 0%, #e6ddf7 45%, #ab98e6 46%, #cdb8f0 100%) !important;
-                color: var(--ink) !important;
-                font-family: var(--font-ui) !important;
-                transition: transform 0.12s ease !important;
-              }
-              :root[data-theme="dark"] .followit--follow-form-container[attr-a][attr-b][attr-c][attr-d][attr-e][attr-f] .form-preview .preview-submit-button button {
-                background: linear-gradient(180deg, #6a5aa8 0%, #4a3d7a 45%, #332a5c 46%, #241d44 100%) !important;
-              }
-              .followit--follow-form-container[attr-a][attr-b][attr-c][attr-d][attr-e][attr-f] .form-preview .preview-submit-button button:hover {
-                cursor: pointer !important;
-                transform: translateY(-1px) !important;
-              }
-              .followit--follow-form-container[attr-a][attr-b][attr-c][attr-d][attr-e][attr-f] .powered-by-line {
-                color: var(--ink-soft) !important;
-                font-family: var(--font-ui) !important;
-                font-size: 13px !important;
-                font-weight: 400 !important;
-                line-height: 25px !important;
-                text-align: center !important;
-                text-decoration: none !important;
-                display: flex !important;
-                width: 100% !important;
-                justify-content: center !important;
-                align-items: center !important;
-                margin-top: 10px !important;
-              }
-              .followit--follow-form-container[attr-a][attr-b][attr-c][attr-d][attr-e][attr-f] .powered-by-line img {
-                margin-left: 10px !important;
-                height: 1.13em !important;
-                max-height: 1.13em !important;
-              }
-            </style>
-            <div class="followit--follow-form-container" attr-a attr-b attr-c attr-d attr-e attr-f>
-              <form action="https://api.follow.it/subscription-form/NWNmVmdteDFIQW1GL2pHWVptem8yUS8xT2xMNDNUbzJESHU1cnF4OG0xZ1lRdFZUUGRWcHlpQk9tZk14aWpQd09PMUNkeXQ5UUhtQ2MzeEVXYVRYN0RKYlpZcW5jVC9SK0NVZGFncFRETkt1Vm9lU20wK0ljSlFUbktPbnhHRG18N3g2Z3BmV0pCRmZZTmVWV2FrNjVzY1EwbWFySFFicEV2SXlNRW9wUGVCMD0=/8" method="post">
-                <div style="background-color: var(--surface); position: relative; border-style: solid; border-width: 4px; border-color: var(--card-border);" class="form-preview">
-                  <div class="preview-heading">
-                    <h5 style="font-family: var(--font-ui); font-weight: 700; color: var(--ink); font-size: 20px; text-align: center; text-transform: none !important;">📡 Want an email whenever I post? Subscribe to my newsletter!</h5>
-                  </div>
-                  <div class="preview-input-field">
-                    <input type="email" name="email" required placeholder="Enter your email" spellcheck="false" style="font-family: var(--font-ui); font-weight: 400; color: var(--ink); font-size: 14px; text-align: center; background-color: var(--surface-hover); text-transform: none !important;">
-                  </div>
-                  <div class="preview-submit-button">
-                    <button type="submit" style="font-family: var(--font-ui); font-weight: bold; font-size: 16px; text-align: center; text-transform: none !important;">Subscribe</button>
-                  </div>
-                </div>
-              </form>
-              <a href="https://follow.it" class="powered-by-line">Powered by <img src="https://follow.it/images/colored-logo.svg" alt="follow.it" height="17px" /></a>
+            <p class="hand-note">📡 Want an email whenever I post? Subscribe to my newsletter!</p>
+            <div class="buttondown-embed-frame">
+              <iframe
+                src="https://buttondown.com/Gemmiewow?as_embed=true"
+                title="Subscribe to Gemmie's newsletter"
+                loading="lazy"
+              ></iframe>
             </div>
 
             <p class="blog-subscribe-rss-note">
