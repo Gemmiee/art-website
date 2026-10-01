@@ -8,11 +8,8 @@ import { execFileSync } from 'node:child_process';
 import ffmpegStaticPath from 'ffmpeg-static';
 import { getImageThumb } from './imageThumb';
 
-// Cloudflare Pages' build image doesn't have a system `ffmpeg` on PATH (the
-// build log showed "[artGallery] ffmpeg not found" and every video silently
-// fell back to a plain play icon instead of a real poster frame) — bundling
-// a prebuilt binary via the ffmpeg-static npm package sidesteps that
-// entirely, no Cloudflare build/deploy config changes needed.
+// Cloudflare's build image has no system ffmpeg (videos silently fell back to
+// a play-icon instead of a poster frame) — ffmpeg-static sidesteps that.
 const FFMPEG_BIN = ffmpegStaticPath ?? 'ffmpeg';
 
 export interface ArtItem {
@@ -102,10 +99,8 @@ function slugify(segments: string[]): string {
 }
 
 function encodeSegment(segment: string): string {
-  // `:` is valid inside a URL path segment and doesn't need escaping, but
-  // Vite's dev server 404s on a literal "%3A" in the request path — so
-  // undo just that one substitution rather than leaving colon-containing
-  // filenames (e.g. "Shop:).png") unreachable.
+  // Vite's dev server 404s on a literal %3A in the path, so undo just that
+  // one substitution (colons don't need escaping in a path segment anyway).
   return encodeURIComponent(segment).replace(/%3A/g, ':');
 }
 

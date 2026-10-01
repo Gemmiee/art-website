@@ -1,8 +1,6 @@
-// Physical products for /art/shop. Each product's images are auto-detected
-// from public/images/shop by filename prefix (e.g. "cat_family.jpg",
-// "cat_family2.jpg", ...) — see src/pages/art/shop.astro — so adding a
-// product here only needs its text, never image paths. Order here is
-// display order, top to bottom.
+// Physical products for /art/shop. Images auto-detected from public/images/shop
+// by filename prefix (cat_family.jpg, cat_family2.jpg, ...) — just add text here.
+// Order = display order.
 export interface ShopProduct {
   id: string; // filename prefix in public/images/shop
   title: string;

@@ -97,12 +97,10 @@ const thumbnailUrl = `/images/blog/${encodeURIComponent(post.data.thumbnail)}`;
 </Layout>
 
 <script>
-  // Lets a post embed a click-to-play sound button just by writing plain
-  // HTML in its Markdown body, e.g.:
+  // Lets a post embed a sound button via plain HTML, e.g.:
   //   <button class="sound-btn" data-sound="glass-breaking.mp3">🔊 Glass breaking</button>
-  // `data-sound` is a filename inside public/images/blog/ (or a full /path
-  // if it lives elsewhere). Audio elements are cached per src so repeat
-  // clicks (or several different sound buttons) don't re-fetch each time.
+  // data-sound is a filename in public/images/blog/ (or a full /path). Audio
+  // elements are cached per src so repeat clicks don't re-fetch.
   document.addEventListener('astro:page-load', () => {
     const audioCache = new Map<string, HTMLAudioElement>();
     document.querySelectorAll<HTMLElement>('.blog-article-body .sound-btn').forEach((btn) => {
@@ -120,10 +118,8 @@ const thumbnailUrl = `/images/blog/${encodeURIComponent(post.data.thumbnail)}`;
       });
     });
 
-    // Click-to-enlarge for every image written into a post's body — no
-    // per-image markup needed, this just wires up whatever <img> tags the
-    // post happens to contain. `.sticker` (inline text stickers) are
-    // excluded since those are decorative, not photos worth zooming.
+    // Click-to-enlarge for every image in the post body, no per-image markup
+    // needed. .sticker excluded — those are decorative, not photos.
     const lightbox = document.getElementById('art-lightbox');
     const lightboxBody = document.getElementById('art-lightbox-body');
     const lightboxTitle = document.getElementById('art-lightbox-title');

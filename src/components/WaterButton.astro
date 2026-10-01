@@ -114,17 +114,9 @@ const { href, label, waterColor = '#3fbfc7', external = false } = Astro.props;
 </style>
 
 <script>
-  /* ---------------------------------------------------------------------
-   * Water: 1D shallow water, on a staggered grid.
-   *
-   *   h[i]  depth of column i          (COLUMNS cells, measured up off the floor)
-   *   u[i]  velocity at face i         (COLUMNS + 1 faces; the walls are 0)
-   *
-   * Water accelerates down the slope of its own surface, and mass moves
-   * between columns by flux, so the level tips, piles against the far wall
-   * and sloshes back — a surface of springs cannot do that, each column
-   * would just bob in place.
-   * ------------------------------------------------------------------- */
+  // 1D shallow water on a staggered grid: h[i] = depth of column i,
+  // u[i] = velocity at face i. Flux between columns is what lets the water
+  // tip and slosh against the walls — a spring surface would just bob in place.
 
   const COLUMNS = 64;
   const SUBSTEPS = 6;
@@ -427,11 +419,9 @@ const { href, label, waterColor = '#3fbfc7', external = false } = Astro.props;
         }
       }
 
-      // canvas path methods throw on NaN/Infinity, which would permanently
-      // kill the animation loop mid-frame — if the sim ever goes unstable,
-      // reset to a calm surface instead of crashing. (NaN comparisons are
-      // always false, so the "worst" tracking below can't detect this on
-      // its own — it needs an explicit finite check.)
+      // Canvas path methods throw on NaN/Infinity, killing the loop — if the
+      // sim goes unstable, reset instead of crashing. Needs an explicit
+      // finite check since NaN comparisons are always false.
       for (let i = 0; i < COLUMNS; i++) {
         if (!Number.isFinite(h[i]) || !Number.isFinite(u[i])) {
           freeze();
@@ -591,11 +581,8 @@ const { href, label, waterColor = '#3fbfc7', external = false } = Astro.props;
     raf = requestAnimationFrame(loop);
   }
 
-  // WaterButton only appears on the home page, so re-arriving here after a
-  // client-side navigation elsewhere gets a freshly-mounted (unmounted)
-  // canvas each time — astro:page-load fires on every navigation, first
-  // load included, so mounting from in here (rather than at module scope)
-  // keeps the water sim alive no matter how many times you come back.
+  // Only lives on the home page, so each return visit gets a fresh canvas —
+  // mounting here (not module scope) re-inits it every astro:page-load.
   document.addEventListener('astro:page-load', () => {
     document.querySelectorAll<HTMLElement>('.water-button').forEach(mountWaterButton);
   });

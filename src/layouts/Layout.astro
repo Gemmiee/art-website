@@ -68,11 +68,8 @@ const ogUrl = new URL(Astro.url.pathname, Astro.site).toString();
     <slot />
 
     <script>
-      // Every client-side page swap (from enabling ViewTransitions so the
-      // music player can survive navigation) resets <html>'s attributes
-      // back to the new page's raw markup — data-theme="light" — so the
-      // stored theme has to be reapplied right after each swap, not just
-      // on the very first hard load.
+      // ViewTransitions resets data-theme to "light" on every swap, so
+      // reapply the saved theme after each one, not just on first load.
       function applyStoredTheme() {
         const stored = localStorage.getItem('theme');
         const theme = stored || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
@@ -80,11 +77,9 @@ const ogUrl = new URL(Astro.url.pathname, Astro.site).toString();
       }
       document.addEventListener('astro:after-swap', applyStoredTheme);
 
-      // The toggle button itself is recreated fresh on every page swap
-      // (it isn't transition:persist'ed), so its click listener has to be
-      // reattached every time too — astro:page-load fires after both the
-      // first load and every subsequent navigation, unlike DOMContentLoaded
-      // which only ever fires once per browser session.
+      // Button is recreated on every swap (not persisted), so rebind the
+      // click listener each time — astro:page-load fires on every nav,
+      // unlike DOMContentLoaded which only fires once.
       document.addEventListener('astro:page-load', () => {
         const themeToggle = document.getElementById('theme-toggle');
         if (themeToggle) {
@@ -99,18 +94,12 @@ const ogUrl = new URL(Astro.url.pathname, Astro.site).toString();
     </script>
 
     <style>
-      /* ---------- layered day/night scene ----------
-         each scene is one element with 6 stacked background-images.
-         CSS layers the FIRST-listed image on top, so the list is
-         written back-to-front in reverse of the visual stacking:
-         sky -> sun/moon -> sea -> clouds -> field -> lampost (front).
-         The sun/moon layer sits at a fixed position (nudged left/off-
-         center so it clears the left nav column) and the two scenes
-         simply crossfade via opacity — no independent sink/rise motion. */
+      /* Day/night scene: 6 stacked bg-images per element, listed back-to-front
+         (sky -> sun/moon -> sea -> clouds -> field -> lampost). Scenes just
+         crossfade via opacity, no independent sun/moon motion. */
       :root {
-        /* mixed %/px nudge (not a plain %) so the shift is consistent
-           regardless of viewport aspect ratio / cover-crop amount —
-           tuned against the left nav column's actual measured bounds */
+        /* mixed %/px nudge, tuned against the nav column's measured bounds,
+           so the shift holds up across viewport ratios */
         --celestial-x: calc(5% - 260px);
         --celestial-y: 14%;
       }
@@ -124,12 +113,8 @@ const ogUrl = new URL(Astro.url.pathname, Astro.site).toString();
         top: 0;
         left: 0;
         width: 100%;
-        /* On mobile, the address bar/toolbar showing or hiding shrinks and
-           grows the viewport — `inset: 0` (i.e. height: 100vh) would resize
-           with it, visibly rescaling this cover-fit background on every
-           toggle. Sizing to the *largest* possible viewport instead keeps
-           the image itself perfectly still; only how much of it the
-           toolbar currently covers changes, which reads as static. */
+        /* 100lvh (largest viewport) instead of plain height:100vh, so the
+           mobile toolbar showing/hiding doesn't visibly rescale the bg. */
         height: 100vh;
         height: 100lvh;
         z-index: -3;

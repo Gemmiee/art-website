@@ -1,8 +1,5 @@
-// Curated list of Bandcamp albums for /music and the sidebar "now playing"
-// widget. To add one: open the album on Bandcamp -> Share / Embed this
-// album -> grab the numeric id from the embed code's "album=NNNNNN" bit,
-// then grab the album art's direct image URL (right-click the cover ->
-// copy image address) and the album's own page URL.
+// Bandcamp albums for /music + the sidebar player. To add one: Bandcamp ->
+// Share/Embed -> grab the "album=NNNNNN" id, plus the cover image URL and page URL.
 export interface MusicAlbum {
   id: string;
   title: string;

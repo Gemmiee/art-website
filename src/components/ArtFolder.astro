@@ -61,11 +61,9 @@ const stripExt = (name: string) => name.replace(/\.[^./]+$/, '');
                 </button>
               ) : (
                 <button class="art-thumb art-thumb-video" type="button" data-full={item.url} data-kind="video" data-name={stripExt(item.name)}>
-                  <!-- data-src, not src: unlike <img loading="lazy">, a <video>'s
-                       preload isn't visibility-aware, so it fetches metadata
-                       immediately even while sitting in a collapsed, hidden
-                       folder. The page script swaps this to a real src the
-                       first time this folder is actually opened. -->
+                  <!-- data-src not src: video preload isn't visibility-aware like
+                       <img loading="lazy">, so it'd fetch even while collapsed.
+                       Script swaps it to a real src when the folder opens. -->
                   <video data-src={item.url} poster={item.posterUrl} preload="none" muted playsinline></video>
                   <span class="art-thumb-play" aria-hidden="true">▶</span>
                 </button>

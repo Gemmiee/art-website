@@ -225,11 +225,9 @@ const styleTiers = visibleTiers.filter((tier) => tier !== termsTier);
 </Layout>
 
 <script>
-  // Same lightbox + prev/next pattern as the main art gallery page
-  // (src/pages/art.astro) — just without the folder-expand/pagination
-  // pieces these flat per-tier example galleries don't need. Each tier's
-  // examples sit in their own .art-gallery, so prev/next (scoped via
-  // thumb.closest('.art-gallery')) stays within that tier only.
+  // Same lightbox pattern as art.astro, minus the folder/pagination bits
+  // these flat per-tier galleries don't need. prev/next stays scoped to
+  // each tier via thumb.closest('.art-gallery').
   document.addEventListener('astro:page-load', () => {
     const lightbox = document.getElementById('art-lightbox');
     const lightboxBody = document.getElementById('art-lightbox-body');

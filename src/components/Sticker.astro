@@ -1,10 +1,6 @@
 ---
-// Drops in one of the sticker images from public/images/stickers — pass
-// just the filename, e.g. <Sticker name="blue_cd.png" />. Usable anywhere
-// in a .astro file: nav labels, blurbs, cards, wherever a little inline
-// sticker fits next to text. For raw markdown text (blog posts etc.),
-// paste an <img class="sticker" src="/images/stickers/whatever.gif" alt="">
-// directly instead — same sizing, no component needed there.
+// Inline sticker from public/images/stickers, e.g. <Sticker name="blue_cd.png" />.
+// In raw markdown (blog posts) use <img class="sticker" src="..."> instead.
 interface Props {
   name: string;
   alt?: string;

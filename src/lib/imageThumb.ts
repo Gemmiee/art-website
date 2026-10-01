@@ -1,9 +1,6 @@
-// Generates small, compressed thumbnails for gallery-style grids so pages
-// don't ship full-resolution source art (some pieces are 10-20MB) just to
-// render a couple-hundred-pixel-wide preview. Full originals are still what
-// the lightbox opens — only the grid preview swaps to this. Results are
-// cached under public/thumbs/, keyed by a hash of the source path + mtime +
-// requested width, so re-running the build only regenerates what changed.
+// Generates small thumbnails for grids so pages don't ship 10-20MB originals
+// just for a preview (the lightbox still opens the full file). Cached under
+// public/thumbs/ keyed by path+mtime+width, so only changed files regenerate.
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
@@ -35,11 +32,8 @@ export async function getImageThumb(absPath: string, maxWidth: number): Promise<
   if (!fs.existsSync(thumbAbsPath)) {
     fs.mkdirSync(THUMB_DIR, { recursive: true });
     const tmpPath = `${thumbAbsPath}.${process.pid}.tmp`;
-    // Reading a GIF with `animated: true` keeps every frame instead of just
-    // the first, so resizing it below carries the animation through into
-    // the output webp too — the grid thumbnail actually plays instead of
-    // showing a freeze-frame. Anything else (a still image) just ignores
-    // this option.
+    // animated: true keeps every GIF frame so the thumbnail still plays
+    // instead of freezing on frame one; no-op for still images.
     const isGif = path.extname(absPath).toLowerCase() === '.gif';
     try {
       await sharp(absPath, isGif ? { animated: true } : {})

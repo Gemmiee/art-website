@@ -1,8 +1,6 @@
-// Pick a specific color for a tag here by giving it a hue (a position on
-// the color wheel, 0-360) — any tag left out still gets an automatic,
-// consistent color based on its name, so this is entirely optional.
-// Cheat sheet: 0 red, 30 orange, 60 yellow, 120 green, 180 cyan, 240 blue,
-// 270 purple, 330 pink.
+// Optional: pin a tag to a specific hue (0-360). Anything left out gets an
+// automatic color based on its name. Cheat sheet: 0 red, 30 orange, 60 yellow,
+// 120 green, 180 cyan, 240 blue, 270 purple, 330 pink.
 const TAG_HUES: Record<string, number> = {
    "art": 270,
   // "games": 210,

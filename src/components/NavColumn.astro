@@ -176,14 +176,10 @@ const startExpanded = currentPath === '/';
         loading="lazy"
       />
       <p class="now-playing-label" id="now-playing-label">{defaultAlbum.title} — {defaultAlbum.artist}</p>
-      <!-- This is a placeholder, not the real player: a live iframe reloads
-           the instant a browser detaches + reattaches it, which is exactly
-           what Astro's page-swap does to everything on the page (including
-           transition:persist'ed elements — proven by testing, not assumed).
-           The actual iframe is created once by client JS and lives directly
-           on document.body, completely outside anything Astro re-renders or
-           swaps, then visually pinned on top of this slot's position — so it
-           never gets detached, and playback survives every navigation. -->
+      <!-- Placeholder, not the real player — a live iframe here would reload
+           on every Astro page-swap (confirmed by testing, even with
+           transition:persist). Real iframe lives on document.body outside
+           Astro's reach, pinned visually over this slot, so it survives nav. -->
       <div class="bandcamp-frame bandcamp-frame-slot" id="now-playing-iframe-slot" aria-hidden="true"></div>
     </div>
   </section>
@@ -233,15 +229,10 @@ const startExpanded = currentPath === '/';
 </script>
 
 <script define:vars={{ musicAlbums }} is:inline>
-  // The floating Bandcamp player: see the comment on #now-playing-iframe-slot
-  // in the markup above for why this can't just be a normal iframe in the
-  // page. This block runs after every navigation (astro:page-load fires on
-  // hard loads AND every soft client-side nav) — the one-time setup (creating
-  // the floating iframe, wiring the window listener) is guarded so it only
-  // happens once per session, but repositioning + resyncing the visible
-  // cover/label has to happen on every single nav, since the slot and the
-  // cover/label elements are ordinary Astro-rendered nodes that get freshly
-  // recreated (reset to the default album) on every page.
+  // Floating Bandcamp player — see #now-playing-iframe-slot comment above for
+  // why it can't be a normal iframe. One-time setup (create iframe, wire
+  // listener) is guarded to run once; repositioning + cover/label resync has
+  // to rerun every nav since those are plain Astro nodes recreated per page.
   document.addEventListener('astro:page-load', () => {
     const cover = document.getElementById('now-playing-cover');
     const label = document.getElementById('now-playing-label');
@@ -250,11 +241,9 @@ const startExpanded = currentPath === '/';
     const bandcampEmbedSrc = (albumId) =>
       `https://bandcamp.com/EmbeddedPlayer/album=${albumId}/size=large/bgcol=faf3ea/linkcol=4b3a7a/tracklist=false/artwork=none/`;
     const findAlbum = (id) => musicAlbums.find((a) => a.id === id);
-    // Re-queries the DOM every call rather than closing over cover/label —
-    // the gemmie:play-album listener below is only ever attached once (see
-    // the init guard further down), so its closure would otherwise keep
-    // pointing at whatever page happened to be live at that first attach,
-    // which is a stale, disconnected node on every later page.
+    // Re-queries the DOM each call instead of closing over cover/label — the
+    // play-album listener only attaches once, so a captured reference would
+    // go stale after the first navigation.
     const renderInfo = (album) => {
       const coverEl = document.getElementById('now-playing-cover');
       const labelEl = document.getElementById('now-playing-label');
@@ -272,12 +261,9 @@ const startExpanded = currentPath === '/';
       frame.id = 'now-playing-frame';
       frame.className = 'bandcamp-frame bandcamp-frame-floating';
       frame.setAttribute('seamless', '');
-      // Appended to <html> itself, NOT document.body — Astro's page-swap
-      // replaces the whole <body> element wholesale on every navigation (not
-      // a fine-grained diff of its children), so anything living inside body
-      // gets wiped along with it regardless of how it got there. A sibling
-      // of <body> is untouched by that swap. position:fixed below doesn't
-      // care about DOM ancestry, so this has no visual effect.
+      // Appended to <html>, not document.body — Astro replaces <body> wholesale
+      // on navigation, wiping anything inside it. position:fixed doesn't care
+      // about DOM ancestry, so this has no visual effect.
       document.documentElement.appendChild(frame);
       window.__gemmieFloatingFrame = frame;
 
@@ -309,12 +295,9 @@ const startExpanded = currentPath === '/';
 
     const setAlbum = (album, { persist = true } = {}) => {
       renderInfo(album);
-      // Reassigning an iframe's src to the SAME url still restarts it in
-      // some browsers, which would kill playback whenever this runs again —
-      // this guard is what makes "do nothing when it's already playing"
-      // possible. window.__gemmieCurrentAlbumId (not a DOM attribute) is the
-      // source of truth here since the DOM nodes themselves get recreated
-      // fresh by Astro on every navigation.
+      // Reassigning an iframe's src to the same url restarts it in some
+      // browsers, killing playback — guard against that. Tracked on window,
+      // not a DOM attribute, since Astro recreates these nodes on every nav.
       if (window.__gemmieCurrentAlbumId === album.id) return;
       window.__gemmieCurrentAlbumId = album.id;
       frame.src = bandcampEmbedSrc(album.id);

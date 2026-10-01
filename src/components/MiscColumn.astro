@@ -117,17 +117,11 @@ const embedCode = `<a href="${siteUrl}"><img src="${ownButtonSrc}" width="88" he
       </div>
     </div>
     <div class="window-body">
-      <!-- The chat box's own content was already sandboxed, but
-           iframe.chat's loader script (below) used to run directly on
-           THIS page with full, unsandboxed privileges — a <script> tag
-           can't carry a sandbox attribute the way an iframe can, so that
-           script (not the chat box itself) was the more likely source of
-           a "malware popup blocked" warning some visitors saw. Wrapping
-           the loader script AND the chat iframe together inside one
-           sandboxed wrapper iframe (via srcdoc) sandboxes the script too,
-           not just the widget it controls. Being a srcdoc'd iframe, this
-           also loads fresh every time — no data-astro-rerun juggling
-           needed the way a plain <script> tag required. -->
+      <!-- The chat loader script used to run unsandboxed on this page itself
+           (a <script> tag can't be sandboxed like an iframe can) — likely
+           cause of a "malware popup blocked" warning some visitors saw.
+           Wrapping loader + chat together in one srcdoc iframe sandboxes
+           the script too, and reloads fresh every time for free. -->
       <iframe
         class="guestbook-iframe"
         title="Gemmie's corner guestbook chat"
