@@ -1,9 +1,23 @@
 ---
+import fs from 'node:fs';
+import path from 'node:path';
 import Layout from '../layouts/Layout.astro';
 import PageShell from '../components/PageShell.astro';
 import WaterButton from '../components/WaterButton.astro';
 import BubbleDivider from '../components/BubbleDivider.astro';
 import Sticker from '../components/Sticker.astro';
+
+// Scanned straight off the folder rather than hardcoded, so dropping a new
+// blinkie .gif in public/images/blinkies_stamps_tags/blinkies is enough —
+// no code change needed to make it show up in the marquee.
+const blinkiesDir = path.join(process.cwd(), 'public', 'images', 'blinkies_stamps_tags', 'blinkies');
+const blinkies = fs.existsSync(blinkiesDir)
+  ? fs
+      .readdirSync(blinkiesDir)
+      .filter((name) => name.toLowerCase().endsWith('.gif'))
+      .sort()
+      .map((name) => `/images/blinkies_stamps_tags/blinkies/${name}`)
+  : [];
 
 const updates = [
   { date: '09/29', text: 'Music got a new look 🌀 you can now select your music from the new music page! Did I mention that music keeps playing even when you switch pages? (°□°) ა🥬' },
@@ -139,6 +153,23 @@ const announcements = [
               </p>
             </div>
           </div>
+
+          {blinkies.length > 0 && (
+            <>
+              <p class="hand-note">⋆ a little blinkie collection ⋆</p>
+              <div class="blinkie-marquee">
+                <div class="blinkie-marquee-track">
+                  {blinkies.map((src) => (
+                    <img class="blinkie-item" src={src} alt="" loading="lazy" />
+                  ))}
+                  {/* repeat so the marquee can loop seamlessly */}
+                  {blinkies.map((src) => (
+                    <img class="blinkie-item" src={src} alt="" aria-hidden="true" loading="lazy" />
+                  ))}
+                </div>
+              </div>
+            </>
+          )}
         </div>
 
         <BubbleDivider />

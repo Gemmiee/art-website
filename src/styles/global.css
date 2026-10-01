@@ -2445,6 +2445,41 @@ h1 {
   box-shadow: 0 4px 8px rgba(26, 18, 46, 0.3);
 }
 
+/* blinkie collection on the main page — same seamless-loop marquee trick as
+   .friend-marquee above, just sized for the wider 150x20 blinkie format
+   (a couple of files are a different aspect ratio, hence object-fit:
+   contain rather than stretching every one to the same box). Duration is
+   scaled up from the friend marquee's 24s/672px so the per-pixel scroll
+   speed stays the same despite the much wider track (~23 blinkies). */
+.blinkie-marquee {
+  overflow: hidden;
+  margin: 10px 0 4px;
+  mask-image: linear-gradient(to right, transparent, black 20px, black calc(100% - 20px), transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 20px, black calc(100% - 20px), transparent);
+}
+.blinkie-marquee-track {
+  display: flex;
+  width: max-content;
+  gap: 8px;
+  animation: friend-marquee-scroll 130s linear infinite;
+}
+.blinkie-marquee:hover .blinkie-marquee-track {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .blinkie-marquee-track {
+    animation: none;
+  }
+}
+.blinkie-item {
+  display: block;
+  flex-shrink: 0;
+  width: 150px;
+  height: 20px;
+  object-fit: contain;
+  border-radius: 2px;
+}
+
 /* BubbleDivider's own default (26px top+bottom) is sized for the wider main
    content column — inside this narrow sidebar window it reads as a big gap
    next to "grab my button". #friend-links needs an ID in the selector (not
