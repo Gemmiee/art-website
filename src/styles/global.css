@@ -747,6 +747,13 @@ h1 {
   height: auto;
 }
 
+.bio-icons {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 4px 0 10px;
+}
+
 .bio-banner {
   position: relative;
   margin: 12px 0 16px 46px;
