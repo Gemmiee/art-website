@@ -64,8 +64,13 @@ const announcements = [
             <div class="avatar-frame">
               <center>
                 <h1>Gemmie <span class="sparkle">☆</span></h1>
-                <img class="avatar-img" src="/images/GemmieBust.webp" alt="Gemmie bust illustration" />
-                
+                <button type="button" class="avatar-trigger" id="gemmie-trigger" aria-label="Boop Gemmie">
+                  <span class="avatar-stage" id="gemmie-stage">
+                    <img class="avatar-img avatar-img-normal" src="/images/GemmieBust.webp" alt="Gemmie bust illustration" />
+                    <img class="avatar-img avatar-img-burned" id="gemmie-burned" src="/images/BurnedGemmie.gif" alt="" aria-hidden="true" />
+                    <img class="avatar-explosion" id="gemmie-explosion" src="/images/explosion.gif" alt="" aria-hidden="true" />
+                  </span>
+                </button>
               </center>
             </div>
             <div>
@@ -201,3 +206,84 @@ const announcements = [
     </section>
   </PageShell>
 </Layout>
+
+<script>
+  // Gemmiebust easter egg: boop to squeak+bounce, 7 boops in a row blows her up.
+  document.addEventListener('astro:page-load', () => {
+    const trigger = document.getElementById('gemmie-trigger');
+    const stage = document.getElementById('gemmie-stage');
+    const explosionImg = document.getElementById('gemmie-explosion') as HTMLImageElement | null;
+    const burnedImg = document.getElementById('gemmie-burned') as HTMLImageElement | null;
+    if (!trigger || !stage || !explosionImg || !burnedImg) return;
+
+    const SPAM_WINDOW_MS = 1500;
+    const CLICKS_TO_EXPLODE = 7;
+    const BLAST_LEAD_MS = 250; // explosion shows a beat before burned swaps in, so it reads as cause->effect
+    // explosion.gif's own loop is ~1.41s (42 frames) — fade has to start just
+    // before that, or it visibly restarts into a second loop before fading.
+    const BLAST_MS = 1380;
+    const BLAST_FADE_MS = 500; // matches the CSS transition duration on .is-blast-fading
+    const BURNED_HOLD_MS = 5000;
+
+    const SQUEAK_SRC = '/sounds/teddy-bear-squeak.mp3';
+    const BOOM_SRC = '/sounds/roblox-explosion.mp3';
+    const EXPLOSION_SRC = '/images/explosion.gif';
+    const BURNED_SRC = '/images/BurnedGemmie.gif';
+
+    let clickCount = 0;
+    let lastClickTime = 0;
+    let exploding = false;
+
+    // Fresh Audio per play (not reusing+rewinding one element) so rapid
+    // clicks layer overlapping sounds instead of cutting each other off.
+    const playSound = (src: string) => {
+      void new Audio(src).play();
+    };
+
+    // A query-string bust forces a real reload+redecode every time; reusing
+    // the exact same src string is a no-op in some browsers and leaves the
+    // gif frozen on its last (often faded-out) frame on repeat loops.
+    const restartGif = (img: HTMLImageElement, baseSrc: string) => {
+      img.src = `${baseSrc}?r=${Date.now()}`;
+    };
+
+    trigger.addEventListener('click', () => {
+      if (exploding) return;
+      const now = Date.now();
+      if (now - lastClickTime > SPAM_WINDOW_MS) clickCount = 0;
+      lastClickTime = now;
+      clickCount++;
+
+      if (clickCount >= CLICKS_TO_EXPLODE) {
+        clickCount = 0;
+        exploding = true;
+        stage.classList.remove('is-booping');
+        restartGif(explosionImg, EXPLOSION_SRC);
+        stage.classList.add('is-blasting');
+        playSound(BOOM_SRC);
+
+        setTimeout(() => {
+          restartGif(burnedImg, BURNED_SRC);
+          stage.classList.add('is-exploding');
+        }, BLAST_LEAD_MS);
+
+        setTimeout(() => {
+          stage.classList.add('is-blast-fading');
+          stage.classList.remove('is-blasting');
+          setTimeout(() => stage.classList.remove('is-blast-fading'), BLAST_FADE_MS);
+        }, BLAST_MS); // measured from click (t=0), same clock the gif itself started on
+
+        setTimeout(() => {
+          stage.classList.remove('is-exploding');
+          exploding = false;
+        }, BLAST_LEAD_MS + BURNED_HOLD_MS);
+        return;
+      }
+
+      playSound(SQUEAK_SRC);
+      stage.classList.remove('is-booping');
+      void stage.offsetWidth; // reflow so the animation can restart on rapid clicks
+      stage.classList.add('is-booping');
+    });
+  });
+</script>

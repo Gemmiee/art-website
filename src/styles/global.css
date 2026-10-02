@@ -743,8 +743,75 @@ h1 {
 }
 
 .avatar-img {
+  display: block;
   width: 100%;
   height: auto;
+}
+
+.avatar-trigger {
+  display: block;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.avatar-stage {
+  position: relative;
+  display: block;
+}
+
+.avatar-img-burned {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.avatar-img-normal {
+  transition: opacity 0.6s ease;
+}
+
+.avatar-stage.is-exploding .avatar-img-normal {
+  opacity: 0;
+}
+.avatar-stage.is-exploding .avatar-img-burned {
+  opacity: 1;
+}
+
+.avatar-explosion {
+  position: absolute;
+  /* explicit width+height (not left to the gif's own aspect ratio via inset)
+     so it fully covers the frame no matter what shape the source gif is */
+  top: -20%;
+  left: -20%;
+  width: 140%;
+  height: 140%;
+  max-width: none;
+  object-fit: cover;
+  opacity: 0;
+  pointer-events: none;
+}
+.avatar-stage.is-blasting .avatar-explosion {
+  opacity: 1;
+}
+/* transition only applies while fading out — appearing stays instant so the
+   burned swap isn't visible through a half-transparent explosion */
+.avatar-stage.is-blast-fading .avatar-explosion {
+  transition: opacity 0.5s ease;
+  opacity: 0;
+}
+
+@keyframes avatar-boop {
+  0% { transform: translateY(0); }
+  35% { transform: translateY(-12px); }
+  60% { transform: translateY(3px); }
+  100% { transform: translateY(0); }
+}
+.avatar-stage.is-booping .avatar-img-normal {
+  animation: avatar-boop 0.35s ease;
 }
 
 .bio-icons {
