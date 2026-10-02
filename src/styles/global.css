@@ -1988,8 +1988,6 @@ h1 {
   font-size: 1.05rem;
   font-weight: 700;
   color: var(--accent-deep);
-  border-bottom: 1px dashed var(--card-border-dashed);
-  padding-bottom: 6px;
 }
 
 /* static (non-scrolling) row of 88x31 friend buttons, wraps on narrow screens */
@@ -2481,6 +2479,28 @@ h1 {
   height: 31px;
 }
 .friend-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(26, 18, 46, 0.3);
+}
+
+/* neighbour buttons — hosted on each site's own domain, so width isn't
+   guaranteed to be the standard 88px; lock height only and let width follow
+   the image's own aspect ratio. */
+.neighbour-btn {
+  display: block;
+  flex-shrink: 0;
+  height: 31px;
+  border-radius: 3px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(26, 18, 46, 0.25);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.neighbour-btn img {
+  display: block;
+  height: 31px;
+  width: auto;
+}
+.neighbour-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(26, 18, 46, 0.3);
 }

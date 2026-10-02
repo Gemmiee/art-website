@@ -4,6 +4,7 @@ import PageShell from '../components/PageShell.astro';
 import Sticker from '../components/Sticker.astro';
 import BubbleDivider from '../components/BubbleDivider.astro';
 import { friends } from '../data/friends';
+import { neighbours } from '../data/neighbours';
 
 // Sites gemmie enjoys or that helped her out along the way — add real
 // entries here as { name, href, blurb }
@@ -69,13 +70,12 @@ const links: { name: string; href: string; blurb: string }[] = [
             <span class="bubble-wrap" style="left: 84%; animation-duration: 3.8s; animation-delay: -1.8s;"><img class="bubble-icon" src="/images/bubble.png" alt="" /></span>
             <img class="doc-banner-img" src="/images/banners/banner_links.png" alt="Links" />
           </div>
-          <p class="hand-note">friends &amp; sites I enjoy ☆</p>
         </div>
 
         <!-- ---- friends ---- -->
         <div class="doc-section" id="links-friends">
           <h2 class="links-section-heading">💌 Friends</h2>
-          <p class="hand-note">Cool as heck people, go check them out!</p>
+          <p class="hand-note">My friends aka cool as heck people</p>
           <div class="friends-grid">
             {friends.map((friend) => (
               <a class="friend-btn" href={friend.href} target="_blank" rel="noopener" aria-label={friend.name}>
@@ -87,10 +87,25 @@ const links: { name: string; href: string; blurb: string }[] = [
 
         <BubbleDivider />
 
+        <!-- ---- neighbours ---- -->
+        <div class="doc-section" id="links-neighbours">
+          <h2 class="links-section-heading">🏠 Neighbours</h2>
+          <p class="hand-note">Websites that left me in awe :O</p>
+          <div class="friends-grid">
+            {neighbours.map((neighbour) => (
+              <a class="neighbour-btn" href={neighbour.href} target="_blank" rel="noopener" aria-label={neighbour.name}>
+                <img src={neighbour.imgSrc} alt={neighbour.name} loading="lazy" />
+              </a>
+            ))}
+          </div>
+        </div>
+
+        <BubbleDivider />
+
         <!-- ---- fun & useful links ---- -->
         <div class="doc-section" id="links-fun">
           <h2 class="links-section-heading">🌐 Fun &amp; Useful Links</h2>
-          <p class="hand-note">sites I enjoy and have helped me a lot ;] ☆</p>
+          <p class="hand-note">Fun + useful sites ;] </p>
           <div class="link-grid">
             {links.map((link) => (
               <a class="link-card" href={link.href} target="_blank" rel="noopener">
