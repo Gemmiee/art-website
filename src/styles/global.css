@@ -668,7 +668,7 @@ h1 {
   gap: 22px;
   align-items: start;
 }
-/* grid items default to min-width:auto — the water button's unwrapped label
+/* grid items default to min-width:auto, the water button's unwrapped label
    was wide enough to force this whole grid past the viewport on phones. */
 .profile-grid > * {
   min-width: 0;
@@ -822,7 +822,7 @@ h1 {
   border: 0;
 }
 :root[data-theme="dark"] .buttondown-embed-frame iframe {
-  /* full invert (not partial) + brightness boost — a partial invert left the
+  /* full invert (not partial) + brightness boost, a partial invert left the
      button's own white "SUBSCRIBE" label too close in tone to its now-dark
      fill to read clearly. */
   filter: invert(1) hue-rotate(180deg) brightness(1.3);
