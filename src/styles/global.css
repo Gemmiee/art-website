@@ -1978,17 +1978,49 @@ h1 {
   }
 }
 
-/* links page: once real entries exist (see src/pages/links.astro) */
-.link-grid {
+/* links page sub-section headings (Friends / Webrings / Fun Links) */
+.links-section-heading {
   display: flex;
-  flex-direction: column;
-  gap: 14px;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 6px;
+  font-family: var(--font-ui);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--accent-deep);
+  border-bottom: 1px dashed var(--card-border-dashed);
+  padding-bottom: 6px;
+}
+
+/* static (non-scrolling) row of 88x31 friend buttons, wraps on narrow screens */
+.friends-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 4px 0 10px;
+}
+
+.links-empty-note {
+  padding: 14px 16px;
+  border: 1px dashed var(--card-border-dashed);
+  border-radius: 10px;
+  background: var(--surface-faint);
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+  font-style: italic;
+}
+
+/* compact grid of small cards rather than one big stacked list */
+.link-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 10px;
 }
 .link-card {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  padding: 14px 16px;
+  padding: 10px 12px;
   border-radius: 10px;
   border: 1px solid var(--card-border);
   background: var(--surface);
@@ -2003,12 +2035,18 @@ h1 {
 }
 .link-card-name {
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   color: var(--accent-deep);
 }
 .link-card-blurb {
-  font-size: 0.8rem;
+  font-size: 0.72rem;
   color: var(--ink-soft);
+  /* caps long blurbs so cards in the compact grid stay roughly even height */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 /* embedded browser game (pinball.astro) */

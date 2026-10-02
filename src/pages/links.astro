@@ -2,6 +2,8 @@
 import Layout from '../layouts/Layout.astro';
 import PageShell from '../components/PageShell.astro';
 import Sticker from '../components/Sticker.astro';
+import BubbleDivider from '../components/BubbleDivider.astro';
+import { friends } from '../data/friends';
 
 // Sites gemmie enjoys or that helped her out along the way — add real
 // entries here as { name, href, blurb }
@@ -9,7 +11,7 @@ const links: { name: string; href: string; blurb: string }[] = [
   {
     name: '🌱 DelphiTools',
     href: 'https://delphi.tools/',
-    blurb: 'Super great and useful for artists, offers a wide range of tools for art, writing, web development and so much more!',
+    blurb: 'A wide range of tools for art, writing, web development and more!',
   },
   {
     name: '️🧊 Chattable',
@@ -19,17 +21,12 @@ const links: { name: string; href: string; blurb: string }[] = [
   {
     name: '🍊 Cloudflare',
     href: 'https://www.cloudflare.com/',
-    blurb: 'Free website deployment and hosting? Whoa? Also offers a lot of other services for free, like DNS, domain purchases and security. So, if you want to host your own website, I recommend this service!',
+    blurb: 'Free website deployment and hosting? Whoa? Using it for my own site :D',
   },
   {
     name: '🫧 Nightwave Plaza',
     href: 'https://plaza.one/',
-    blurb: 'An aesthetic vaporwave radio. Got nothing to listen to while making those chores? Maybe you will like this one!',
-  },
-  {
-    name: '🌊 Pixel Emojis Archive',
-    href: 'https://fauxfur.neocities.org/',
-    blurb: 'A collection of aesthetic, old internet pixel emojis. Used some of them on my own website. Completely free!',
+    blurb: 'An aesthetic vaporwave radio.',
   },
   {
     name: '⚙️ 88x31 Button Maker',
@@ -45,8 +42,7 @@ const links: { name: string; href: string; blurb: string }[] = [
     name: '📺 Toonami Aftermath',
     href: 'https://www.toonamiaftermath.com/',
     blurb: 'A website that hosts a lot of old Toonami shows and movies.',
-  }
-
+  },
 ];
 ---
 
@@ -56,7 +52,7 @@ const links: { name: string; href: string; blurb: string }[] = [
     <section class="window main-doc">
       <div class="title-bar">
         <span class="title-bar-icon" aria-hidden="true"><Sticker name="black_computer.gif" /></span>
-        <span class="title-bar-text">gemmies-links.exe</span>
+        <span class="title-bar-text">links.exe</span>
         <div class="title-bar-controls" aria-hidden="true">
           <span class="tb-btn">_</span>
           <span class="tb-btn">□</span>
@@ -73,24 +69,36 @@ const links: { name: string; href: string; blurb: string }[] = [
             <span class="bubble-wrap" style="left: 84%; animation-duration: 3.8s; animation-delay: -1.8s;"><img class="bubble-icon" src="/images/bubble.png" alt="" /></span>
             <img class="doc-banner-img" src="/images/banners/banner_links.png" alt="Links" />
           </div>
-          <p class="hand-note">sites I enjoy and have helped me a lot ;] ☆</p>
+          <p class="hand-note">friends &amp; sites I enjoy ☆</p>
+        </div>
 
-          {links.length > 0 ? (
-            <div class="link-grid">
-              {links.map((link) => (
-                <a class="link-card" href={link.href} target="_blank" rel="noopener">
-                  <span class="link-card-name">{link.name}</span>
-                  <span class="link-card-blurb">{link.blurb}</span>
-                </a>
-              ))}
-            </div>
-          ) : (
-            <div class="gallery-grid">
-              {Array.from({ length: 6 }).map(() => (
-                <div class="gallery-slot" aria-hidden="true">🔗</div>
-              ))}
-            </div>
-          )}
+        <!-- ---- friends ---- -->
+        <div class="doc-section" id="links-friends">
+          <h2 class="links-section-heading">💌 Friends</h2>
+          <p class="hand-note">Cool as heck people, go check them out!</p>
+          <div class="friends-grid">
+            {friends.map((friend) => (
+              <a class="friend-btn" href={friend.href} target="_blank" rel="noopener" aria-label={friend.name}>
+                <img src={`/images/friends/${friend.button}`} width="88" height="31" alt={friend.name} />
+              </a>
+            ))}
+          </div>
+        </div>
+
+        <BubbleDivider />
+
+        <!-- ---- fun & useful links ---- -->
+        <div class="doc-section" id="links-fun">
+          <h2 class="links-section-heading">🌐 Fun &amp; Useful Links</h2>
+          <p class="hand-note">sites I enjoy and have helped me a lot ;] ☆</p>
+          <div class="link-grid">
+            {links.map((link) => (
+              <a class="link-card" href={link.href} target="_blank" rel="noopener">
+                <span class="link-card-name">{link.name}</span>
+                <span class="link-card-blurb">{link.blurb}</span>
+              </a>
+            ))}
+          </div>
         </div>
       </div>
     </section>
