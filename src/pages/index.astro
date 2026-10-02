@@ -218,6 +218,7 @@ const announcements = [
 
     const SPAM_WINDOW_MS = 1500;
     const CLICKS_TO_EXPLODE = 7;
+    const BOOM_LEAD_MS = 80; // sound starts a beat before the visual blast
     const BLAST_LEAD_MS = 250; // explosion shows a beat before burned swaps in, so it reads as cause->effect
     // explosion.gif's own loop is ~1.41s (42 frames) — fade has to start just
     // before that, or it visibly restarts into a second loop before fading.
@@ -258,25 +259,28 @@ const announcements = [
         clickCount = 0;
         exploding = true;
         stage.classList.remove('is-booping');
-        restartGif(explosionImg, EXPLOSION_SRC);
-        stage.classList.add('is-blasting');
         playSound(BOOM_SRC);
+
+        setTimeout(() => {
+          restartGif(explosionImg, EXPLOSION_SRC);
+          stage.classList.add('is-blasting');
+        }, BOOM_LEAD_MS);
 
         setTimeout(() => {
           restartGif(burnedImg, BURNED_SRC);
           stage.classList.add('is-exploding');
-        }, BLAST_LEAD_MS);
+        }, BOOM_LEAD_MS + BLAST_LEAD_MS);
 
         setTimeout(() => {
           stage.classList.add('is-blast-fading');
           stage.classList.remove('is-blasting');
           setTimeout(() => stage.classList.remove('is-blast-fading'), BLAST_FADE_MS);
-        }, BLAST_MS); // measured from click (t=0), same clock the gif itself started on
+        }, BOOM_LEAD_MS + BLAST_MS); // BLAST_MS still measured from the gif's own start
 
         setTimeout(() => {
           stage.classList.remove('is-exploding');
           exploding = false;
-        }, BLAST_LEAD_MS + BURNED_HOLD_MS);
+        }, BOOM_LEAD_MS + BLAST_LEAD_MS + BURNED_HOLD_MS);
         return;
       }
 
