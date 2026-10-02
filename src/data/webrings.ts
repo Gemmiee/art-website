@@ -1,9 +1,15 @@
-// Empty for now — not part of any webrings yet. Shape ready for whenever
-// that changes: add entries and the empty-state note on links.astro drops out.
+// Webrings/directories gemmie is part of. Badge images are hosted by each
+// ring, not public/images — same deal as neighbours.ts.
 export interface Webring {
   name: string;
   href: string;
-  blurb: string;
+  imgSrc: string;
 }
 
-export const webrings: Webring[] = [];
+export const webrings: Webring[] = [
+  {
+    name: 'indie web database',
+    href: 'https://petrapixel.neocities.org/indiewebdb/',
+    imgSrc: 'https://cdn.jsdelivr.net/gh/petracoding/petrapixel.neocities.org@latest/public/assets/img/links/indiewebdb.png',
+  },
+];

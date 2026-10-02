@@ -5,6 +5,7 @@ import Sticker from '../components/Sticker.astro';
 import BubbleDivider from '../components/BubbleDivider.astro';
 import { friends } from '../data/friends';
 import { neighbours } from '../data/neighbours';
+import { webrings } from '../data/webrings';
 
 // Sites gemmie enjoys or that helped her out along the way — add real
 // entries here as { name, href, blurb }
@@ -92,13 +93,28 @@ const links: { name: string; href: string; blurb: string }[] = [
 
         <BubbleDivider />
 
+        <!-- ---- webrings ---- -->
+        <div class="doc-section" id="links-webrings">
+          <h2 class="links-section-heading">🔗 Webrings</h2>
+          <p class="hand-note">Webrings &amp; directories I'm part of</p>
+          <div class="friends-grid">
+            {webrings.map((webring) => (
+              <a class="offsite-btn" href={webring.href} target="_blank" rel="noopener" aria-label={webring.name}>
+                <img src={webring.imgSrc} alt={webring.name} loading="lazy" />
+              </a>
+            ))}
+          </div>
+        </div>
+
+        <BubbleDivider />
+
         <!-- ---- neighbours ---- -->
         <div class="doc-section" id="links-neighbours">
           <h2 class="links-section-heading">🏠 Neighbours</h2>
           <p class="hand-note">Websites that left me in awe :O</p>
           <div class="friends-grid">
             {neighbours.map((neighbour) => (
-              <a class="neighbour-btn" href={neighbour.href} target="_blank" rel="noopener" aria-label={neighbour.name}>
+              <a class="offsite-btn" href={neighbour.href} target="_blank" rel="noopener" aria-label={neighbour.name}>
                 <img src={neighbour.imgSrc} alt={neighbour.name} loading="lazy" />
               </a>
             ))}
