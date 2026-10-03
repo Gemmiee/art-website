@@ -41,9 +41,10 @@ const unlockedGames: GameLink[] = [
   { sticker: 'blue_console.gif', name: 'Metal Slug X', href: '/metal-slug-x' },
 ];
 
-// Grows over time as more standalone pages get added (Clipboard, Blinkies, etc.)
+
 const otherLinks: NavLink[] = [
   { sticker: 'black_computer.gif', label: 'Links', href: '/links' },
+  { sticker: 'blue_computer.gif', label: 'Code Snippets', href: '/code-snippets' },
 ];
 
 const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';

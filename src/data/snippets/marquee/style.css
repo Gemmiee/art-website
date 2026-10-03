@@ -1,0 +1,40 @@
+.marquee {
+  overflow: hidden;
+  /* soft fade at both edges */
+  mask-image: linear-gradient(to right, transparent, black 20px, black calc(100% - 20px), transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 20px, black calc(100% - 20px), transparent);
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  gap: 8px;
+  /* content is duplicated once in the HTML; animating exactly one copy's
+     width (-50%) makes the loop point invisible, whatever the content's
+     actual width turns out to be */
+  animation: marquee-scroll 24s linear infinite;
+}
+
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+}
+
+.marquee-item {
+  display: block;
+  flex-shrink: 0;
+}

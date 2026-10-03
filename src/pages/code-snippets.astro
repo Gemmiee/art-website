@@ -1,0 +1,216 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageShell from '../components/PageShell.astro';
+import Sticker from '../components/Sticker.astro';
+import WaterButton from '../components/WaterButton.astro';
+import { codeResources } from '../data/codeResources';
+---
+
+<Layout title="Code Snippets ☆ Gemmie's corner">
+  <PageShell showMisc={false}>
+    <!-- ================= code resources window ================= -->
+    <section class="window main-doc">
+      <div class="title-bar">
+        <span class="title-bar-icon" aria-hidden="true"><Sticker name="blue_computer.gif" /></span>
+        <span class="title-bar-text">code-snippets.exe</span>
+        <div class="title-bar-controls" aria-hidden="true">
+          <span class="tb-btn">_</span>
+          <span class="tb-btn">□</span>
+          <span class="tb-btn close">×</span>
+        </div>
+      </div>
+      <div class="window-body">
+        <div class="doc-section" id="code-resources">
+          <p class="hand-note">Little bits of code from this site, free to copy into your own</p>
+
+          {codeResources.map((resource) => (
+            <div class="code-resource">
+              <h2 class="links-section-heading">{resource.title}</h2>
+              <p class="code-resource-desc">{resource.description}</p>
+
+              {resource.id === 'water-button' && (
+                <div class="code-resource-demo">
+                  <WaterButton href="#" label="Hello! Mi me ma mo muu!" waterColor="#3fbfc7" />
+                </div>
+              )}
+
+              {resource.id === 'marquee' && (
+                <div class="code-resource-demo">
+                  <style set:html={resource.css} />
+                  <div class="marquee demo-marquee">
+                    <div class="marquee-track">
+                      <img class="marquee-item" src="/images/friends/button_mage.png" width="88" height="31" alt="" />
+                      <img class="marquee-item" src="/images/friends/button_leli.png" width="88" height="31" alt="" />
+                      <img class="marquee-item" src="/images/friends/button_grassy.png" width="88" height="31" alt="" />
+                      <img class="marquee-item" src="/images/friends/button_mage.png" width="88" height="31" alt="" aria-hidden="true" />
+                      <img class="marquee-item" src="/images/friends/button_leli.png" width="88" height="31" alt="" aria-hidden="true" />
+                      <img class="marquee-item" src="/images/friends/button_grassy.png" width="88" height="31" alt="" aria-hidden="true" />
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {resource.id === 'glass-panel' && (
+                <div class="code-resource-demo demo-glass-backdrop">
+                  <style set:html={resource.css} />
+                  <div class="glass-panel">
+                    <p>WHUAU! I'm frosted!</p>
+                  </div>
+                </div>
+              )}
+
+              {resource.id === 'gradient-text' && (
+                <div class="code-resource-demo">
+                  <style set:html={resource.css} />
+                  <h1 class="gradient-text">Gradient Text oooOOoo</h1>
+                </div>
+              )}
+
+              {resource.id === 'theme-toggle' && (
+                <div class="code-resource-demo">
+                  <div class="theme-demo-box" data-demo-theme="light">
+                    <p class="theme-demo-text">
+                      This card has its own light/dark state, click me!
+                    </p>
+                    <button class="demo-theme-toggle" type="button" aria-label="Toggle demo theme">
+                      <span class="demo-theme-icon demo-sun-icon" aria-hidden="true">☀️</span>
+                      <span class="demo-theme-icon demo-moon-icon" aria-hidden="true">🌙</span>
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              <details class="code-block">
+                <summary>HTML</summary>
+                <div class="code-block-body">
+                  <button class="embed-copy-btn code-copy-btn" type="button" data-copy-target={`${resource.id}-html`}>Copy</button>
+                  <pre><code id={`${resource.id}-html`}>{resource.html}</code></pre>
+                </div>
+              </details>
+
+              <details class="code-block">
+                <summary>CSS</summary>
+                <div class="code-block-body">
+                  <button class="embed-copy-btn code-copy-btn" type="button" data-copy-target={`${resource.id}-css`}>Copy</button>
+                  <pre><code id={`${resource.id}-css`}>{resource.css}</code></pre>
+                </div>
+              </details>
+
+              {resource.js && (
+                <details class="code-block">
+                  <summary>JavaScript</summary>
+                  <div class="code-block-body">
+                    <button class="embed-copy-btn code-copy-btn" type="button" data-copy-target={`${resource.id}-js`}>Copy</button>
+                    <pre><code id={`${resource.id}-js`}>{resource.js}</code></pre>
+                  </div>
+                </details>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  </PageShell>
+</Layout>
+
+<style>
+  /* colorful backdrop so the glass-panel demo's blur has something to blur */
+  .demo-glass-backdrop {
+    background: linear-gradient(135deg, #ff9ecf 0%, #3fbfc7 50%, #ffd56b 100%);
+  }
+
+  /* theme-toggle demo */
+  .theme-demo-box {
+    width: 100%;
+    max-width: 320px;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    background: #fdf6f0;
+    color: #2b2140;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+  .theme-demo-box[data-demo-theme='dark'] {
+    background: #14101f;
+    color: #f3ecff;
+  }
+  .theme-demo-text {
+    margin: 0 0 14px;
+    font-size: 0.85rem;
+  }
+  .demo-theme-toggle {
+    position: relative;
+    width: 34px;
+    height: 34px;
+    margin: 0 auto;
+    border-radius: 50%;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    background: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+  }
+  .theme-demo-box[data-demo-theme='dark'] .demo-theme-toggle {
+    background: rgba(255, 255, 255, 0.1);
+  }
+  .demo-theme-icon {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  .theme-demo-box[data-demo-theme='light'] .demo-sun-icon {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+  }
+  .theme-demo-box[data-demo-theme='light'] .demo-moon-icon {
+    opacity: 0;
+    transform: rotate(-90deg) scale(0.6);
+  }
+  .theme-demo-box[data-demo-theme='dark'] .demo-sun-icon {
+    opacity: 0;
+    transform: rotate(90deg) scale(0.6);
+  }
+  .theme-demo-box[data-demo-theme='dark'] .demo-moon-icon {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+  }
+</style>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+
+    document.querySelectorAll<HTMLAnchorElement>('.code-resource-demo a').forEach((a) => {
+      a.addEventListener('click', (e) => e.preventDefault());
+    });
+
+    // theme-toggle demo
+    document.querySelectorAll<HTMLButtonElement>('.demo-theme-toggle').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const box = btn.closest<HTMLElement>('.theme-demo-box');
+        if (!box) return;
+        const next = box.dataset.demoTheme === 'dark' ? 'light' : 'dark';
+        box.dataset.demoTheme = next;
+      });
+    });
+
+    document.querySelectorAll<HTMLButtonElement>('.code-copy-btn').forEach((btn) => {
+      const defaultLabel = btn.textContent || 'Copy';
+      btn.addEventListener('click', async () => {
+        const targetId = btn.dataset.copyTarget;
+        const codeEl = targetId ? document.getElementById(targetId) : null;
+        if (!codeEl) return;
+        try {
+          await navigator.clipboard.writeText(codeEl.textContent || '');
+        } catch {
+          return;
+        }
+        btn.textContent = 'Copied!';
+        setTimeout(() => {
+          btn.textContent = defaultLabel;
+        }, 1500);
+      });
+    });
+  });
+</script>

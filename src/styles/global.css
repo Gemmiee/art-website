@@ -1990,6 +1990,65 @@ h1 {
   color: var(--accent-deep);
 }
 
+/* code resources page */
+.code-resource {
+  padding: 16px;
+  border-radius: 10px;
+  border: 1px solid var(--card-border);
+  background: var(--surface);
+  box-shadow: var(--shadow-soft);
+  margin-bottom: 20px;
+}
+.code-resource-desc {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  margin: 0 0 14px;
+}
+.code-resource-demo {
+  display: flex;
+  justify-content: center;
+  padding: 24px;
+  border-radius: 8px;
+  background: var(--surface-faint);
+  margin-bottom: 14px;
+}
+.code-block {
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.code-block + .code-block {
+  margin-top: 8px;
+}
+.code-block summary {
+  cursor: pointer;
+  padding: 8px 12px;
+  font-weight: 600;
+  font-size: 0.8rem;
+  color: var(--ink);
+  background: var(--surface-faint);
+}
+.code-block summary::marker {
+  color: var(--accent-deep);
+}
+.code-block-body {
+  padding: 10px 12px;
+}
+.code-block-body pre {
+  margin: 8px 0 0;
+  padding: 10px;
+  border-radius: 6px;
+  background: rgba(43, 33, 64, 0.06);
+  max-height: 340px;
+  overflow: auto;
+  font-family: monospace;
+  font-size: 0.72rem;
+  line-height: 1.5;
+}
+:root[data-theme="dark"] .code-block-body pre {
+  background: rgba(0, 0, 0, 0.3);
+}
+
 /* static (non-scrolling) row of 88x31 friend buttons, wraps on narrow screens */
 .friends-grid {
   display: flex;
