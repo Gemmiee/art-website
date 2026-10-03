@@ -4,8 +4,6 @@ import PageShell from '../components/PageShell.astro';
 import Sticker from '../components/Sticker.astro';
 import BubbleDivider from '../components/BubbleDivider.astro';
 import { friends } from '../data/friends';
-import { neighbours } from '../data/neighbours';
-import { webrings } from '../data/webrings';
 
 // Sites gemmie enjoys or that helped her out along the way — add real
 // entries here as { name, href, blurb }
@@ -104,12 +102,21 @@ const links: { name: string; href: string; blurb: string }[] = [
           <h2 class="links-section-heading">🔗 Webrings</h2>
           <p class="hand-note">Webrings I'm part of</p>
           <div class="friends-grid">
-            {webrings.map((webring) => (
-              <a class="offsite-btn" href={webring.href} target="_blank" rel="noopener" aria-label={webring.name}>
-                <img src={webring.imgSrc} alt={webring.name} loading="lazy" />
-              </a>
-              
-            ))}
+            <a class="offsite-btn" href="https://petrapixel.neocities.org/indiewebdb/" target="_blank" rel="noopener" aria-label="indie web database">
+              <img src="https://cdn.jsdelivr.net/gh/petracoding/petrapixel.neocities.org@latest/public/assets/img/links/indiewebdb.png" alt="indie web database" loading="lazy" />
+            </a>
+            <a class="offsite-btn" href="https://webmasterwebring.netlify.app" target="_blank" rel="noopener" aria-label="Webmaster Webring">
+              <img src="https://file.garden/ZrZSgsrYfQXsO7QH/ww/btn.png" alt="Webmaster Webring" loading="lazy" />
+            </a>
+
+            <!-- Online Widget -->
+            <map name="onlinewidget">
+            <area href="https://webring.ghostk.id/online/" target="_blank" shape="rect" coords="20,14,167,24" alt="The online webring" title="The online webring">
+            <area href="https://webring.ghostk.id/online/Gemmie/previous" target="_top" shape="rect" coords="7,27,60,36" alt="Previous" title="Previous">
+            <area href="https://webring.ghostk.id/online/random" target="_top" shape="rect" coords="74,27,126,36" alt="Random" title="Random">
+            <area href="https://webring.ghostk.id/online/Gemmie/next" target="_top" shape="rect" coords="139,27,192,36" alt="Next" title="Next">
+            </map>
+            <img usemap="#onlinewidget" src="https://ghostk.id/i/onlinepurple.gif" width="200" height="40" style="width:200px;height:40px;max-width:none;image-rendering:pixelated;" alt="A Windows style dialog box titled 'THE ONLINE WEBRING' with three clickable buttons labeled Previous, Random, and Next" class="offsite-imagemap" />
           </div>
         </div>
 
@@ -120,11 +127,9 @@ const links: { name: string; href: string; blurb: string }[] = [
           <h2 class="links-section-heading">🏠 Neighbours</h2>
           <p class="hand-note">Websites that left me in awe :O</p>
           <div class="friends-grid">
-            {neighbours.map((neighbour) => (
-              <a class="offsite-btn" href={neighbour.href} target="_blank" rel="noopener" aria-label={neighbour.name}>
-                <img src={neighbour.imgSrc} alt={neighbour.name} loading="lazy" />
-              </a>
-            ))}
+            <a class="offsite-btn" href="https://zhongvie.neocities.org/" target="_blank" rel="noopener" aria-label="zhongvie button">
+              <img src="https://file.garden/Zq0xOX6Iv3i3b1te/Neocities/sylvieButton.gif" alt="zhongvie button" loading="lazy" />
+            </a>
           </div>
         </div>
 

@@ -196,12 +196,37 @@ const announcements = [
 
         <BubbleDivider />
 
-        <!-- ---- shop ---- -->
+        <!-- ---- shop + webrings ---- -->
         <div class="doc-section" id="shop">
-          <img class="section-banner" src="/images/banners/banner_shop.png" alt="Click for shop" />
-          <a class="shop-link" href="https://ko-fi.com/gemmiewow/" target="_blank" rel="noopener noreferrer">
-            <img class="shop-img" src="/images/banners/Gemmie_shop.png" alt="Gemmie's Ko-fi shop" />
-          </a>
+          <div class="shop-grid">
+            <div class="shop-col">
+              <a class="shop-link" href="https://ko-fi.com/gemmiewow/" target="_blank" rel="noopener noreferrer">
+                <img class="shop-img" src="/images/cards/card_shop.png" alt="Gemmie's Ko-fi shop" />
+              </a>
+            </div>
+            <div class="shop-col">
+              <h2 class="links-section-heading">🔗 Webrings</h2>
+              <p class="hand-note">Webrings I'm part of: see <a href="/links">links page</a></p>
+
+              <div class="friends-grid">
+                <a class="offsite-btn" href="https://petrapixel.neocities.org/indiewebdb/" target="_blank" rel="noopener" aria-label="indie web database">
+                  <img src="https://cdn.jsdelivr.net/gh/petracoding/petrapixel.neocities.org@latest/public/assets/img/links/indiewebdb.png" alt="indie web database" loading="lazy" />
+                </a>
+                <a class="offsite-btn" href="https://webmasterwebring.netlify.app" target="_blank" rel="noopener" aria-label="Webmaster Webring">
+                  <img src="https://file.garden/ZrZSgsrYfQXsO7QH/ww/btn.png" alt="Webmaster Webring" loading="lazy" />
+                </a>
+
+                <!-- Online Widget -->
+                <map name="onlinewidget">
+                <area href="https://webring.ghostk.id/online/" target="_blank" shape="rect" coords="20,14,167,24" alt="The online webring" title="The online webring">
+                <area href="https://webring.ghostk.id/online/Gemmie/previous" target="_top" shape="rect" coords="7,27,60,36" alt="Previous" title="Previous">
+                <area href="https://webring.ghostk.id/online/random" target="_top" shape="rect" coords="74,27,126,36" alt="Random" title="Random">
+                <area href="https://webring.ghostk.id/online/Gemmie/next" target="_top" shape="rect" coords="139,27,192,36" alt="Next" title="Next">
+                </map>
+                <img usemap="#onlinewidget" src="https://ghostk.id/i/onlinepurple.gif" width="200" height="40" style="width:200px;height:40px;max-width:none;image-rendering:pixelated;" alt="A Windows style dialog box titled 'THE ONLINE WEBRING' with three clickable buttons labeled Previous, Random, and Next" class="offsite-imagemap" />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

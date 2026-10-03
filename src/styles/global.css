@@ -716,10 +716,26 @@ h1 {
   }
 }
 
+/* shop section: shop card on the left, webrings on the right */
+.shop-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 26px;
+  align-items: start;
+}
+.shop-col > .section-banner {
+  margin: 0 auto 8px;
+}
+@media (max-width: 700px) {
+  .shop-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* shop: one big clickable illustration opening the ko-fi shop in a new tab */
 .shop-link {
   display: block;
-  max-width: 640px;
+  max-width: 420px;
   margin: 0 auto;
   border-radius: 14px;
   overflow: hidden;
@@ -2561,6 +2577,24 @@ h1 {
   width: auto;
 }
 .offsite-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(26, 18, 46, 0.3);
+}
+
+/* image-map webrings (one gif, clickable prev/random/next regions baked in
+   via <area> coords) — no <a> wrapper here, so hover/shadow styling goes
+   straight on the img. max-width:none overrides the site-wide img reset,
+   which would otherwise be a no-op here anyway since width/height are set,
+   but keeps it explicit like the ring's own supplied markup. */
+.offsite-imagemap {
+  flex-shrink: 0;
+  max-width: none;
+  image-rendering: pixelated;
+  border-radius: 3px;
+  box-shadow: 0 2px 4px rgba(26, 18, 46, 0.25);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.offsite-imagemap:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(26, 18, 46, 0.3);
 }
