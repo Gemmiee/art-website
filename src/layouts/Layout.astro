@@ -37,6 +37,8 @@ const ogUrl = new URL(Astro.url.pathname, Astro.site).toString();
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <!-- Sanringo (Sanrio) webring widget styling -->
+    <link href="https://luckyatoll.nekoweb.org/sanriowebring.css" rel="stylesheet" type="text/css" media="all" />
     {feedUrl && <link rel="alternate" type="application/rss+xml" title="Gemmie's corner — Blog" href={feedUrl} />}
     <title>{title}</title>
 

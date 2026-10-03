@@ -2599,6 +2599,58 @@ h1 {
   box-shadow: 0 4px 8px rgba(26, 18, 46, 0.3);
 }
 
+/* luckyatoll's sanringo webring widget (sanriowebring.css, linked in
+   Layout.astro's head) sets max-height:175px on its own card, which is
+   shorter than its real content once the Cherry Bomb One/Hi Melody webfonts
+   load — the bottom nav row + info link were spilling out below the card
+   with no background. Let it grow to fit instead. !important because the
+   external stylesheet loads after global.css in dev and would otherwise win
+   the tie on equal specificity. */
+.sanringo {
+  max-height: none !important;
+}
+/* our site-wide `img { display: block; }` reset (near the top of this file)
+   forces the prev/character/next images each onto their own line, instead
+   of sitting side by side like the widget's own markup expects (plain
+   default-inline <img>s, same as any three images in running text). */
+.sanringo img {
+  display: inline;
+}
+
+/* vertical stack for the front page's webring box — these widgets (plain
+   badges, the online-ring image map, the sanrio card) are wildly different
+   shapes, so a wrapping flex row (like .friends-grid) looked messy; stacked
+   and centered instead, so no widget's own fixed size has to be fought with
+   max-height/width tricks. */
+.webring-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+/* plain scrollable box holding the webring widgets — no card artwork, just
+   a simple bordered panel like .links-empty-note, sized to comfortably fit
+   the tallest widget (the sanrio card, ~325px) without clipping it. */
+.webring-scroll-box {
+  max-height: 380px;
+  overflow-y: auto;
+  padding: 16px 10px;
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  background: var(--surface-faint);
+}
+
+/* pull the webring card up closer to the "Webrings" heading above it —
+   scoped to #shop so the Links page's own heading/note spacing elsewhere
+   isn't affected. */
+#shop .links-section-heading {
+  margin-bottom: 2px;
+}
+#shop .hand-note {
+  margin-bottom: 6px;
+}
+
 /* blinkies — same loop trick as .friend-marquee, sized for 150x20 (object-fit:
    contain since a couple files are a different ratio). Duration scaled up
    from friend-marquee's 24s/672px to keep the same scroll speed. */

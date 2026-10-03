@@ -47,6 +47,9 @@ const announcements = [
 
 <Layout>
   <PageShell>
+    <!-- for sanrio webring -->
+    <link href="https://luckyatoll.nekoweb.org/sanriowebring.css" rel="stylesheet" type="text/css" media="all"/>
+    
     <!-- ================= single merged content window ================= -->
     <section class="window main-doc">
       <div class="title-bar">
@@ -197,23 +200,23 @@ const announcements = [
         <BubbleDivider />
 
         <!-- ---- shop + webrings ---- -->
+ 
         <div class="doc-section" id="shop">
           <div class="shop-grid">
             <div class="shop-col">
-              <a class="shop-link" href="https://ko-fi.com/gemmiewow/" target="_blank" rel="noopener noreferrer">
+              <img class="section-banner" src="/images/banners/banner_shop.png" alt="Click for shop!" />
+              <a href="https://ko-fi.com/gemmiewow/" target="_blank" rel="noopener noreferrer">
                 <img class="shop-img" src="/images/cards/card_shop.png" alt="Gemmie's Ko-fi shop" />
               </a>
             </div>
+
             <div class="shop-col">
               <h2 class="links-section-heading">🔗 Webrings</h2>
               <p class="hand-note">Webrings I'm part of: see <a href="/links">links page</a></p>
 
-              <div class="friends-grid">
+              <div class="webring-scroll-box webring-stack">
                 <a class="offsite-btn" href="https://petrapixel.neocities.org/indiewebdb/" target="_blank" rel="noopener" aria-label="indie web database">
                   <img src="https://cdn.jsdelivr.net/gh/petracoding/petrapixel.neocities.org@latest/public/assets/img/links/indiewebdb.png" alt="indie web database" loading="lazy" />
-                </a>
-                <a class="offsite-btn" href="https://webmasterwebring.netlify.app" target="_blank" rel="noopener" aria-label="Webmaster Webring">
-                  <img src="https://file.garden/ZrZSgsrYfQXsO7QH/ww/btn.png" alt="Webmaster Webring" loading="lazy" />
                 </a>
 
                 <!-- Online Widget -->
@@ -224,9 +227,17 @@ const announcements = [
                 <area href="https://webring.ghostk.id/online/Gemmie/next" target="_top" shape="rect" coords="139,27,192,36" alt="Next" title="Next">
                 </map>
                 <img usemap="#onlinewidget" src="https://ghostk.id/i/onlinepurple.gif" width="200" height="40" style="width:200px;height:40px;max-width:none;image-rendering:pixelated;" alt="A Windows style dialog box titled 'THE ONLINE WEBRING' with three clickable buttons labeled Previous, Random, and Next" class="offsite-imagemap" />
-                
 
-
+                <!-- Sanrio Webring -->
+                <div class="sanringo cinnamoroll">
+                <a class="title" href="https://luckyatoll.nekoweb.org/sanringo.html">Sanrio Webring</a>
+                <br>
+                <a class="prev" href="https://luckyatoll.nekoweb.org/sanringo.html?action=previous"><img src="https://luckyatoll.nekoweb.org/images/pinkarrow.png"></a>
+                <img class="character" src="https://www.sanrio.co.jp/special/characterranking/2020/assets/img/common/character/cinnamon.png">
+                <a class="next" href="https://luckyatoll.nekoweb.org/sanringo.html?action=next"><img src="https://luckyatoll.nekoweb.org/images/pinkarrow.png"></a>
+                <br>
+                <a class="info" href="https://luckyatoll.nekoweb.org/sanringo.html">what's this?</a>
+                </div>
               </div>
             </div>
           </div>
