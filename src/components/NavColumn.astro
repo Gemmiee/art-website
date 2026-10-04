@@ -16,6 +16,7 @@ interface NavLink {
 
 const topicsLinks: NavLink[] = [
   { sticker: 'yellow_sunflower.gif', label: 'Main Page', href: '/' },
+  { sticker: 'orange_goldfish.gif', label: 'About Me', href: '/about' },
   { sticker: 'white_letter.gif', label: 'Blog', href: '/blog' },
   { sticker: 'black_cd.gif', label: 'Music', href: '/music' },
   { sticker: 'blue_teddybear.gif', label: 'Guestbook', href: '/guestbook' },
@@ -36,7 +37,7 @@ interface GameLink {
 
 const unlockedGames: GameLink[] = [
   { sticker: 'yellow_bee.gif', name: 'Space Cadet Pinball', href: '/pinball' },
-  { sticker: 'yellow_pompompurin.gif', name: 'Spider Solitaire', href: '/spider-solitaire' },
+  { sticker: 'white_card.gif', name: 'Spider Solitaire', href: '/spider-solitaire' },
   { sticker: 'blue_sea.gif', name: 'Paint', href: '/paint' },
   { sticker: 'blue_console.gif', name: 'Metal Slug X', href: '/metal-slug-x' },
 ];
@@ -69,7 +70,7 @@ const startExpanded = currentPath === '/';
         <p class="nav-mascot-mood-note">University starting again... 😬</p>
       </div>
     </div>
-    <img class="nav-mascot-sprite" src="/images/Gemmie_pixel.gif" alt="pixel Gemmie" />
+    <img class="nav-mascot-sprite" src="/images/other_components/Gemmie_pixel.gif" alt="pixel Gemmie" />
   </div>
 
   <!-- ================= navigation ================= -->

@@ -19,4 +19,14 @@ const { class: extraClass = '' } = Astro.props;
     background: linear-gradient(90deg, #9fe0ea 0%, #93a3e6 55%, #4b3a7a 100%);
     box-shadow: 0 1px 4px rgba(30, 25, 60, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.6);
   }
+  /* quieter variant — same spacing, just a dashed line instead of the
+     gradient bar, reusing the dashed color already used on bordered boxes
+     elsewhere (.links-empty-note, code-resource blocks, etc). */
+  .bubble-divider-dashed {
+    height: 0;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+    border-top: 2px dashed var(--card-border-dashed);
+  }
 </style>

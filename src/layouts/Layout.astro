@@ -13,7 +13,7 @@ interface Props {
 const {
   title = "Gemmie's Aero Art Site",
   description = 'Art, animation, music, guestbook, games and more!',
-  image = '/images/banner.webp',
+  image = '/images/other_components/banner.webp',
   feedUrl,
 } = Astro.props;
 
@@ -64,7 +64,7 @@ const ogUrl = new URL(Astro.url.pathname, Astro.site).toString();
     </button>
 
     <div class="site-banner">
-      <img src="/images/banner2.webp" alt="Gemmie's corner banner — gemmiewow.com" />
+      <img src="/images/other_components/banner2.webp" alt="Gemmie's corner banner — gemmiewow.com" />
     </div>
 
     <slot />

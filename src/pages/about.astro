@@ -1,0 +1,231 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageShell from '../components/PageShell.astro';
+import WaterButton from '../components/WaterButton.astro';
+import BubbleDivider from '../components/BubbleDivider.astro';
+import Sticker from '../components/Sticker.astro';
+---
+
+<Layout title="About Me ☆ Gemmie's corner" description="Get to know Gemmie — art equipment, programming, music and games I enjoy.">
+  <PageShell showMisc={false}>
+    <!-- ================= about me window ================= -->
+    <section class="window main-doc">
+      <div class="title-bar">
+        <span class="title-bar-icon" aria-hidden="true"><Sticker name="orange_goldfish.gif" /></span>
+        <span class="title-bar-text">about-me.exe</span>
+        <div class="title-bar-controls" aria-hidden="true">
+          <span class="tb-btn">_</span>
+          <span class="tb-btn">□</span>
+          <span class="tb-btn close">×</span>
+        </div>
+      </div>
+      <div class="window-body">
+        <div class="doc-section" id="about-me">
+
+          <div class="article-grid">
+
+            <div class="article-portrait">
+              <img src="/images/other_components/GemmieSway.gif" alt="Gemmie holding a pencil" />
+            </div>
+            <div>
+              <h1>Gemmie (again.)<span class="sparkle">☆</span></h1>
+              <div class="bio-icons">
+                <Sticker name="pink_girl.gif" /> 
+                <img src="/images/blinkies_stamps_tags/tags/tag_greek.png" alt="Greek" />
+                <img src="/images/blinkies_stamps_tags/tags/tag_intp.png" alt="INTP" />
+                <img src="/images/blinkies_stamps_tags/tags/tag_sanrio.png" alt="Sanrio" />
+                <img src="/images/blinkies_stamps_tags/tags/tag_darkestdungeon.png" alt="Darkness Dungeon" />
+              </div>
+              <p class="blurb">
+                <Sticker name="white_kitty.gif" /> 
+                Okay, I KNOW I already made the first blog post a small "trivia" about me,
+                but I thought I'd make it a proper page.
+              </br>
+                <Sticker name="yellow_supermario.gif" /> 
+                Below, I'm just gonna be an absolute nerd and yap/ meme about the stuff I love, besides art;
+                cause you already know about that <span class="sparkle">☆</span>
+              </p>
+
+              <WaterButton
+              href="https://code.gemmiewow.com/"
+              label="🌍 Visit my Programming Portfolio"
+              waterColor="#3fbfc7"
+              external
+              />
+            </div>
+          </div>
+
+          <BubbleDivider class="bubble-divider-dashed" />
+
+          <h2 class="links-section-heading"><Sticker name="white_nintendo.png" /> Games & more GAMES!</h2>
+          <p class="hand-note">Steam - Nintendo - PlayStation</p>
+          <p class="blurb">BEHOLD! The games I play:</p>
+          <ul class="update-list">
+            <li><span class="update-bullet" aria-hidden="true">☆</span> <strong>Favorite game:</strong> Darkest Dungeon.</li>
+            <li><span class="update-bullet" aria-hidden="true">☆</span> <strong>Rhythm:</strong> Crypt of the Necrodancer, A Dance of Fire and Ice, Just Shapes and Beats, Friday Night Funkin.</li>
+            <li><span class="update-bullet" aria-hidden="true">☆</span> <strong>Bullet Hell:</strong> Enter the Gungeon, Hades, Metal Slug, Vampire Survivors, Cuphead, Hotline Miami.</li>
+            <li><span class="update-bullet" aria-hidden="true">☆</span> <strong>Metroidvania:</strong> Blasphemous, Hollow Knight.</li>
+            <li><span class="update-bullet" aria-hidden="true">☆</span> <strong>RPG Maker:</strong> Ib, Mad Father, The Witch's House.</li>
+            <li><span class="update-bullet" aria-hidden="true">☆</span> <strong>Multiplayer:</strong> Among Us, PEAK, R.E.P.O.</li>
+            <li><span class="update-bullet" aria-hidden="true">☆</span> <strong>Nintendo:</strong> Dungeon Maker, Crash of the Titans, Lego Star Wars, Lego Harry Potter, Rhythm Heaven.</li>
+          </ul>
+
+          </br>
+          <h2 class="links-section-heading"><Sticker name="white_nintendo.png" /> A moment to address my favorite game: Darkest Dungeon.</h2>
+          <p class="hand-note">
+            Waiter waiter! Please, give me more mercenaries spending my MONEY UNREASONABLY! 
+          </p>
+          
+          <div class="article-grid">
+            <div class="article-portrait">
+              <img src="/images/other_components/MY_MONEY.webp" alt="BROO MY MONEY!" />
+            </div>
+            <div>
+              <p class="blurb">
+                <Sticker name="TheFlame.png" /> 
+                <i>"Ruin, has come to our family."</i>
+                </br>
+                </br>
+                <Sticker name="dismas_heart.png" /> 
+                What an absolute game. Unfair, cruel, unforgiving... <i>and yet so rewarding.</i>
+                I love everything, from enviroments and art style, to music, to the story and especially the characters.
+                It's a hard game and you get to learn quickly that as safe as you might feel,
+                you are actually not. Hire up mercenaries, send them to missions and PROFIT!
+                This game introduces a very intersting mechanic, the "stress bar" --
+                too much stress, and your heroes go to breakdown until you de-stress them.
+                Every win feels like an absolute victory and everytime you don't lose your 
+                favorite heroes to missions, it's relief.
+                
+              </p>
+            </div>
+          </div>
+
+          <div class="article-grid-3">
+            <div class="article-portrait">
+              <img class="article-portrait-img" src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fdarkestdungeon.wiki.gg%2Fimages%2FHwm_wiki.png%3F8ceeb3&f=1&nofb=1&ipt=844d7750edc2329769f9565e5245ff3db0750bd69683e058f4643166eca05074&ipo=images" alt="DISMAS I LOVE YOU" />
+            </div>
+            <div>
+              <center>
+              <p class="blurb">
+                <Sticker name="ripostecard.png" />
+                Dismas I love you so much, you are my best frontline and backline warrior,
+                nobody shoots and reposts like you do.
+  
+                </br>
+                </br>
+                <Sticker name="floocube.gif" />
+                <i>
+                I also got him as a plushie, he's legit my fav character.
+                </i>
+                <Sticker name="floocube.gif" />
+              </p>
+              </center>
+            </div>
+            <div class="article-portrait">
+              <img class="article-portrait-img" src="/images/other_components/dismas_plushie.webp" alt="Gemmie's Dismas plushie" />
+            </div>
+          </div>
+          
+
+
+
+          <BubbleDivider class="bubble-divider-dashed" />
+
+          <h2 class="links-section-heading"><Sticker name="purple_mp3.gif" />  Music</h2>
+          <p class="blurb">I listen to almost anything, but here are some of my favorites:</p>
+          <ul class="update-list">
+            <li><span class="update-bullet" aria-hidden="true">☆</span> <strong>Heavy Metal:</strong> Avenged Sevenfold, Iron Maiden, Helloween, Katatonia etc.</li>
+            <li><span class="update-bullet" aria-hidden="true">☆</span> <strong>Rock:</strong> Queen, Muse, Beatles etc.</li>
+            <li><span class="update-bullet" aria-hidden="true">☆</span> <strong>EDM:</strong> Monstercat, Nitro Fun, Pegboard Nerds.</li>
+            <li><span class="update-bullet" aria-hidden="true">☆</span> <strong>Game music:</strong> Darkest Dungeon, Blasphemous, Crypt of the Necrodancer, Minecraft.</li>
+            </br
+          </ul>
+          
+
+
+           <div class="article-grid">
+            
+            <div class="article-portrait">
+              <img src="/images/other_components/minecraft_cassettes.webp" alt="My minecraft music cassettes" />
+              <img src="/images/other_components/cassette_player.webp" alt="My Akai cassette player" />
+            </div>
+            <div>
+              <p class="blurb">
+                <Sticker name="blue_musicnotes.png" /> 
+                I fully support the idea of having physical copies of your media,
+                especially in the current age where you don't really own your online music/ games/ movies.
+                If it's physical, it's yours forever!
+                Personally, I collect CDs and cassettes or straight up download or buy
+                my music from bandcamp creators instead of streaming it on Spotify.
+                Used to have a small SanDisk mp3 player too, but I lost it. <Sticker name="frown.png" /> 
+                </br>
+                </br>
+                <p class="blurb">
+                <strong>Music equipment I got:</strong>
+                <ul class="update-list">
+                  <li><span class="update-bullet" aria-hidden="true">☆</span> <strong>CD Player + Radio:</strong> Lamtech Boombox -- RATING: ★★★⯪☆ </li>
+                  <li><span class="update-bullet" aria-hidden="true">☆</span> <strong>Cassette Player:</strong> Akai Portable Cassette Player -- RATING: ★★★★⯪ </li>
+                  <li><span class="update-bullet" aria-hidden="true">☆</span> <strong>Mp3 Player:</strong> SanDisk Clip Jam Blue -- RATING: ★★★★★ </li>
+                </ul>
+                </p>
+                <WaterButton
+                href="https://bandcamp.com/gemmiewow"
+                label="🎧 My bandcamp library"
+                waterColor="#a876d9"
+                external
+                />
+                
+              </p>
+            </div>
+          </div>
+
+
+
+          <BubbleDivider class="bubble-divider-dashed" />
+
+          <h2 class="links-section-heading"><Sticker name="blue_tv.gif" /> Shows & Movies</h2>
+          <p class="hand-note">This is just a glimpse of what I've watched</p>
+          <ul class="update-list">
+            <li><span class="update-bullet" aria-hidden="true">☆</span> <strong>Cartoon Shows:</strong> Randy Cunningham: 9th Grade Ninja, Pink Panther, Tom & Jerry, Scooby Doo: Mystery Inc, Avatar, Star Wars Rebels, Kim Possible -- my list goes forever, <a href="/images/other_components/gemmies_cartoon_list.txt" class="guestbook-link" target="_blank">click here to view them all.</a> </li>
+            <li><span class="update-bullet" aria-hidden="true">☆</span> <strong>Cartoon Movies:</strong> Treasure Planet, Atlantis, Beauty and the Beast, Megamind, Tangled (GOD I LOVE TANGLED), Monsters Inc, Cars, How to Train your Dragon, Kpop Demon Hunters, Spiderverse 1 +2.</li>
+            <li><span class="update-bullet" aria-hidden="true">☆</span> <strong>Normal Movies:</strong> Pirates of the Caribbean Movies (I LOVE), Harry Potter Movies, Truman Show, The Mask, The Count of Monte Cristo, Gladiator, Phantom of the Opera.</li>
+            <li><span class="update-bullet" aria-hidden="true">☆</span> <strong>Series:</strong> House, Chicago Med, Criminal Minds -- Yall sorry I don't watch series lol</li>
+          </ul>
+
+          <div class="article-grid">
+            
+            <div class="article-portrait">
+              <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwallpapers.com%2Fimages%2Fhd%2Ftangled-rapunzel-with-flynn-3g96ejp0dz8kjysb.jpg&f=1&nofb=1&ipt=c27a27aefcc80fa21e0955de1283701a1c16df107dc58e92b6876dc82a6b3a04&ipo=images" alt="Tangled Disnay Movie" />
+              <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fstatic0.gamerantimages.com%2Fwordpress%2Fwp-content%2Fuploads%2F2025%2F04%2Ftangled-image-cropped.jpg&f=1&nofb=1&ipt=8e1d8f1b380264d22b6dd6a4e2ab9f672a8c5078501bb8a6b1330b3b566741a6&ipo=images" alt="Tangled Disnay Movie" />
+            </div>
+            <div>
+              <p class="blurb">
+                <Sticker name="floocube.gif" /> 
+                WAAA WHAT AN ICONIC MOVIE! I first watched Tangled on my sister's old
+                windows XP laptop and, even if I did not understand english cause I was 6 year old,
+                I was so mesmerised by the story! Needless to say that Flyn Rider was my first crush,
+                if you are a girl you might understand me here. This movie is connected
+                to my childhood and specifically to my sister; everytime I rewatch it
+                I keep remembering her and her old HP mini laptop with windows XP x)
+                </br>
+                </br>
+                <Sticker name="blue_castle.gif" />
+                Not even mentioning how amazing all the songs are, I think all of you know. Diisneeyy
+                please make movies like these agaaiin!
+                
+              </p>
+            </div>
+          </div>
+
+
+          <BubbleDivider class="bubble-divider-dashed" />
+
+          <p class="blurb">
+            <Sticker name="blue_teddybear.gif" /> That's me in a nutshell! Might add more stuff in time.
+            If you wanna, leave me a note in my <a href="/guestbook" class="guestbook-link">guestbook</a> and tell me about your own interests! <span class="sparkle">☆</span>
+          </p>
+        </div>
+      </div>
+    </section>
+  </PageShell>
+</Layout>

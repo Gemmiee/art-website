@@ -20,6 +20,7 @@ const blinkies = fs.existsSync(blinkiesDir)
   : [];
 
 const updates = [
+  { date: '09/04', text: 'Ive noticed all this time, we didnt have an about-me page. Now we do lolol' },
   { date: '09/03', text: 'Posted some code snippets used on this site :>' },
   { date: '09/29', text: 'Music got a new look 🌀 you can now select your music from the new music page! Did I mention that music keeps playing even when you switch pages? (°□°) ა🥬' },
   { date: '09/23', text: 'Blog is here! YAAAAAAYYYY! More spending your time! Plus newsletter!' },
@@ -70,9 +71,9 @@ const announcements = [
                 <h1>Gemmie <span class="sparkle">☆</span></h1>
                 <button type="button" class="avatar-trigger" id="gemmie-trigger" aria-label="Boop Gemmie">
                   <span class="avatar-stage" id="gemmie-stage">
-                    <img class="avatar-img avatar-img-normal" src="/images/GemmieBust.webp" alt="Gemmie bust illustration" />
-                    <img class="avatar-img avatar-img-burned" id="gemmie-burned" src="/images/BurnedGemmie.gif" alt="" aria-hidden="true" />
-                    <img class="avatar-explosion" id="gemmie-explosion" src="/images/explosion.gif" alt="" aria-hidden="true" />
+                    <img class="avatar-img avatar-img-normal" src="/images/other_components/GemmieBust.webp" alt="Gemmie bust illustration" />
+                    <img class="avatar-img avatar-img-burned" id="gemmie-burned" src="/images/other_components/BurnedGemmie.gif" alt="" aria-hidden="true" />
+                    <img class="avatar-explosion" id="gemmie-explosion" src="/images/other_components/explosion.gif" alt="" aria-hidden="true" />
                   </span>
                 </button>
               </center>
@@ -81,7 +82,7 @@ const announcements = [
             
               
               <div class="bio-banner">
-                <img class="bio-doodle" src="/images/gemmie_doodle.png" alt="" aria-hidden="true" />
+                <img class="bio-doodle" src="/images/other_components/gemmie_doodle.png" alt="" aria-hidden="true" />
                 <img class="bio-banner-img" src="/images/banners/banner_bio.png" alt="Female — Cartoon Artist + Animator" />
               </div>
 
@@ -162,7 +163,7 @@ const announcements = [
           <img class="section-banner" src="/images/banners/banner_what_is_this.png" alt="What is this?" />
           <div class="article-grid">
             <div class="article-portrait">
-              <img class="article-portrait-img" src="/images/Gemmie_sit.png" alt="Gemmie sitting illustration" />
+              <img class="article-portrait-img" src="/images/other_components/Gemmie_sit.png" alt="Gemmie sitting illustration" />
             </div>
             <div>
               <p class="blurb">
@@ -270,8 +271,8 @@ const announcements = [
 
     const SQUEAK_SRC = '/sounds/teddy-bear-squeak.mp3';
     const BOOM_SRC = '/sounds/roblox-explosion.mp3';
-    const EXPLOSION_SRC = '/images/explosion.gif';
-    const BURNED_SRC = '/images/BurnedGemmie.gif';
+    const EXPLOSION_SRC = '/images/other_components/explosion.gif';
+    const BURNED_SRC = '/images/other_components/BurnedGemmie.gif';
 
     let clickCount = 0;
     let lastClickTime = 0;
