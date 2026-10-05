@@ -1,6 +1,3 @@
-// 1D shallow water on a staggered grid: h[i] = depth of column i,
-// u[i] = velocity at face i. Flux between columns is what lets the water
-// tip and slosh against the walls, a spring surface would just bob in place.
 const COLUMNS = 64;
 const SUBSTEPS = 6;
 const GRAVITY = 6000;
@@ -14,9 +11,6 @@ const MAX_FILL = 0.9;
 const STILL = 0.05;
 const SLEEP_FRAMES = 20;
 const WATER_AMOUNT = 69;
-/* Spray: a height field can't fold, so water that leaves the surface
- * stops being a height field and becomes a droplet, plain ballistics,
- * poured back into whichever column it lands in. */
 const MAX_DROPS = 96;
 const DROP_GRAVITY = 1400;
 const DROP_DRAG = 0.6;
@@ -258,9 +252,7 @@ function mountWaterButton(root) {
         if (h[i] < 0) h[i] = 0;
       }
     }
-    // Canvas path methods throw on NaN/Infinity, killing the loop, if the
-    // sim goes unstable, reset instead of crashing. Needs an explicit
-    // finite check since NaN comparisons are always false.
+
     for (let i = 0; i < COLUMNS; i++) {
       if (!Number.isFinite(h[i]) || !Number.isFinite(u[i])) {
         freeze();

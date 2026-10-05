@@ -10,8 +10,7 @@
   width: max-content;
   gap: 8px;
   /* content is duplicated once in the HTML; animating exactly one copy's
-     width (-50%) makes the loop point invisible, whatever the content's
-     actual width turns out to be */
+     width. The loop point is invisible */
   animation: marquee-scroll 24s linear infinite;
 }
 
