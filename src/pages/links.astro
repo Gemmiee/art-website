@@ -5,8 +5,6 @@ import Sticker from '../components/Sticker.astro';
 import BubbleDivider from '../components/BubbleDivider.astro';
 import { friends } from '../data/friends';
 
-// Sites gemmie enjoys or that helped her out along the way — add real
-// entries here as { name, href, blurb }
 const links: { name: string; href: string; blurb: string }[] = [
   {
     name: '🌱 DelphiTools',
@@ -96,7 +94,7 @@ const links: { name: string; href: string; blurb: string }[] = [
           </div>
         </div>
 
-        <BubbleDivider />
+        <BubbleDivider class="bubble-divider-dashed" />
 
         <!-- ---- webrings ---- -->
         <div class="doc-section" id="links-webrings">
@@ -151,7 +149,7 @@ const links: { name: string; href: string; blurb: string }[] = [
           </div>
         </div>
 
-        <BubbleDivider />
+        <BubbleDivider class="bubble-divider-dashed" />
 
         <!-- ---- neighbours/ mentions ---- -->
         <div class="doc-section" id="links-neighbours">
@@ -181,7 +179,7 @@ const links: { name: string; href: string; blurb: string }[] = [
           </div>
         </div>
 
-        <BubbleDivider />
+        <BubbleDivider class="bubble-divider-dashed" />
 
         <!-- ---- fun & useful links ---- -->
         <div class="doc-section" id="links-fun">
