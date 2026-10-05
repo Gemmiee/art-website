@@ -169,20 +169,20 @@ const announcements = [
               <p class="blurb">
                 <Sticker name="yellow_sunflower.gif" /> Welcome to my website! This is my little personal spot on the internet filled with art and games.
                 I keep adding new stuff, so make sure you check the 'Site Updates' above.
-                <span class="sparkle">☆</span>
               </br>
               </br>
                 <Sticker name="blue_teddybear.gif" /> Leave your comments and feedback in my <a href="/guestbook" class="guestbook-link">guestbook</a>! I would love to hear from you! <span class="sparkle">☆</span>
               </br>
               </br>
-              <Sticker name="blue_castle.gif" /> If you enjoy the site, consider bookmarking it! Add my button to your own website or we can become neighbours!!
+               <Sticker name="blue_castle.gif" /> If you enjoy the site, consider bookmarking it! Add my button to your own website or we can become neighbours!!
+                <span class="sparkle">☆</span>
               </p>
+              
             </div>
           </div>
 
           {blinkies.length > 0 && (
             <>
-              <p class="hand-note">⋆ a little blinkie collection ⋆</p>
               <div class="blinkie-marquee">
                 <div class="blinkie-marquee-track">
                   {blinkies.map((src) => (
@@ -198,7 +198,7 @@ const announcements = [
           )}
         </div>
 
-        <BubbleDivider />
+        <BubbleDivider/>
 
         <!-- ---- shop + webrings ---- -->
  
@@ -209,6 +209,11 @@ const announcements = [
               <a href="https://ko-fi.com/gemmiewow/" target="_blank" rel="noopener noreferrer">
                 <img class="shop-img" src="/images/cards/card_shop.png" alt="Gemmie's Ko-fi shop" />
               </a>
+              <div style="text-align: center;">
+                <a href="https://grrrl.valentinely.cc/" target="_blank" rel="noopener" style="display: inline-block; padding: 10px;">
+                  <img src="/images/other_components/gemmie_made_by_a_girl.png" alt="Made by a girl clique" loading="lazy" />
+                </a>
+              </div>
             </div>
 
             <div class="shop-col">
@@ -222,6 +227,9 @@ const announcements = [
                   </a>
                   <a class="offsite-btn" href="https://webmasterwebring.netlify.app" target="_blank" rel="noopener" aria-label="Webmaster Webring">
                     <img src="https://file.garden/ZrZSgsrYfQXsO7QH/ww/btn.png" alt="Webmaster Webring" loading="lazy" />
+                  </a>
+                  <a class="offsite-btn" href="https://butteroncookies.neocities.org/angelical" target="_blank" rel="noopener" aria-label="become an angel clique!">
+                    <img src="/images/other_components/angelicalbtn.gif" alt="become an angel clique button" loading="lazy" />
                   </a>
                 </div>
 
