@@ -2491,6 +2491,14 @@ h1 {
   border: 0;
 }
 
+.webring-iframe {
+  display: block;
+  width: 188px;
+  height: 94px;
+  border: 0;
+  background: transparent;
+}
+
 /* footer */
 .footer {
   text-align: center;
