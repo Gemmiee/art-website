@@ -5,8 +5,6 @@ import Sticker from './Sticker.astro';
 
 const defaultAlbum = musicAlbums[0];
 
-// Either `emoji` or `sticker` (a filename from public/images/stickers) works
-// per link — sticker takes priority when both would somehow be set.
 interface NavLink {
   label: string;
   href: string;
@@ -28,18 +26,11 @@ const artLinks: NavLink[] = [
   { sticker: 'yellow_money.gif', label: 'Shop', href: '/art/shop' },
 ];
 
-interface GameLink {
-  name: string;
-  href: string;
-  emoji?: string;
-  sticker?: string;
-}
-
-const unlockedGames: GameLink[] = [
-  { sticker: 'yellow_bee.gif', name: 'Space Cadet Pinball', href: '/pinball' },
-  { sticker: 'white_card.gif', name: 'Spider Solitaire', href: '/spider-solitaire' },
-  { sticker: 'blue_sea.gif', name: 'Paint', href: '/paint' },
-  { sticker: 'blue_console.gif', name: 'Metal Slug X', href: '/metal-slug-x' },
+const unlockedGames: NavLink[] = [
+  { sticker: 'yellow_bee.gif', label: 'Space Cadet Pinball', href: '/pinball' },
+  { sticker: 'white_card.gif', label: 'Spider Solitaire', href: '/spider-solitaire' },
+  { sticker: 'blue_sea.gif', label: 'Paint', href: '/paint' },
+  { sticker: 'blue_console.gif', label: 'Metal Slug X', href: '/metal-slug-x' },
 ];
 
 
@@ -54,7 +45,7 @@ const isCurrent = (href: string) => {
   return target === currentPath;
 };
 
-// On every page except the home page the nav is collapsed
+// On every page except the home page, the nav is collapsed
 const startExpanded = currentPath === '/';
 ---
 
@@ -132,7 +123,7 @@ const startExpanded = currentPath === '/';
                 href={game.href}
                 aria-current={isCurrent(game.href) ? 'page' : undefined}
               >
-                {game.sticker ? <Sticker name={game.sticker} /> : <span aria-hidden="true">{game.emoji}</span>} {game.name}
+                {game.sticker ? <Sticker name={game.sticker} /> : <span aria-hidden="true">{game.emoji}</span>} {game.label}
               </a>
             </li>
           ))}
