@@ -125,18 +125,18 @@ const startExpanded = currentPath === '/';
         <button class="nav-section-toggle" type="button" aria-expanded={startExpanded ? 'true' : 'false'} aria-controls="nav-sec-games">
           <img class="nav-banner-img" src="/images/banners/banner_nav_games.webp" alt="Games" />
         </button>
-        <div class:list={['games-grid', 'nav-section-content', !startExpanded && 'is-collapsed']} id="nav-sec-games">
+        <ul class:list={['nav-list', 'nav-section-content', !startExpanded && 'is-collapsed']} id="nav-sec-games">
           {unlockedGames.map((game) => (
-            <a
-              class="game-slot game-slot-active"
-              href={game.href}
-              aria-current={isCurrent(game.href) ? 'page' : undefined}
-            >
-              {game.sticker ? <Sticker name={game.sticker} /> : <span class="game-slot-icon" aria-hidden="true">{game.emoji}</span>}
-              <span class="game-slot-name">{game.name}</span>
-            </a>
+            <li>
+              <a
+                href={game.href}
+                aria-current={isCurrent(game.href) ? 'page' : undefined}
+              >
+                {game.sticker ? <Sticker name={game.sticker} /> : <span aria-hidden="true">{game.emoji}</span>} {game.name}
+              </a>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
 
       <div class="nav-section">
@@ -246,7 +246,7 @@ const startExpanded = currentPath === '/';
       const frame = document.createElement('iframe');
       frame.id = 'now-playing-frame';
       frame.className = 'bandcamp-frame bandcamp-frame-floating';
-      frame.setAttribute('seamless', '');t.
+      frame.setAttribute('seamless', '');
       document.documentElement.appendChild(frame);
       window.__gemmieFloatingFrame = frame;
 
