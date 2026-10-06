@@ -1,7 +1,3 @@
-/* ============================================
-   gemmie's corner — designs
-   ============================================ */
-
 @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700&family=Pacifico&display=swap');
 
 :root {
@@ -9,26 +5,26 @@
   --glass-fill: rgba(255, 250, 245, 0.6);
   --glass-fill-strong: rgba(255, 250, 245, 0.84);
   --glass-border: rgba(255, 255, 255, 0.85);
-  --titlebar-start: #dee3fb;
-  --titlebar-mid: #93a3e6;
-  --titlebar-end: #4b3a7a;
-  --titlebar-border: #332a56;
-  --titlebar-inactive-start: #ebe5f4;
-  --titlebar-inactive-mid: #cfc2e2;
-  --titlebar-inactive-end: #a996c4;
-  --titlebar-inactive-border: #8d7ba3;
-  --titlebar-inactive-text: #4a3f66;
+  --titlebar-start: #d7e6f5;
+  --titlebar-mid: #4a85c9;
+  --titlebar-end: #1a3f66;
+  --titlebar-border: #11263f;
+  --titlebar-inactive-start: #e4ebf2;
+  --titlebar-inactive-mid: #b7c9da;
+  --titlebar-inactive-end: #7891ab;
+  --titlebar-inactive-border: #5a7290;
+  --titlebar-inactive-text: #2a3f55;
   --tb-btn-start: #fdfefe;
-  --tb-btn-end: #d6cdea;
+  --tb-btn-end: #cfe6e9;
 
   /* text */
-  --ink: #2b2140;
-  --ink-soft: #5c4f7a;
+  --ink: #142c3f;
+  --ink-soft: #3c5a70;
   --ink-inverse: #fbf3ea;
 
   /* accents */
-  --accent: #6a7fd9;
-  --accent-deep: #4b3a7a;
+  --accent: #3a7ab8;
+  --accent-deep: #1a3f66;
   --accent-teal: #3fbfc7;
   --accent-orange: #e8823a;
   --accent-red: #e3543f;
@@ -37,10 +33,10 @@
   --surface-faint: rgba(255, 255, 255, 0.38);
   --surface: rgba(255, 255, 255, 0.55);
   --surface-hover: rgba(255, 255, 255, 0.9);
-  --card-border: rgba(75, 58, 122, 0.32);
-  --card-border-dashed: rgba(75, 58, 122, 0.4);
-  --card-stripe: rgba(75, 58, 122, 0.15);
-  --card-stripe-bg: rgba(75, 58, 122, 0.06);
+  --card-border: rgba(26, 63, 102, 0.32);
+  --card-border-dashed: rgba(26, 63, 102, 0.4);
+  --card-stripe: rgba(26, 63, 102, 0.15);
+  --card-stripe-bg: rgba(26, 63, 102, 0.06);
 
   /* type */
   --font-ui: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -56,37 +52,37 @@
 
 /* ---------- dark theme token overrides ---------- */
 :root[data-theme="dark"] {
-  --glass-fill: rgba(20, 15, 34, 0.55);
-  --glass-fill-strong: rgba(20, 15, 34, 0.78);
+  --glass-fill: rgba(14, 17, 46, 0.55);
+  --glass-fill-strong: rgba(14, 17, 46, 0.78);
   --glass-border: rgba(255, 255, 255, 0.14);
-  --titlebar-start: #6a5aa8;
-  --titlebar-mid: #392f5c;
-  --titlebar-end: #15111f;
-  --titlebar-border: #08060f;
-  --titlebar-inactive-start: #33294a;
-  --titlebar-inactive-mid: #241c38;
-  --titlebar-inactive-end: #171226;
-  --titlebar-inactive-border: #0d0a16;
-  --titlebar-inactive-text: #cabfe0;
-  --tb-btn-start: #4a4260;
-  --tb-btn-end: #2a2440;
+  --titlebar-start: #2a5f99;
+  --titlebar-mid: #16304f;
+  --titlebar-end: #0d1030;
+  --titlebar-border: #070816;
+  --titlebar-inactive-start: #1a2f44;
+  --titlebar-inactive-mid: #15222f;
+  --titlebar-inactive-end: #10122c;
+  --titlebar-inactive-border: #0a0b1d;
+  --titlebar-inactive-text: #a3bdd6;
+  --tb-btn-start: #27405a;
+  --tb-btn-end: #171538;
 
-  --ink: #f3ecff;
-  --ink-soft: #cabfe0;
+  --ink: #e9f1fb;
+  --ink-soft: #9ab6d6;
   --ink-inverse: #fbf3ea;
 
-  --accent: #93a3e6;
-  --accent-deep: #b9c3f0;
+  --accent: #4f9fd9;
+  --accent-deep: #7fb8ef;
   --accent-teal: #5fe0e6;
   --accent-orange: #ffab5c;
 
-  --surface-faint: rgba(20, 15, 34, 0.35);
-  --surface: rgba(30, 22, 48, 0.55);
-  --surface-hover: rgba(70, 56, 100, 0.75);
-  --card-border: rgba(185, 195, 240, 0.28);
-  --card-border-dashed: rgba(185, 195, 240, 0.35);
-  --card-stripe: rgba(185, 195, 240, 0.18);
-  --card-stripe-bg: rgba(185, 195, 240, 0.08);
+  --surface-faint: rgba(14, 17, 46, 0.35);
+  --surface: rgba(18, 21, 54, 0.55);
+  --surface-hover: rgba(36, 42, 98, 0.75);
+  --card-border: rgba(127, 184, 239, 0.28);
+  --card-border-dashed: rgba(127, 184, 239, 0.35);
+  --card-stripe: rgba(127, 184, 239, 0.18);
+  --card-stripe-bg: rgba(127, 184, 239, 0.08);
 }
 
 * {
@@ -102,7 +98,7 @@ body {
   font-family: var(--font-ui);
   color: var(--ink);
   min-height: 100vh;
-  background-color: #dfe3fb;
+  background-color: #dce8f2;
   font-size: 15px;
   line-height: 1.55;
   position: relative;
@@ -111,7 +107,7 @@ body {
 }
 
 :root[data-theme="dark"] body {
-  background-color: #0d0a16;
+  background-color: #0a0d28;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -247,9 +243,7 @@ button:focus-visible {
   margin: 0 1px;
 }
 
-/* ============================================
-   page shell, my 3-column desktop layout shared for every page
-   ============================================ */
+/* ---------- page shell ------------ */
 
 .layout-grid {
   display: grid;
@@ -297,7 +291,6 @@ button:focus-visible {
 }
 .nav-mascot.in-nav {
   display: block;
-  /* cancels .col-nav's own 8px flex gap so the sprite touches topics.exe */
   margin-bottom: -8px;
 }
 .nav-mascot.in-shell {
@@ -421,7 +414,7 @@ button:focus-visible {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(180deg, #eafcff 0%, #9fe0ea 30%, #93a3e6 65%, #4b3a7a 100%);
+  background: linear-gradient(180deg, #eafcff 0%, #9fe0ea 30%, #3f7fc9 65%, #1a3f66 100%);
   border: 1px solid rgba(255,255,255,0.75);
   box-shadow: 0 6px 14px rgba(30,25,60,0.3), inset 0 2px 4px rgba(255,255,255,0.6);
 }
@@ -594,11 +587,16 @@ h1 {
   font-size: 2.8rem;
   line-height: 1;
   margin: 0 0 10px;
-  background: linear-gradient(180deg, #ffb3d1 0%, #ff6fa5 45%, #e14f86 100%);
+  background: linear-gradient(180deg, #8df0f4 0%, #6a6fe0 45%, #2f2a78 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   filter: drop-shadow(0 2px 2px rgba(26,18,46,0.25));
+}
+:root[data-theme="dark"] h1 {
+  background: linear-gradient(180deg, #a8f5f8 0%, #8f8ff0 45%, #4b3fb0 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
 }
 
 .profile-grid {
@@ -1317,13 +1315,13 @@ h1 {
   padding: 8px 14px;
   border-radius: 6px;
   border: 1px solid var(--accent-deep);
-  background: linear-gradient(180deg, #ffffff 0%, #e6ddf7 45%, #ab98e6 46%, #cdb8f0 100%);
+  background: linear-gradient(180deg, #ffffff 0%, #d9f3f0 45%, #4fb9c2 46%, #8fe0e6 100%);
   color: var(--ink);
   cursor: pointer;
   transition: transform 0.12s ease;
 }
 :root[data-theme="dark"] .music-play-btn {
-  background: linear-gradient(180deg, #6a5aa8 0%, #4a3d7a 45%, #332a5c 46%, #241d44 100%);
+  background: linear-gradient(180deg, #2f99a8 0%, #1f6f78 45%, #164d54 46%, #0d2e32 100%);
 }
 .music-play-btn:hover {
   transform: translateY(-1px);
@@ -1517,13 +1515,13 @@ h1 {
   padding: 9px 16px;
   border-radius: 6px;
   border: 1px solid var(--accent-deep);
-  background: linear-gradient(180deg, #ffffff 0%, #e6ddf7 45%, #ab98e6 46%, #cdb8f0 100%);
+  background: linear-gradient(180deg, #ffffff 0%, #d9f3f0 45%, #4fb9c2 46%, #8fe0e6 100%);
   color: var(--ink);
   text-decoration: none;
   transition: transform 0.12s ease;
 }
 :root[data-theme="dark"] .shop-kofi-btn {
-  background: linear-gradient(180deg, #6a5aa8 0%, #4a3d7a 45%, #332a5c 46%, #241d44 100%);
+  background: linear-gradient(180deg, #2f99a8 0%, #1f6f78 45%, #164d54 46%, #0d2e32 100%);
 }
 .shop-kofi-btn:hover {
   transform: translateY(-1px);
@@ -2148,7 +2146,7 @@ h1 {
   transform: translateY(-50%);
   font-size: 1.3rem;
   font-weight: 700;
-  color: #241a3d;
+  color: #0f2236;
   text-shadow: 0 1px 2px rgba(255, 255, 255, 0.55);
   transition: transform 0.2s ease;
 }
@@ -2458,13 +2456,13 @@ h1 {
   padding: 6px 10px;
   border-radius: 6px;
   border: 1px solid var(--accent-deep);
-  background: linear-gradient(180deg, #ffffff 0%, #e6ddf7 45%, #ab98e6 46%, #cdb8f0 100%);
+  background: linear-gradient(180deg, #ffffff 0%, #d9f3f0 45%, #4fb9c2 46%, #8fe0e6 100%);
   color: var(--ink);
   cursor: pointer;
   transition: transform 0.12s ease;
 }
 :root[data-theme="dark"] .embed-copy-btn {
-  background: linear-gradient(180deg, #6a5aa8 0%, #4a3d7a 45%, #332a5c 46%, #241d44 100%);
+  background: linear-gradient(180deg, #2f99a8 0%, #1f6f78 45%, #164d54 46%, #0d2e32 100%);
   color: var(--ink);
 }
 .embed-copy-btn:hover {

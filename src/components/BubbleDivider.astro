@@ -1,7 +1,4 @@
 ---
-// Thin section separator — same gradient as the Art Gallery banner
-// (.doc-banner), squashed down into a slim bar so it reads as a divider
-// rather than a heading.
 interface Props {
   class?: string;
 }
@@ -16,12 +13,9 @@ const { class: extraClass = '' } = Astro.props;
     height: 6px;
     margin: 26px 0;
     border-radius: 999px;
-    background: linear-gradient(90deg, #9fe0ea 0%, #93a3e6 55%, #4b3a7a 100%);
+    background: linear-gradient(90deg, #9fe0ea 0%, #3f7fc9 55%, #1a3f66 100%);
     box-shadow: 0 1px 4px rgba(30, 25, 60, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.6);
   }
-  /* quieter variant — same spacing, just a dashed line instead of the
-     gradient bar, reusing the dashed color already used on bordered boxes
-     elsewhere (.links-empty-note, code-resource blocks, etc). */
   .bubble-divider-dashed {
     height: 0;
     border-radius: 0;

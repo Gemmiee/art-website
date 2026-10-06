@@ -1,10 +1,10 @@
 :root {
   --bg: #fdf6f0;
-  --fg: #2b2140;
+  --fg: #142c3f;
 }
 :root[data-theme="dark"] {
-  --bg: #14101f;
-  --fg: #f3ecff;
+  --bg: #0a1522;
+  --fg: #e9f1fb;
 }
 
 body {

@@ -7,9 +7,6 @@ import WaterButton from '../components/WaterButton.astro';
 import BubbleDivider from '../components/BubbleDivider.astro';
 import Sticker from '../components/Sticker.astro';
 
-// Scanned straight off the folder rather than hardcoded, so dropping a new
-// blinkie .gif in public/images/blinkies_stamps_tags/blinkies is enough —
-// no code change needed to make it show up in the marquee.
 const blinkiesDir = path.join(process.cwd(), 'public', 'images', 'blinkies_stamps_tags', 'blinkies');
 const blinkies = fs.existsSync(blinkiesDir)
   ? fs
@@ -50,7 +47,7 @@ const announcements = [
 
 <Layout>
   <PageShell>
-    <!-- for sanrio webring -->
+    <!-- css for sanrio webring -->
     <link href="https://luckyatoll.nekoweb.org/sanriowebring.css" rel="stylesheet" type="text/css" media="all"/>
     
     <!-- ================= single merged content window ================= -->
@@ -114,7 +111,7 @@ const announcements = [
               <WaterButton
                 href="/art/commissions"
                 label="💌 See my commissions here!"
-                waterColor="#d472a1"
+                waterColor="#a876d9"
               />
 
             </div>
@@ -251,7 +248,7 @@ const announcements = [
                 <area href="https://webring.ghostk.id/online/random" target="_top" shape="rect" coords="74,27,126,36" alt="Random" title="Random">
                 <area href="https://webring.ghostk.id/online/Gemmie/next" target="_top" shape="rect" coords="139,27,192,36" alt="Next" title="Next">
                 </map>
-                <img usemap="#onlinewidget" src="https://ghostk.id/i/onlinepurple.gif" width="200" height="40" style="width:200px;height:40px;max-width:none;image-rendering:pixelated;" alt="A Windows style dialog box titled 'THE ONLINE WEBRING' with three clickable buttons labeled Previous, Random, and Next" class="offsite-imagemap" />
+                <img usemap="#onlinewidget" src="https://ghostk.id/i/onlineblue.gif" width="200" height="40" style="width:200px;height:40px;max-width:none;image-rendering:pixelated;" alt="A Windows style dialog box titled 'THE ONLINE WEBRING' with three clickable buttons labeled Previous, Random, and Next" class="offsite-imagemap" />
 
                 <!--For The Dreamers -->
                 <div style="text-align: center;">
@@ -301,12 +298,10 @@ const announcements = [
 
     const SPAM_WINDOW_MS = 1500;
     const CLICKS_TO_EXPLODE = 7;
-    const BOOM_LEAD_MS = 80; // sound starts a beat before the visual blast
-    const BLAST_LEAD_MS = 250; // explosion shows a beat before burned swaps in, so it reads as cause->effect
-    // explosion.gif's own loop is ~1.41s (42 frames) — fade has to start just
-    // before that, or it visibly restarts into a second loop before fading.
+    const BOOM_LEAD_MS = 80;
+    const BLAST_LEAD_MS = 250;
     const BLAST_MS = 1380;
-    const BLAST_FADE_MS = 500; // matches the CSS transition duration on .is-blast-fading
+    const BLAST_FADE_MS = 500;
     const BURNED_HOLD_MS = 5000;
 
     const SQUEAK_SRC = '/sounds/teddy-bear-squeak.mp3';
@@ -318,15 +313,10 @@ const announcements = [
     let lastClickTime = 0;
     let exploding = false;
 
-    // Fresh Audio per play (not reusing+rewinding one element) so rapid
-    // clicks layer overlapping sounds instead of cutting each other off.
     const playSound = (src: string) => {
       void new Audio(src).play();
     };
 
-    // A query-string bust forces a real reload+redecode every time; reusing
-    // the exact same src string is a no-op in some browsers and leaves the
-    // gif frozen on its last (often faded-out) frame on repeat loops.
     const restartGif = (img: HTMLImageElement, baseSrc: string) => {
       img.src = `${baseSrc}?r=${Date.now()}`;
     };
@@ -358,7 +348,7 @@ const announcements = [
           stage.classList.add('is-blast-fading');
           stage.classList.remove('is-blasting');
           setTimeout(() => stage.classList.remove('is-blast-fading'), BLAST_FADE_MS);
-        }, BOOM_LEAD_MS + BLAST_MS); // BLAST_MS still measured from the gif's own start
+        }, BOOM_LEAD_MS + BLAST_MS);
 
         setTimeout(() => {
           stage.classList.remove('is-exploding');
@@ -369,7 +359,7 @@ const announcements = [
 
       playSound(SQUEAK_SRC);
       stage.classList.remove('is-booping');
-      void stage.offsetWidth; // reflow so the animation can restart on rapid clicks
+      void stage.offsetWidth;
       stage.classList.add('is-booping');
     });
   });

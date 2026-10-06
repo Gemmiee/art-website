@@ -43,7 +43,7 @@ const folders = await scanArtGallery();
           <WaterButton
             href="/art/commissions"
             label="💌 Interested in a commission? See my info + examples here!"
-            waterColor="#d472a1"
+            waterColor="#a876d9"
           />
 
           <div class="art-folder-list">
@@ -125,9 +125,6 @@ const folders = await scanArtGallery();
     const prevBtn = document.getElementById('art-lightbox-prev') as HTMLButtonElement | null;
     const nextBtn = document.getElementById('art-lightbox-next') as HTMLButtonElement | null;
     if (lightbox && lightboxBody && lightboxTitle && prevBtn && nextBtn) {
-      // The whole folder's thumbnails (every page, not just the visible one —
-      // pages besides the current one are just hidden, not removed from the
-      // DOM) become one navigable sequence for as long as the lightbox is open.
       let currentThumbs: HTMLButtonElement[] = [];
       let currentIndex = -1;
 
