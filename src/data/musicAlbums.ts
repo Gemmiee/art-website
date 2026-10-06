@@ -1,5 +1,4 @@
-// Bandcamp albums for /music + the sidebar player. To add one: Bandcamp ->
-// Share/Embed -> grab the "album=NNNNNN" id, plus the cover image URL and page URL.
+// bandcamp album data for the music page
 export interface MusicAlbum {
   id: string;
   title: string;

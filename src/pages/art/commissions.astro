@@ -91,8 +91,7 @@ const tiers = await Promise.all(
 );
 const visibleTiers = tiers.filter((tier) => tier.sheetUrl !== null);
 
-// The Terms sheet gets its own layout below (sheet + Gemmie/speech-cloud
-// mascot instead of text + examples), so it's split out of the main list.
+// terms get their own layout cause they are displayed differently
 const termsTier = visibleTiers.find((tier) => tier.label === 'Terms & What I Can Do') ?? null;
 const styleTiers = visibleTiers.filter((tier) => tier !== termsTier);
 ---
@@ -225,9 +224,7 @@ const styleTiers = visibleTiers.filter((tier) => tier !== termsTier);
 </Layout>
 
 <script>
-  // Same lightbox pattern as art.astro, minus the folder/pagination bits
-  // these flat per-tier galleries don't need. prev/next stays scoped to
-  // each tier via thumb.closest('.art-gallery').
+  // shared lightbox for the examples and terms
   document.addEventListener('astro:page-load', () => {
     const lightbox = document.getElementById('art-lightbox');
     const lightboxBody = document.getElementById('art-lightbox-body');
@@ -260,9 +257,7 @@ const styleTiers = visibleTiers.filter((tier) => tier !== termsTier);
       currentIndex = -1;
     };
 
-    // Sheet buttons (.comm-sheet-thumb) aren't inside a .art-gallery, so
-    // they naturally fall back to a single-item "gallery" with prev/next
-    // hidden — exactly right, since each is its own standalone image.
+    // left and right buttons
     document.querySelectorAll<HTMLButtonElement>('.art-thumb, .comm-sheet-thumb').forEach((thumb) => {
       thumb.addEventListener('click', () => {
         const gallery = thumb.closest('.art-gallery');

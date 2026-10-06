@@ -1,6 +1,3 @@
-// Physical products for /art/shop. Images auto-detected from public/images/shop
-// by filename prefix (cat_family.jpg, cat_family2.jpg, ...) — just add text here.
-// Order = display order.
 export interface ShopProduct {
   id: string; // filename prefix in public/images/shop
   title: string;

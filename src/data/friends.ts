@@ -1,5 +1,3 @@
-// Shared between MiscColumn.astro (home sidebar marquee) and links.astro
-
 export interface Friend {
   name: string;
   href: string;

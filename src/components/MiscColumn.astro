@@ -1,6 +1,4 @@
 ---
-// Right sidebar: socials, friend links, guestbook. Only rendered on pages
-// that opt in via <PageShell showMisc> — secondary pages keep just nav + main.
 import BubbleDivider from './BubbleDivider.astro';
 import Sticker from './Sticker.astro';
 import { friends } from '../data/friends';
@@ -108,11 +106,8 @@ const embedCode = `<a href="${siteUrl}"><img src="${ownButtonSrc}" width="88" he
       </div>
     </div>
     <div class="window-body">
-      <!-- The chat loader script used to run unsandboxed on this page itself
-           (a <script> tag can't be sandboxed like an iframe can) — likely
-           cause of a "malware popup blocked" warning some visitors saw.
-           Wrapping loader + chat together in one srcdoc iframe sandboxes
-           the script too, and reloads fresh every time for free. -->
+      <!-- The chat loader script used to run unsandboxed on this page
+       and people thought it was malware cause of their adguards, son -->
       <iframe
         class="guestbook-iframe"
         title="Gemmie's corner guestbook chat"
@@ -167,7 +162,7 @@ const embedCode = `<a href="${siteUrl}"><img src="${ownButtonSrc}" width="88" he
       window.addEventListener('scroll', hide, { passive: true });
     }
 
-    // grab-my-button embed snippet
+    // grab my button embed snippet
     const embedInput = document.querySelector<HTMLInputElement>('.embed-input');
     embedInput?.addEventListener('click', () => embedInput.select());
 

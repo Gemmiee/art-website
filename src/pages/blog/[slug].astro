@@ -76,8 +76,7 @@ const thumbnailUrl = `/images/blog/${encodeURIComponent(post.data.thumbnail)}`;
       </div>
     </section>
 
-    <!-- shared lightbox — same pattern as src/pages/art.astro / art/shop.astro.
-         Every image in the post body is clickable, no per-image markup needed. -->
+    <!-- same lightbox as in art -->
     <div class="art-lightbox" id="art-lightbox" hidden>
       <div class="art-lightbox-backdrop" data-close></div>
       <div class="art-lightbox-frame window">
@@ -97,10 +96,7 @@ const thumbnailUrl = `/images/blog/${encodeURIComponent(post.data.thumbnail)}`;
 </Layout>
 
 <script>
-  // Lets a post embed a sound button via plain HTML, e.g.:
-  //   <button class="sound-btn" data-sound="glass-breaking.mp3">🔊 Glass breaking</button>
-  // data-sound is a filename in public/images/blog/ (or a full /path). Audio
-  // elements are cached per src so repeat clicks don't re-fetch.
+  // soundboard for the blog posts
   document.addEventListener('astro:page-load', () => {
     const audioCache = new Map<string, HTMLAudioElement>();
     document.querySelectorAll<HTMLElement>('.blog-article-body .sound-btn').forEach((btn) => {
@@ -118,8 +114,7 @@ const thumbnailUrl = `/images/blog/${encodeURIComponent(post.data.thumbnail)}`;
       });
     });
 
-    // Click-to-enlarge for every image in the post body, no per-image markup
-    // needed. .sticker excluded — those are decorative, not photos.
+    // click to open images in the lightbox + left and right buttons
     const lightbox = document.getElementById('art-lightbox');
     const lightboxBody = document.getElementById('art-lightbox-body');
     const lightboxTitle = document.getElementById('art-lightbox-title');

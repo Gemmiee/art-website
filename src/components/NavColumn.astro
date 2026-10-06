@@ -54,8 +54,7 @@ const isCurrent = (href: string) => {
   return target === currentPath;
 };
 
-// On every page except the home page, the nav's banner sections (Topics,
-// Games, Contact) start collapsed so the sidebar takes up less room.
+// On every page except the home page the nav is collapsed
 const startExpanded = currentPath === '/';
 ---
 
@@ -178,10 +177,7 @@ const startExpanded = currentPath === '/';
         loading="lazy"
       />
       <p class="now-playing-label" id="now-playing-label">{defaultAlbum.title} — {defaultAlbum.artist}</p>
-      <!-- Placeholder, not the real player — a live iframe here would reload
-           on every Astro page-swap (confirmed by testing, even with
-           transition:persist). Real iframe lives on document.body outside
-           Astro's reach, pinned visually over this slot, so it survives nav. -->
+      <!-- Placeholder, not the real player -->
       <div class="bandcamp-frame bandcamp-frame-slot" id="now-playing-iframe-slot" aria-hidden="true"></div>
     </div>
   </section>
@@ -189,9 +185,7 @@ const startExpanded = currentPath === '/';
 
 <script>
   document.addEventListener('astro:page-load', () => {
-    // Main page always shows every section expanded (see startExpanded in
-    // the frontmatter) regardless of what's remembered below — this just
-    // has to match that same "is it home" check so the two never disagree.
+
     const path = window.location.pathname.replace(/\/$/, '') || '/';
     const isHome = path === '/';
 
@@ -205,9 +199,6 @@ const startExpanded = currentPath === '/';
       const sectionId = btn.getAttribute('aria-controls') || '';
       const storageKey = `gemmie-nav-expanded:${sectionId}`;
 
-      // Restore whatever was last chosen for this section on any OTHER
-      // page — skipped on home, which always renders fully expanded
-      // server-side already (startExpanded), so there's nothing to restore.
       if (!isHome) {
         try {
           const saved = localStorage.getItem(storageKey);
@@ -220,8 +211,7 @@ const startExpanded = currentPath === '/';
       btn.addEventListener('click', () => {
         const nowExpanded = btn.getAttribute('aria-expanded') !== 'true';
         setSection(btn, nowExpanded);
-        // Saved even when clicked on home, so the choice is there waiting
-        // the next time a non-home page loads.
+        // Saved even when clicked on home, so the choice is there waiting the next time a non-home page loads.
         try {
           localStorage.setItem(storageKey, String(nowExpanded));
         } catch {}
@@ -231,10 +221,7 @@ const startExpanded = currentPath === '/';
 </script>
 
 <script define:vars={{ musicAlbums }} is:inline>
-  // Floating Bandcamp player — see #now-playing-iframe-slot comment above for
-  // why it can't be a normal iframe. One-time setup (create iframe, wire
-  // listener) is guarded to run once; repositioning + cover/label resync has
-  // to rerun every nav since those are plain Astro nodes recreated per page.
+  // Floating Bandcamp player 
   document.addEventListener('astro:page-load', () => {
     const cover = document.getElementById('now-playing-cover');
     const label = document.getElementById('now-playing-label');
@@ -243,9 +230,6 @@ const startExpanded = currentPath === '/';
     const bandcampEmbedSrc = (albumId) =>
       `https://bandcamp.com/EmbeddedPlayer/album=${albumId}/size=large/bgcol=faf3ea/linkcol=4b3a7a/tracklist=false/artwork=none/`;
     const findAlbum = (id) => musicAlbums.find((a) => a.id === id);
-    // Re-queries the DOM each call instead of closing over cover/label — the
-    // play-album listener only attaches once, so a captured reference would
-    // go stale after the first navigation.
     const renderInfo = (album) => {
       const coverEl = document.getElementById('now-playing-cover');
       const labelEl = document.getElementById('now-playing-label');
@@ -262,10 +246,7 @@ const startExpanded = currentPath === '/';
       const frame = document.createElement('iframe');
       frame.id = 'now-playing-frame';
       frame.className = 'bandcamp-frame bandcamp-frame-floating';
-      frame.setAttribute('seamless', '');
-      // Appended to <html>, not document.body — Astro replaces <body> wholesale
-      // on navigation, wiping anything inside it. position:fixed doesn't care
-      // about DOM ancestry, so this has no visual effect.
+      frame.setAttribute('seamless', '');t.
       document.documentElement.appendChild(frame);
       window.__gemmieFloatingFrame = frame;
 
@@ -297,9 +278,6 @@ const startExpanded = currentPath === '/';
 
     const setAlbum = (album, { persist = true } = {}) => {
       renderInfo(album);
-      // Reassigning an iframe's src to the same url restarts it in some
-      // browsers, killing playback — guard against that. Tracked on window,
-      // not a DOM attribute, since Astro recreates these nodes on every nav.
       if (window.__gemmieCurrentAlbumId === album.id) return;
       window.__gemmieCurrentAlbumId = album.id;
       frame.src = bandcampEmbedSrc(album.id);
@@ -323,9 +301,6 @@ const startExpanded = currentPath === '/';
 
       window.addEventListener('gemmie:play-album', (e) => setAlbum(e.detail));
     } else {
-      // Not the first load this session — the iframe is untouched and still
-      // playing, but the cover/label are fresh nodes showing the default
-      // album again, so resync them to whatever's actually still playing.
       const current = findAlbum(window.__gemmieCurrentAlbumId);
       if (current) renderInfo(current);
     }

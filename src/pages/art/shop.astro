@@ -139,7 +139,7 @@ const products = await Promise.all(
       </div>
     </section>
 
-    <!-- shared lightbox — same pattern as src/pages/art.astro / art/commissions.astro -->
+    <!-- shared lightbox same as commissions and art -->
     <div class="art-lightbox" id="art-lightbox" hidden>
       <div class="art-lightbox-backdrop" data-close></div>
       <div class="art-lightbox-frame window">
@@ -160,9 +160,7 @@ const products = await Promise.all(
 
 <script>
   document.addEventListener('astro:page-load', () => {
-    // per-product image carousel (left column) — independent of the
-    // shared full-screen lightbox below, which still opens on clicking
-    // whichever slide is currently active.
+    // products images are carousel
     document.querySelectorAll<HTMLElement>('.shop-carousel').forEach((carousel) => {
       const slides = Array.from(carousel.querySelectorAll<HTMLElement>('.shop-carousel-slide'));
       const dots = Array.from(carousel.querySelectorAll<HTMLElement>('.shop-carousel-dot'));
