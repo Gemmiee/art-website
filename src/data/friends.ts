@@ -12,4 +12,5 @@ export const friends: Friend[] = [
   { name: 'Leda', href: 'https://www.instagram.com/kaito_solos_', button: 'button_leda.png' },
   { name: 'Grassy', href: 'https://grasshampoo.carrd.co/', button: 'button_grassy.png' },
   { name: 'Dera', href: 'https://www.instagram.com/voiceofthederanged', button: 'button_dera.gif' },
+  { name: 'Klaxxium', href: 'https://klaxxium.carrd.co/', button: 'button_klax.gif' },
 ];
