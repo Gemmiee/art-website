@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import PageShell from '../components/PageShell.astro';
 import Sticker from '../components/Sticker.astro';
+import DocBanner from '../components/DocBanner.astro';
 ---
 
 <Layout title="Guestbook ☆ Gemmie's corner">
@@ -19,14 +20,7 @@ import Sticker from '../components/Sticker.astro';
       </div>
       <div class="window-body">
         <div class="doc-section" id="guestbook">
-          <div class="doc-banner">
-            <span class="bubble-wrap" style="left: 8%; animation-duration: 3.2s; animation-delay: -0.5s;"><img class="bubble-icon" src="/images/other_components/bubble.png" alt="" /></span>
-            <span class="bubble-wrap" style="left: 26%; animation-duration: 4s; animation-delay: -2s;"><img class="bubble-icon" src="/images/other_components/bubble.png" alt="" /></span>
-            <span class="bubble-wrap" style="left: 46%; animation-duration: 3.5s; animation-delay: -1.2s;"><img class="bubble-icon" src="/images/other_components/bubble.png" alt="" /></span>
-            <span class="bubble-wrap" style="left: 66%; animation-duration: 4.5s; animation-delay: -3s;"><img class="bubble-icon" src="/images/other_components/bubble.png" alt="" /></span>
-            <span class="bubble-wrap" style="left: 84%; animation-duration: 3.8s; animation-delay: -1.8s;"><img class="bubble-icon" src="/images/other_components/bubble.png" alt="" /></span>
-            <img class="doc-banner-img" src="/images/banners/banner_guestbook.png" alt="Guestbook" />
-          </div>
+          <DocBanner src="/images/banners/banner_guestbook.png" alt="Guestbook" />
           <p class="hand-note">
             Leave a little note before you go!
           </p>

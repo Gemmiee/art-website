@@ -6,6 +6,7 @@ import PageShell from '../../components/PageShell.astro';
 import BubbleDivider from '../../components/BubbleDivider.astro';
 import { getImageThumb } from '../../lib/imageThumb';
 import Sticker from '../../components/Sticker.astro';
+import DocBanner from '../../components/DocBanner.astro';
 import { shopProducts, KOFI_SHOP_URL } from '../../data/shopProducts';
 
 const IMAGE_EXTS = new Set(['.png', '.jpg', '.jpeg', '.gif', '.webp']);
@@ -65,14 +66,7 @@ const products = await Promise.all(
       </div>
       <div class="window-body">
         <div class="doc-section" id="shop">
-          <div class="doc-banner">
-            <span class="bubble-wrap" style="left: 8%; animation-duration: 3.2s; animation-delay: -0.5s;"><img class="bubble-icon" src="/images/other_components/bubble.png" alt="" /></span>
-            <span class="bubble-wrap" style="left: 26%; animation-duration: 4s; animation-delay: -2s;"><img class="bubble-icon" src="/images/other_components/bubble.png" alt="" /></span>
-            <span class="bubble-wrap" style="left: 46%; animation-duration: 3.5s; animation-delay: -1.2s;"><img class="bubble-icon" src="/images/other_components/bubble.png" alt="" /></span>
-            <span class="bubble-wrap" style="left: 66%; animation-duration: 4.5s; animation-delay: -3s;"><img class="bubble-icon" src="/images/other_components/bubble.png" alt="" /></span>
-            <span class="bubble-wrap" style="left: 84%; animation-duration: 3.8s; animation-delay: -1.8s;"><img class="bubble-icon" src="/images/other_components/bubble.png" alt="" /></span>
-            <img class="doc-banner-img" src="/images/banners/banner_kofi.png" alt="Shop" />
-          </div>
+          <DocBanner src="/images/banners/banner_kofi.png" alt="Shop" />
 
           <p class="hand-note">
             🎨 Physical canvases I've made! All items ship out from my Ko-fi shop!
