@@ -1,0 +1,107 @@
+/* ---------- shared components ---------- */
+
+.wrap {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 40px 16px 64px;
+  position: relative;
+  z-index: 1;
+}
+
+/* -- Aero glass window -- */
+
+.window {
+  background: var(--glass-fill-strong);
+  border: 1px solid var(--glass-border);
+  border-radius: 0;
+  backdrop-filter: blur(10px) saturate(1.4);
+  -webkit-backdrop-filter: blur(10px) saturate(1.4);
+  overflow: hidden;
+  position: relative;
+  transition: background var(--theme-transition) ease, border-color var(--theme-transition) ease;
+}
+
+.window + .window {
+  margin-top: 26px;
+}
+.col-nav .window + .window,
+.col-misc .window + .window {
+  margin-top: 0;
+}
+
+.title-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 8px 7px 12px;
+  background: linear-gradient(180deg, var(--titlebar-start) 0%, var(--titlebar-mid) 45%, var(--titlebar-end) 100%);
+  border-bottom: 1px solid var(--titlebar-border);
+  position: relative;
+  transition: background var(--theme-transition) ease, border-color var(--theme-transition) ease;
+}
+
+.title-bar::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 45%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.75), rgba(255,255,255,0));
+  pointer-events: none;
+}
+
+.title-bar-icon {
+  font-size: 0.95rem;
+}
+
+.title-bar-text {
+  flex: 1;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ink-inverse);
+  text-shadow: 0 1px 1px rgba(0,0,0,0.35);
+  letter-spacing: 0.2px;
+}
+
+.title-bar-controls {
+  display: flex;
+  gap: 4px;
+}
+
+.tb-btn {
+  width: 22px;
+  height: 20px;
+  border-radius: 0;
+
+  border: 1px solid rgba(255,255,255,0.6);
+  background: linear-gradient(180deg, var(--tb-btn-start) 0%, var(--tb-btn-end) 100%);
+  color: var(--ink);
+  font-size: 0.7rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--theme-transition) ease;
+}
+
+.tb-btn.close {
+  background: linear-gradient(180deg, #ff9a8a 0%, #e3543f 100%);
+  color: #fff;
+}
+
+.window-body {
+  padding: 20px;
+}
+
+.sparkle {
+  color: var(--accent-orange);
+}
+
+/* for custom stickers */
+.sticker {
+  display: inline-block;
+  height: 1.4em;
+  width: auto;
+  vertical-align: middle;
+  margin: 0 1px;
+}
+

@@ -1,0 +1,156 @@
+/* ---------- page shell ------------ */
+
+.layout-grid {
+  display: grid;
+  grid-template-columns: 265px minmax(0, 1fr) 265px;
+  grid-template-areas: "nav main misc" "footer footer footer";
+  column-gap: 8px;
+  row-gap: 14px;
+  align-items: start;
+}
+.layout-grid.no-misc {
+  grid-template-columns: 265px minmax(0, 1fr);
+  grid-template-areas: "nav main" "footer footer";
+}
+.col-main { grid-area: main; min-width: 0; }
+.col-nav {
+  grid-area: nav;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: sticky;
+  top: 20px;
+  min-width: 0;
+}
+.col-misc {
+  grid-area: misc;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: sticky;
+  top: 20px;
+
+  min-width: 0;
+}
+.footer { grid-area: footer; }
+
+/* nav mascot speech cloud, there are two copies one for desktop
+   the other for mobile cos positioning sucked */
+.nav-mascot {
+  position: relative;
+  width: 100%;
+  height: 172px;
+  max-width: 260px;
+  margin-left: 6px;
+  margin-right: 6px;
+}
+.nav-mascot.in-nav {
+  display: block;
+  margin-bottom: -8px;
+}
+.nav-mascot.in-shell {
+  display: none;
+}
+.nav-mascot-sprite {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 172px;
+  height: auto;
+  z-index: 2;
+}
+.nav-mascot-cloud {
+  position: absolute;
+  left: -18px;
+  top: -10px;
+  width: 158px;
+  z-index: 1;
+}
+.nav-mascot-cloud-img,
+.nav-mascot-cloud-img-night,
+.comm-terms-cloud-img,
+.comm-terms-cloud-img-night {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: opacity var(--theme-transition) ease;
+}
+.nav-mascot-cloud-img-night,
+.comm-terms-cloud-img-night {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  opacity: 0;
+}
+:root[data-theme="dark"] .nav-mascot-cloud-img,
+:root[data-theme="dark"] .comm-terms-cloud-img {
+  opacity: 0;
+}
+:root[data-theme="dark"] .nav-mascot-cloud-img-night,
+:root[data-theme="dark"] .comm-terms-cloud-img-night {
+  opacity: 1;
+}
+.nav-mascot-mood {
+  position: absolute;
+  inset: 9% 16% 26% 9%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 2px;
+  color: var(--ink);
+}
+.nav-mascot-mood-label {
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.nav-mascot-mood-note {
+  margin: 0;
+  font-size: 0.74rem;
+  font-style: italic;
+  color: var(--ink);
+}
+
+@media (max-width: 900px) {
+  .layout-grid,
+  .layout-grid.no-misc {
+    grid-template-columns: 1fr;
+    grid-template-areas: "mascot" "main" "misc" "nav" "footer";
+    row-gap: 0;
+  }
+  .col-main,
+  .col-misc,
+  .col-nav {
+    margin-bottom: 14px;
+  }
+  .col-nav, .col-misc {
+    position: static;
+  }
+  .nav-mascot.in-nav {
+    display: none;
+  }
+  .nav-mascot.in-shell {
+    display: block;
+    grid-area: mascot;
+    justify-self: end;
+    max-width: 270px;
+    height: 160px;
+  }
+  .nav-mascot-sprite {
+    width: 140px;
+  }
+  .nav-mascot-cloud {
+    width: 180px;
+  }
+  .nav-mascot-mood-label {
+    font-size: 0.9rem;
+  }
+  .nav-mascot-mood-note {
+    font-size: 0.86rem;
+  }
+}
+

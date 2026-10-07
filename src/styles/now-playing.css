@@ -1,0 +1,52 @@
+/* ---------------- now playing ---------------*/
+.bandcamp-body {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.bandcamp-cover {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 0;
+
+  border: 1px solid var(--glass-border);
+}
+.now-playing-label {
+  margin: 0;
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.bandcamp-frame {
+  display: block;
+  width: calc(100% + 28px);
+  margin: 0 -14px -14px;
+  height: 120px;
+  border: 0;
+}
+.bandcamp-frame-slot {
+  pointer-events: none;
+}
+.bandcamp-frame-floating {
+  position: fixed;
+  margin: 0;
+  z-index: 40;
+}
+.now-playing-change-link {
+  display: block;
+  margin: 0;
+  font-size: 0.74rem;
+  font-weight: 600;
+  text-align: center;
+  color: var(--accent-deep);
+}
+.now-playing-change-link:hover {
+  text-decoration-thickness: 2px;
+}
+

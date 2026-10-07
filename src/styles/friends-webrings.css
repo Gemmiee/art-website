@@ -1,0 +1,154 @@
+/* ---------------- links ---------------*/
+.links-section-heading {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 6px;
+  font-family: var(--font-ui);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--accent-deep);
+}
+
+
+/* friend list static */
+.friends-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 4px 0 10px;
+}
+
+.links-empty-note {
+  padding: 14px 16px;
+  background: var(--surface-faint);
+}
+
+/* link cards */
+.link-list {
+  margin: 0;
+  padding-left: 20px;
+  color: var(--ink);
+}
+.link-list li {
+  margin-bottom: 6px;
+  font-size: 0.85rem;
+}
+.link-list a {
+  font-weight: 700;
+  color: var(--accent-deep);
+}
+
+
+/* friend marquee */
+.friend-marquee {
+  overflow: hidden;
+  margin-bottom: 4px;
+  /* soft fade at both edges */
+  mask-image: linear-gradient(to right, transparent, black 20px, black calc(100% - 20px), transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 20px, black calc(100% - 20px), transparent);
+}
+.friend-marquee-track {
+  display: flex;
+  width: max-content;
+  gap: 8px;
+  animation: friend-marquee-scroll 24s linear infinite;
+}
+.friend-marquee:hover .friend-marquee-track {
+  animation-play-state: paused;
+}
+@keyframes friend-marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .friend-marquee-track {
+    animation: none;
+  }
+}
+.friend-btn {
+  display: block;
+  flex-shrink: 0;
+  width: 88px;
+  height: 31px;
+  border-radius: 0;
+  overflow: hidden;
+  transition: transform 0.15s ease;
+}
+.friend-btn img {
+  display: block;
+  width: 88px;
+  height: 31px;
+}
+.friend-btn:hover {
+  transform: translateY(-2px);
+}
+
+.offsite-btn {
+  display: block;
+  flex-shrink: 0;
+  height: 31px;
+  border-radius: 0;
+  overflow: hidden;
+  transition: transform 0.15s ease;
+}
+.offsite-btn img {
+  display: block;
+  height: 31px;
+  width: auto;
+}
+.offsite-btn:hover {
+  transform: translateY(-2px);
+}
+
+.offsite-imagemap {
+  flex-shrink: 0;
+  max-width: none;
+  image-rendering: pixelated;
+  border-radius: 0;
+  transition: transform 0.15s ease;
+}
+.offsite-imagemap:hover {
+  transform: translateY(-2px);
+}
+
+/* changing the sanrio webring height so that it fits inside the scrollable box */
+.sanringo {
+  max-height: none !important;
+}
+/* i need this or else the sanrio webring will look uuugglyyyyy */
+.sanringo img {
+  display: inline;
+}
+
+/* stack for the front page's webring box */
+.webring-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+/* webring scrolled box */
+.webring-scroll-box {
+  max-height: 380px;
+  overflow-y: auto;
+  padding: 16px 10px;
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  background: var(--surface-faint);
+}
+
+/* pull the webring card up closer to the "Webrings" title */
+#shop .links-section-heading {
+  margin-bottom: 2px;
+}
+#shop .hand-note {
+  margin-bottom: 6px;
+}
+
+/* smaller margin for the devider on the friends list */
+#friend-links .bubble-divider {
+  margin: 10px 0;
+}
+

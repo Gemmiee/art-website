@@ -1,0 +1,17 @@
+/* buttons + notes */
+.hand-note,
+.code-resource-desc,
+.footer-note,
+.links-empty-note {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+.hand-note,
+.links-empty-note {
+  font-style: italic;
+}
+.hand-note {
+  margin: 0 0 14px;
+}
+
+

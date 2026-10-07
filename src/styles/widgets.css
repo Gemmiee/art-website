@@ -1,0 +1,100 @@
+/* blinkies */
+.blinkie-marquee {
+  overflow: hidden;
+  margin: 10px 0 4px;
+  mask-image: linear-gradient(to right, transparent, black 20px, black calc(100% - 20px), transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 20px, black calc(100% - 20px), transparent);
+}
+.blinkie-marquee-track {
+  display: flex;
+  width: max-content;
+  gap: 8px;
+  animation: friend-marquee-scroll 130s linear infinite;
+}
+.blinkie-marquee:hover .blinkie-marquee-track {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .blinkie-marquee-track {
+    animation: none;
+  }
+}
+.blinkie-item {
+  display: block;
+  flex-shrink: 0;
+  width: 150px;
+  height: 20px;
+  object-fit: contain;
+  border-radius: 0;
+
+}
+
+
+/* grab my button embed */
+.embed-row {
+  display: flex;
+  gap: 6px;
+  margin-top: 10px;
+}
+.embed-input {
+  flex: 1;
+  min-width: 0;
+  font-family: monospace;
+  font-size: 0.68rem;
+  padding: 6px 8px;
+  border-radius: 0;
+
+  border: 1px solid var(--card-border);
+  background: var(--surface);
+  color: var(--ink-soft);
+}
+.embed-copy-btn {
+  flex-shrink: 0;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 0;
+
+  border: 1px solid var(--accent-deep);
+  background: linear-gradient(180deg, #ffffff 0%, #d9f3f0 45%, #4fb9c2 46%, #8fe0e6 100%);
+  color: var(--ink);
+  cursor: pointer;
+  transition: transform 0.12s ease;
+}
+:root[data-theme="dark"] .embed-copy-btn {
+  background: linear-gradient(180deg, #2f99a8 0%, #1f6f78 45%, #164d54 46%, #0d2e32 100%);
+  color: var(--ink);
+}
+.embed-copy-btn:hover {
+  transform: translateY(-1px);
+}
+.embed-copy-btn:active {
+  transform: translateY(0);
+}
+
+/* guestbook */
+.guestbook-page-iframe {
+  display: block;
+  width: 100%;
+  height: 1030px;
+  border-radius: 0;
+
+  border: 1px solid var(--card-border);
+  background: #fff;
+}
+
+.guestbook-iframe {
+  display: block;
+  width: calc(100% + 32px);
+  height: 380px;
+  margin: -16px;
+  border: 0;
+}
+
+.webring-iframe {
+  display: block;
+  width: 188px;
+  height: 94px;
+  border: 0;
+  background: transparent;
+}

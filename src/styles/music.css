@@ -1,0 +1,80 @@
+/* ---------------- music ---------------*/
+
+.music-album-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-top: 18px;
+}
+@media (max-width: 640px) {
+  .music-album-list {
+    grid-template-columns: 1fr;
+  }
+}
+.music-album-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 18px 20px;
+  border-radius: 0;
+
+  border: 1px solid var(--card-border);
+  background: var(--surface-faint);
+}
+.music-album-title {
+  margin: 0;
+  font-size: 1.2rem;
+}
+.music-album-artist {
+  margin: 4px 0 0;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+.music-album-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 10px;
+}
+.music-play-btn {
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 0;
+
+  border: 1px solid var(--accent-deep);
+  background: linear-gradient(180deg, #ffffff 0%, #d9f3f0 45%, #4fb9c2 46%, #8fe0e6 100%);
+  color: var(--ink);
+  cursor: pointer;
+  transition: transform 0.12s ease;
+}
+:root[data-theme="dark"] .music-play-btn {
+  background: linear-gradient(180deg, #2f99a8 0%, #1f6f78 45%, #164d54 46%, #0d2e32 100%);
+}
+.music-play-btn:hover {
+  transform: translateY(-1px);
+}
+.music-play-btn.is-active {
+  border-color: #7aa2e8;
+  background: linear-gradient(180deg, #f5f9ff 0%, #e2ecfc 45%, #b7cdf5 46%, #cddcf8 100%);
+  color: #1a2b57;
+}
+:root[data-theme="dark"] .music-play-btn.is-active {
+  background: linear-gradient(180deg, #4d7fe0 0%, #3a5fc4 45%, #22346e 46%, #172452 100%);
+  color: #eaf1ff;
+}
+.music-bandcamp-link {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--accent-deep);
+}
+.music-album-frame {
+  display: block;
+  width: 100%;
+  height: 120px;
+  border: 0;
+  border-radius: 0;
+
+}
+
