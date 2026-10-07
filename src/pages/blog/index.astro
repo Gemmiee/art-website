@@ -124,6 +124,8 @@ const feedUrl = 'https://gemmiewow.com/blog/rss.xml';
 </Layout>
 
 <script>
+  import { bindCopyButton } from '../../lib/copyButton';
+
   document.addEventListener('astro:page-load', () => {
     const filterBtns = Array.from(document.querySelectorAll<HTMLButtonElement>('.blog-tag-filter'));
     const cards = Array.from(document.querySelectorAll<HTMLElement>('.blog-card'));
@@ -159,23 +161,6 @@ const feedUrl = 'https://gemmiewow.com/blog/rss.xml';
     // feed link copy button
     const feedInput = document.querySelector<HTMLInputElement>('.blog-subscribe .embed-input');
     feedInput?.addEventListener('click', () => feedInput.select());
-
-    const copyBtn = document.querySelector<HTMLButtonElement>('.blog-subscribe .embed-copy-btn');
-    if (copyBtn) {
-      const defaultLabel = copyBtn.textContent || 'Copy';
-      copyBtn.addEventListener('click', async () => {
-        const text = copyBtn.dataset.copyText || '';
-        try {
-          await navigator.clipboard.writeText(text);
-        } catch {
-          feedInput?.select();
-          document.execCommand('copy');
-        }
-        copyBtn.textContent = 'Copied!';
-        setTimeout(() => {
-          copyBtn.textContent = defaultLabel;
-        }, 1500);
-      });
-    }
+    bindCopyButton(document.querySelector<HTMLButtonElement>('.blog-subscribe .embed-copy-btn'), feedInput);
   });
 </script>

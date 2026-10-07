@@ -3,7 +3,6 @@ import fs from 'node:fs';
 import path from 'node:path';
 import Layout from '../../layouts/Layout.astro';
 import PageShell from '../../components/PageShell.astro';
-import BubbleDivider from '../../components/BubbleDivider.astro';
 import { getImageThumb } from '../../lib/imageThumb';
 import Sticker from '../../components/Sticker.astro';
 import DocBanner from '../../components/DocBanner.astro';
@@ -71,8 +70,6 @@ const products = await Promise.all(
           <p class="hand-note">
             🎨 Physical canvases I've made! All items ship out from my Ko-fi shop!
           </p>
-
-          <!-- <BubbleDivider /> -->
 
           <div class="shop-product-list">
             {products.map((product) => (

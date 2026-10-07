@@ -555,11 +555,21 @@ const { href, label, waterColor = '#3fbfc7', external = false } = Astro.props;
     });
     observer.observe(root);
 
-    setInterval(() => {
+    const pollId = setInterval(() => {
       if (Math.abs(pixelScale() - pixScale) < 0.02) return;
       raster();
       draw();
     }, 300);
+
+    document.addEventListener(
+      'astro:before-swap',
+      () => {
+        cancelAnimationFrame(raf);
+        observer.disconnect();
+        clearInterval(pollId);
+      },
+      { once: true }
+    );
 
     build();
     draw();

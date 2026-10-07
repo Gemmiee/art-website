@@ -1,13 +1,11 @@
 /* buttons + notes */
 .hand-note,
 .code-resource-desc,
-.footer-note,
-.links-empty-note {
+.footer-note {
   font-size: 0.85rem;
   color: var(--ink-soft);
 }
-.hand-note,
-.links-empty-note {
+.hand-note {
   font-style: italic;
 }
 .hand-note {

@@ -19,11 +19,6 @@
   margin: 4px 0 10px;
 }
 
-.links-empty-note {
-  padding: 14px 16px;
-  background: var(--surface-faint);
-}
-
 /* link cards */
 .link-list {
   margin: 0;

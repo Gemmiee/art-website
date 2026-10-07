@@ -134,6 +134,8 @@ const embedCode = `<a href="${siteUrl}"><img src="${ownButtonSrc}" width="88" he
 </div>
 
 <script>
+  import { bindCopyButton } from '../lib/copyButton';
+
   // MiscColumn only renders on the home page
   document.addEventListener('astro:page-load', () => {
     const tooltip = document.getElementById('icon-tooltip');
@@ -165,23 +167,6 @@ const embedCode = `<a href="${siteUrl}"><img src="${ownButtonSrc}" width="88" he
     // grab my button embed snippet
     const embedInput = document.querySelector<HTMLInputElement>('.embed-input');
     embedInput?.addEventListener('click', () => embedInput.select());
-
-    const copyBtn = document.querySelector<HTMLButtonElement>('.embed-copy-btn');
-    if (copyBtn) {
-      const defaultLabel = copyBtn.textContent || 'Copy';
-      copyBtn.addEventListener('click', async () => {
-        const text = copyBtn.dataset.copyText || '';
-        try {
-          await navigator.clipboard.writeText(text);
-        } catch {
-          embedInput?.select();
-          document.execCommand('copy');
-        }
-        copyBtn.textContent = 'Copied!';
-        setTimeout(() => {
-          copyBtn.textContent = defaultLabel;
-        }, 1500);
-      });
-    }
+    bindCopyButton(document.querySelector<HTMLButtonElement>('.embed-copy-btn'), embedInput);
   });
 </script>
