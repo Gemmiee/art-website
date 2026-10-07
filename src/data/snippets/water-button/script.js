@@ -22,6 +22,8 @@ const SPRAY_PER_FRAME = 4;
 const SPRAY_LIFT = 150;
 const BREAK_SPEED = 210;
 const MIN_SPRAY_DEPTH = 2;
+const CFL_SAFETY = 0.5;
+const MAX_SUBSTEPS = 40;
 const RIPPLE = 1;
 const MAX_PIXEL_SCALE = 8;
 const MAX_PIXELS = 2000000;
@@ -68,6 +70,7 @@ function mountWaterButton(root) {
   let pixScale = 1;
   let W = 0;
   let H = 0;
+  let maxSub = 1 / 60;
   const h = new Float32Array(COLUMNS);
   const u = new Float32Array(COLUMNS + 1);
   const flux = new Float32Array(COLUMNS + 1);
@@ -123,6 +126,9 @@ function mountWaterButton(root) {
     flying = 0;
     asleep = true;
     quiet = 0;
+
+    const waveSpeed = Math.sqrt(GRAVITY * Math.max(rest, 1));
+    maxSub = (colW * CFL_SAFETY) / waveSpeed;
   }
   function freeze() {
     h.fill(rest);
@@ -233,8 +239,9 @@ function mountWaterButton(root) {
   function step(dt) {
     spray(dt);
     fall(dt);
-    const sub = dt / SUBSTEPS;
-    for (let s = 0; s < SUBSTEPS; s++) {
+    const subSteps = Math.min(MAX_SUBSTEPS, Math.max(SUBSTEPS, Math.ceil(dt / maxSub)));
+    const sub = dt / subSteps;
+    for (let s = 0; s < subSteps; s++) {
       if (hovering) drive(sub);
       for (let i = 1; i < COLUMNS; i++) {
         u[i] += ((-GRAVITY * (h[i] - h[i - 1])) / colW) * sub;

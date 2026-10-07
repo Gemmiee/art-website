@@ -130,6 +130,8 @@ const { href, label, waterColor = '#3fbfc7', external = false } = Astro.props;
   const SPRAY_LIFT = 150;
   const BREAK_SPEED = 210;
   const MIN_SPRAY_DEPTH = 2;
+  const CFL_SAFETY = 0.5;
+  const MAX_SUBSTEPS = 40;
 
   const RIPPLE = 1;
   const MAX_PIXEL_SCALE = 8;
@@ -192,6 +194,7 @@ const { href, label, waterColor = '#3fbfc7', external = false } = Astro.props;
     let pixScale = 1;
     let W = 0;
     let H = 0;
+    let maxSub = 1 / 60;
 
     const h = new Float32Array(COLUMNS);
     const u = new Float32Array(COLUMNS + 1);
@@ -258,6 +261,9 @@ const { href, label, waterColor = '#3fbfc7', external = false } = Astro.props;
       flying = 0;
       asleep = true;
       quiet = 0;
+
+      const waveSpeed = Math.sqrt(GRAVITY * Math.max(rest, 1));
+      maxSub = (colW * CFL_SAFETY) / waveSpeed;
     }
 
     function freeze() {
@@ -377,8 +383,9 @@ const { href, label, waterColor = '#3fbfc7', external = false } = Astro.props;
       spray(dt);
       fall(dt);
 
-      const sub = dt / SUBSTEPS;
-      for (let s = 0; s < SUBSTEPS; s++) {
+      const subSteps = Math.min(MAX_SUBSTEPS, Math.max(SUBSTEPS, Math.ceil(dt / maxSub)));
+      const sub = dt / subSteps;
+      for (let s = 0; s < subSteps; s++) {
         if (hovering) drive(sub);
 
         for (let i = 1; i < COLUMNS; i++) {

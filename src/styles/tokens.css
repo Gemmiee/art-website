@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700&family=Pacifico&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700&family=Caveat:wght@700&family=Pacifico&display=swap');
 
 :root {
   /* glass */
@@ -40,7 +40,7 @@
 
   /* type */
   --font-ui: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  --font-name: 'Pacifico', cursive;
+  --font-name: 'Caveat', cursive;
   --font-banner: 'Baloo 2', var(--font-ui);
 
   /* misc */
