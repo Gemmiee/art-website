@@ -212,14 +212,14 @@ const links: { name: string; href: string; blurb: string }[] = [
         <div class="doc-section" id="links-fun">
           <h2 class="links-section-heading">🌐 Fun &amp; Useful Links</h2>
           <p class="hand-note">Fun + useful sites ;] </p>
-          <div class="link-grid">
+          <ul class="link-list">
             {links.map((link) => (
-              <a class="link-card" href={link.href} target="_blank" rel="noopener">
-                <span class="link-card-name">{link.name}</span>
-                <span class="link-card-blurb">{link.blurb}</span>
-              </a>
+              <li>
+                <a href={link.href} target="_blank" rel="noopener">{link.name}</a>
+                {' — '}{link.blurb}
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       </div>
     </section>

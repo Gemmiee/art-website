@@ -1,6 +1,6 @@
 :root {
   --bg: #fdf6f0;
-  --fg: #142c3f;
+  --fg: #1a3f7a;
 }
 :root[data-theme="dark"] {
   --bg: #0a1522;

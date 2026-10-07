@@ -39,12 +39,10 @@ const { href, label, waterColor = '#3fbfc7', external = false } = Astro.props;
     cursor: pointer;
     isolation: isolate;
     text-decoration: none;
-    box-shadow: var(--shadow-soft);
     transition: transform 0.15s ease, box-shadow 0.15s ease;
   }
   .water-button:hover {
     transform: translateY(-1px);
-    box-shadow: 0 8px 18px rgba(26, 18, 46, 0.28);
   }
   .water-button:active {
     transform: scale(0.97);
