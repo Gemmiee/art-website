@@ -42,13 +42,13 @@ h1 {
   font-size: 3rem;
   line-height: 1.1;
   margin: 0 0 3px;
-  background: linear-gradient(180deg, #8df0f4 0%, #3d7fb4 45%, #cee0f7 100%);
+  background: linear-gradient(180deg, #8df0f4 0%, #2e82c7 45%, #cee0f7 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 :root[data-theme="dark"] h1 {
-  background: linear-gradient(180deg, #b9f6f8 0%, #a7d1f3 45%, #061d81 100%);
+  background: linear-gradient(180deg, #fdf0ca 0%, #e69c2c 45%, #6b1304 100%);
   -webkit-background-clip: text;
   background-clip: text;
 }
