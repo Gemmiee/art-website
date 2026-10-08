@@ -1,9 +1,14 @@
 /* buttons + notes */
 .hand-note,
 .code-resource-desc,
+.footer-note,
+.art-folder-desc {
+  color: var(--ink-soft);
+}
+.hand-note,
+.code-resource-desc,
 .footer-note {
   font-size: 0.85rem;
-  color: var(--ink-soft);
 }
 .hand-note {
   font-style: italic;
@@ -11,7 +16,8 @@
 .hand-note {
   margin: 0 0 14px;
 }
-:root[data-theme="dark"] .hand-note {
+:root[data-theme="dark"] .hand-note,
+:root[data-theme="dark"] .art-folder-desc {
   color: var(--glow-soft);
 }
 

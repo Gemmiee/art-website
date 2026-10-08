@@ -52,7 +52,6 @@
 .art-folder-name {
   font-weight: 700;
   font-size: 1.08rem;
-  color: var(--ink);
 }
 .art-folder[data-depth="0"] > .art-folder-toggle .art-folder-name {
   font-size: 1.3rem;
@@ -64,7 +63,6 @@
   margin-left: 90px;
   font-size: 0.86rem;
   font-weight: 400;
-  color: var(--ink-soft);
   white-space: normal;
 }
 .art-folder[data-depth="0"] > .art-folder-toggle .art-folder-desc {
