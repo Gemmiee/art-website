@@ -216,7 +216,8 @@
   color: var(--ink);
   margin: 24px 0 10px;
 }
-.blog-article-body a {
+.blog-article-body a,
+.link-list a {
   color: var(--accent-deep);
   font-weight: 700;
 }
