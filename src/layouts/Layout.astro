@@ -17,8 +17,6 @@ const {
   feedUrl,
 } = Astro.props;
 
-// Chat apps/social platforms unfurling a shared link need an absolute image
-// URL — a root-relative one resolves against their own domain, not ours.
 const ogImage = new URL(image, Astro.site).toString();
 const ogUrl = new URL(Astro.url.pathname, Astro.site).toString();
 ---
@@ -110,8 +108,6 @@ const ogUrl = new URL(Astro.url.pathname, Astro.site).toString();
         top: 0;
         left: 0;
         width: 100%;
-        /* 100lvh (largest viewport) instead of plain height:100vh, so the
-           mobile toolbar showing/hiding doesn't visibly rescale the bg. */
         height: 100vh;
         height: 100lvh;
         z-index: -3;

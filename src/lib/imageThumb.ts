@@ -1,6 +1,4 @@
-// Generates small thumbnails for grids so pages don't ship 10-20MB originals
-// just for a preview (the lightbox still opens the full file). Cached under
-// public/thumbs/ keyed by path+mtime+width, so only changed files regenerate.
+// Generates small thumbnails for grids so pages dont have too much MB
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
@@ -8,12 +6,6 @@ import sharp from 'sharp';
 
 const THUMB_DIR = path.join(process.cwd(), 'public', 'thumbs');
 
-/**
- * Returns a URL for a resized WebP thumbnail of the image at `absPath`,
- * generating it (once) if missing. Returns undefined if it couldn't be
- * made (unsupported format, corrupt file, etc.) so callers can fall back
- * to the original file.
- */
 export async function getImageThumb(absPath: string, maxWidth: number): Promise<string | undefined> {
   let stat: fs.Stats;
   try {
@@ -32,8 +24,7 @@ export async function getImageThumb(absPath: string, maxWidth: number): Promise<
   if (!fs.existsSync(thumbAbsPath)) {
     fs.mkdirSync(THUMB_DIR, { recursive: true });
     const tmpPath = `${thumbAbsPath}.${process.pid}.tmp`;
-    // animated: true keeps every GIF frame so the thumbnail still plays
-    // instead of freezing on frame one; no-op for still images.
+    // i wanna let gifs play cause its a shame if they dont
     const isGif = path.extname(absPath).toLowerCase() === '.gif';
     try {
       await sharp(absPath, isGif ? { animated: true } : {})

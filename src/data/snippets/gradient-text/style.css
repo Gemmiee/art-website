@@ -3,7 +3,6 @@
   font-weight: 700;
   font-size: 2.8rem;
   margin: 0;
-  /* line-height: 1 or 1.2, play around with it if your text is being cut*/
   line-height: 1.25;
   background: linear-gradient(180deg, #ffb3d1 0%, #ff6fa5 45%, #e14f86 100%);
   -webkit-background-clip: text;

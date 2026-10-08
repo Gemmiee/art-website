@@ -99,7 +99,6 @@ const styleTiers = visibleTiers.filter((tier) => tier !== termsTier);
 
 <Layout title="Commissions ☆ Gemmie's corner" image="/images/site/site_commissions.png">
   <PageShell showMisc={false}>
-    <!-- ================= commissions window ================= -->
     <section class="window main-doc">
       <div class="title-bar">
         <span class="title-bar-icon" aria-hidden="true"><Sticker name="blue_exclamations.gif" /></span>
@@ -160,7 +159,7 @@ const styleTiers = visibleTiers.filter((tier) => tier !== termsTier);
             ))}
           </div>
 
-          <BubbleDivider />
+          <BubbleDivider class="bubble-divider-dashed" />
 
           {termsTier && (
             <div class="comm-tier">
@@ -185,7 +184,7 @@ const styleTiers = visibleTiers.filter((tier) => tier !== termsTier);
             </div>
           )}
 
-          <BubbleDivider />
+          <BubbleDivider class="bubble-divider-dashed" />
 
           <!-- ---- shop ---- -->
           <div class="doc-section" id="shop">

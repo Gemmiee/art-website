@@ -41,19 +41,6 @@
   font-size: 0.82rem;
   font-weight: 600;
   padding: 8px 14px;
-  border-radius: 0;
-
-  border: 1px solid var(--accent-deep);
-  background: linear-gradient(180deg, #ffffff 0%, #d9f3f0 45%, #4fb9c2 46%, #8fe0e6 100%);
-  color: var(--ink);
-  cursor: pointer;
-  transition: transform 0.12s ease;
-}
-:root[data-theme="dark"] .music-play-btn {
-  background: linear-gradient(180deg, #2f99a8 0%, #1f6f78 45%, #164d54 46%, #0d2e32 100%);
-}
-.music-play-btn:hover {
-  transform: translateY(-1px);
 }
 .music-play-btn.is-active {
   border-color: #7aa2e8;

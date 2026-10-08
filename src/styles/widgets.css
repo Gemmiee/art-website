@@ -48,25 +48,34 @@
   background: var(--surface);
   color: var(--ink-soft);
 }
+.music-play-btn,
+.shop-kofi-btn,
+.embed-copy-btn {
+  border-radius: 0;
+  border: 1px solid var(--accent-deep);
+  background: linear-gradient(180deg, #ffffff 0%, #d9f3f0 45%, #4fb9c2 46%, #8fe0e6 100%);
+  color: var(--ink);
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.12s ease;
+}
+:root[data-theme="dark"] .music-play-btn,
+:root[data-theme="dark"] .shop-kofi-btn,
+:root[data-theme="dark"] .embed-copy-btn {
+  border-color: var(--glow);
+  background: linear-gradient(180deg, #e8a63c 0%, #c97d1e 45%, #a3611a 46%, #5c3410 100%);
+  color: var(--glow-deep);
+}
+.music-play-btn:hover,
+.shop-kofi-btn:hover,
+.embed-copy-btn:hover {
+  transform: translateY(-1px);
+}
 .embed-copy-btn {
   flex-shrink: 0;
   font-size: 0.72rem;
   font-weight: 600;
   padding: 6px 10px;
-  border-radius: 0;
-
-  border: 1px solid var(--accent-deep);
-  background: linear-gradient(180deg, #ffffff 0%, #d9f3f0 45%, #4fb9c2 46%, #8fe0e6 100%);
-  color: var(--ink);
-  cursor: pointer;
-  transition: transform 0.12s ease;
-}
-:root[data-theme="dark"] .embed-copy-btn {
-  background: linear-gradient(180deg, #2f99a8 0%, #1f6f78 45%, #164d54 46%, #0d2e32 100%);
-  color: var(--ink);
-}
-.embed-copy-btn:hover {
-  transform: translateY(-1px);
 }
 .embed-copy-btn:active {
   transform: translateY(0);

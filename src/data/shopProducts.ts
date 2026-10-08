@@ -1,5 +1,5 @@
 export interface ShopProduct {
-  id: string; // filename prefix in public/images/shop
+  id: string;
   title: string;
   price: string;
   summary: string;

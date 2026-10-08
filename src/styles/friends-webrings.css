@@ -9,6 +9,9 @@
   font-weight: 700;
   color: var(--accent-deep);
 }
+:root[data-theme="dark"] .links-section-heading {
+  color: var(--glow);
+}
 
 
 /* friend list static */

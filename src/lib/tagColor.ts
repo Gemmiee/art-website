@@ -1,6 +1,4 @@
-// Optional: pin a tag to a specific hue (0-360). Anything left out gets an
-// automatic color based on its name. Cheat sheet: 0 red, 30 orange, 60 yellow,
-// 120 green, 180 cyan, 240 blue, 270 purple, 330 pink.
+// in case i wanna manually change the hashtags colors for the blog
 const TAG_HUES: Record<string, number> = {
    "art": 270,
   // "games": 210,

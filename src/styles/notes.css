@@ -11,5 +11,8 @@
 .hand-note {
   margin: 0 0 14px;
 }
+:root[data-theme="dark"] .hand-note {
+  color: var(--glow-soft);
+}
 
 

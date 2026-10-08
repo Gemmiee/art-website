@@ -73,11 +73,19 @@
   gap: 8px;
   min-width: 0;
 }
-.comm-tier-text {
+.comm-tier-text,
+.shop-product-summary {
   margin: 0;
   font-size: 0.86rem;
   line-height: 1.6;
   color: var(--ink-soft);
+}
+.shop-product-summary {
+  margin: 4px 0 0;
+}
+:root[data-theme="dark"] .comm-tier-text,
+:root[data-theme="dark"] .shop-product-summary {
+  color: var(--glow-soft);
 }
 @media (max-width: 720px) {
   .comm-tier {

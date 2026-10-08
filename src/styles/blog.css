@@ -136,6 +136,12 @@
   font-family: var(--font-banner);
   color: var(--ink);
 }
+:root[data-theme="dark"] .blog-card-title,
+:root[data-theme="dark"] .music-album-title,
+:root[data-theme="dark"] .shop-product-title,
+:root[data-theme="dark"] .blog-title {
+  color: var(--glow);
+}
 .blog-card-title {
   margin: 0;
   font-size: 1.05rem;

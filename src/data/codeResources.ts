@@ -1,5 +1,4 @@
-// Copy-paste snippets for /code-resources. Plain HTML/CSS/JS, no Astro or
-// build step required — each one works dropped straight into any site.
+// for code snippets
 import waterButtonHtml from './snippets/water-button/markup.html?raw';
 import waterButtonCss from './snippets/water-button/style.css?raw';
 import waterButtonJs from './snippets/water-button/script.js?raw';

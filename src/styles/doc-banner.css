@@ -132,6 +132,9 @@
   color: var(--accent-deep);
   margin-right: 4px;
 }
+:root[data-theme="dark"] .update-date {
+  color: var(--glow);
+}
 .update-bullet {
   color: var(--accent-orange);
   margin-right: 2px;

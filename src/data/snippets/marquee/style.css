@@ -9,8 +9,6 @@
   display: flex;
   width: max-content;
   gap: 8px;
-  /* content is duplicated once in the HTML; animating exactly one copy's
-     width. The loop point is invisible */
   animation: marquee-scroll 24s linear infinite;
 }
 

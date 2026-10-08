@@ -1,6 +1,3 @@
-// Builds the art gallery's folder tree straight from public/images/Art at
-// build/dev time, so adding or removing files there is all it takes to
-// update the site — nothing here needs editing per-piece.
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
@@ -8,8 +5,7 @@ import { execFileSync } from 'node:child_process';
 import ffmpegStaticPath from 'ffmpeg-static';
 import { getImageThumb } from './imageThumb';
 
-// Cloudflare's build image has no system ffmpeg (videos silently fell back to
-// a play-icon instead of a poster frame) — ffmpeg-static sidesteps that.
+
 const FFMPEG_BIN = ffmpegStaticPath ?? 'ffmpeg';
 
 export interface ArtItem {
@@ -49,9 +45,7 @@ function hasFfmpeg(): boolean {
   return ffmpegAvailable;
 }
 
-// Grabs a still frame from a video to use as its gallery thumbnail, caching
-// the result by a hash of the video's path + modified time so re-running the
-// build doesn't re-extract frames for videos that haven't changed.
+// Grabs a still frame from a video to use as the thumbnail
 function getVideoPoster(absVideoPath: string): string | undefined {
   if (!hasFfmpeg()) return undefined;
 
@@ -72,7 +66,6 @@ function getVideoPoster(absVideoPath: string): string | undefined {
         posterAbsPath,
       ], { stdio: 'ignore' });
     } catch {
-      // Video may be shorter than 1 second — fall back to the very first frame.
       try {
         execFileSync(FFMPEG_BIN, [
           '-y',
@@ -108,9 +101,6 @@ function toUrl(segments: string[]): string {
   return '/images/Art/' + segments.map(encodeSegment).join('/');
 }
 
-// Grid thumbnails and folder icons only ever need to look good at the tiny
-// sizes they're actually displayed at, so both are generated much smaller
-// than the multi-megabyte originals they're standing in for.
 const GALLERY_THUMB_WIDTH = 480;
 const FOLDER_ICON_WIDTH = 160;
 
@@ -125,9 +115,6 @@ async function scan(absDir: string, segments: string[]): Promise<ArtFolderNode> 
   for (const entry of entries) {
     if (entry.isDirectory()) {
       const child = await scan(path.join(absDir, entry.name), [...segments, entry.name]);
-      // Skip subfolders that end up with nothing displayable inside them
-      // (e.g. a folder holding only unsupported .heic files) rather than
-      // showing an empty, clickable dead end.
       if (child.items.length > 0 || child.subfolders.length > 0) {
         subfolders.push(child);
       }
@@ -139,8 +126,8 @@ async function scan(absDir: string, segments: string[]): Promise<ArtFolderNode> 
     const fileSegments = [...segments, entry.name];
     const absFilePath = path.join(absDir, entry.name);
 
-    // A file named "Thumbnail" becomes the folder's icon
-    // "Description" text file becomes the folder's blurb
+    // name a file "Thumbnail" to make it the thumbnail duh
+    // and add a description txt for disc
     if (baseName === 'thumbnail' && IMAGE_EXTS.has(ext)) {
       thumbnailUrl = (await getImageThumb(absFilePath, FOLDER_ICON_WIDTH)) ?? toUrl(fileSegments);
       continue;
@@ -165,8 +152,6 @@ async function scan(absDir: string, segments: string[]): Promise<ArtFolderNode> 
         posterUrl: getVideoPoster(absFilePath),
       });
     }
-    // Anything else (.heic, etc.) is silently skipped — browsers can't
-    // render it, so it's better left out than shown as a broken image.
   }
 
   return {

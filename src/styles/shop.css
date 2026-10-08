@@ -131,12 +131,6 @@
 :root[data-theme="dark"] .shop-product-price {
   color: var(--accent-teal);
 }
-.shop-product-summary {
-  margin: 4px 0 0;
-  font-size: 0.86rem;
-  line-height: 1.6;
-  color: var(--ink-soft);
-}
 .shop-product-bullets {
   margin: 6px 0 0;
   padding: 0;
@@ -163,19 +157,6 @@
   font-size: 0.85rem;
   font-weight: 700;
   padding: 9px 16px;
-  border-radius: 0;
-
-  border: 1px solid var(--accent-deep);
-  background: linear-gradient(180deg, #ffffff 0%, #d9f3f0 45%, #4fb9c2 46%, #8fe0e6 100%);
-  color: var(--ink);
-  text-decoration: none;
-  transition: transform 0.12s ease;
-}
-:root[data-theme="dark"] .shop-kofi-btn {
-  background: linear-gradient(180deg, #2f99a8 0%, #1f6f78 45%, #164d54 46%, #0d2e32 100%);
-}
-.shop-kofi-btn:hover {
-  transform: translateY(-1px);
 }
 @media (max-width: 720px) {
   .shop-product-card {
