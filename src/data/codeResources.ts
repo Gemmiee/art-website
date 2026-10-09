@@ -26,7 +26,7 @@ export const codeResources: CodeResource[] = [
     id: 'water-button',
     title: '💧 Water Button - Original from originkit.dev',
     description:
-      "A button with animated water inside. Sweep your cursor across it to slosh the water, click for a splash. Pure HTML/CSS/JS.",
+      "A button with animated water inside. Original button is from www.originkit.dev!",
     html: waterButtonHtml,
     css: waterButtonCss,
     js: waterButtonJs,
@@ -43,7 +43,7 @@ export const codeResources: CodeResource[] = [
     id: 'glass-panel',
     title: '🧊 Frosted Glass Card',
     description:
-      'The look this whole site is built around. No JS, just a translucent fill + backdrop-filter blur.',
+      'The look this whole site is built around',
     html: glassPanelHtml,
     css: glassPanelCss,
   },
