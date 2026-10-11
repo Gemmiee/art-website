@@ -73,8 +73,7 @@ const ogUrl = new URL(Astro.url.pathname, Astro.site).toString();
     <slot />
 
     <script>
-      // ViewTransitions resets data-theme to "light" on every swap, so
-      // reapply the saved theme after each one, not just on first load.
+      // remembers theme
       function applyStoredTheme() {
         const stored = localStorage.getItem('theme');
         const theme = stored || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
@@ -172,8 +171,8 @@ const ogUrl = new URL(Astro.url.pathname, Astro.site).toString();
         border-radius: 50%;
         border: 1px solid var(--glass-border);
         background: var(--glass-fill-strong);
-        backdrop-filter: blur(10px) saturate(1.4);
-        -webkit-backdrop-filter: blur(10px) saturate(1.4);
+        backdrop-filter: var(--glass-blur);
+        -webkit-backdrop-filter: var(--glass-blur);
         cursor: pointer;
         z-index: 50;
       }

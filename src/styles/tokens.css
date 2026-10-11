@@ -1,10 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=DynaPuff:wght@400..700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700&family=Caveat:wght@700&family=Pacifico&display=swap');
 :root {
-  /* glass */
-  --glass-fill: rgba(255, 250, 245, 0.6);
-  --glass-fill-strong: rgba(255, 250, 245, 0.84);
-  --glass-border: rgba(255, 255, 255, 0.85);
+  /* glass light mode */
+  --glass-fill: rgba(255, 255, 255, 0.562);
+  --glass-fill-strong: rgba(255, 255, 255, 0.658);
+  --glass-border: rgba(255, 255, 255, 0.30);
+  --glass-blur: blur(13px) saturate(208%);
   --titlebar-start: #d7e6f5;
   --titlebar-mid: #4a85c9;
   --titlebar-end: #1a3f66;
@@ -24,7 +25,7 @@
 
   /* accents */
   --accent: #3a7ab8;
-  --accent-deep: #1a3f66;
+  --accent-deep: #1b6ec7;
   --accent-teal: #3fbfc7;
   --accent-orange: #e8823a;
   --accent-red: #e3543f;
@@ -35,7 +36,6 @@
   --surface-hover: rgba(255, 255, 255, 0.9);
   --card-border: rgba(26, 63, 102, 0.32);
   --card-border-dashed: rgba(26, 63, 102, 0.4);
-  --card-stripe: rgba(26, 63, 102, 0.15);
   --card-stripe-bg: rgba(26, 63, 102, 0.06);
 
   /* type */
@@ -49,9 +49,9 @@
 
 /* ---------- dark theme token overrides ---------- */
 :root[data-theme="dark"] {
-  --glass-fill: rgba(14, 17, 46, 0.55);
-  --glass-fill-strong: rgba(14, 17, 46, 0.78);
-  --glass-border: rgba(255, 255, 255, 0.14);
+  --glass-fill: rgba(3, 46, 87, 0.774);
+  --glass-fill-strong: rgba(3, 42, 92, 0.616);
+  --glass-border: rgba(255, 255, 255, 0.493);
   --titlebar-start: #2a5f99;
   --titlebar-mid: #16304f;
   --titlebar-end: #0d1030;
@@ -68,8 +68,8 @@
   --ink-soft: #9ab6d6;
   --ink-inverse: #fbf3ea;
 
-  --accent: #4f9fd9;
-  --accent-deep: #7fb8ef;
+  --accent: #3a84b9;
+  --accent-deep: #fffec0;
   --accent-teal: #5fe0e6;
   --accent-orange: #ffab5c;
 
@@ -78,7 +78,6 @@
   --surface-hover: rgba(36, 42, 98, 0.75);
   --card-border: rgba(127, 184, 239, 0.28);
   --card-border-dashed: rgba(204, 154, 82, 0.4);
-  --card-stripe: rgba(127, 184, 239, 0.18);
   --card-stripe-bg: rgba(127, 184, 239, 0.08);
 
   --glow: #f3c93e;

@@ -55,8 +55,8 @@ const { href, label, waterColor = '#3fbfc7', external = false } = Astro.props;
     overflow: hidden;
     background: var(--glass-fill);
     border: 1px solid var(--glass-border);
-    backdrop-filter: blur(20px) saturate(1.4);
-    -webkit-backdrop-filter: blur(20px) saturate(1.4);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
     pointer-events: none;
   }
 

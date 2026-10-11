@@ -24,16 +24,16 @@ export interface CodeResource {
 export const codeResources: CodeResource[] = [
   {
     id: 'water-button',
-    title: '💧 Water Button - Original from originkit.dev',
+    title: 'Water Button - Original from originkit.dev',
     description:
-      "A button with animated water inside. Original button is from www.originkit.dev!",
+      'Original button is from <a href="https://www.originkit.dev/" target="_blank" rel="noopener">originkit.dev</a>',
     html: waterButtonHtml,
     css: waterButtonCss,
     js: waterButtonJs,
   },
   {
     id: 'marquee',
-    title: '🔁 Infinite Loop Marquee',
+    title: 'Friend Loop Marquee',
     description:
       'For friend buttons that you wanna have em scroll forever with no visible seam + pause on hover.',
     html: marqueeHtml,
@@ -41,15 +41,15 @@ export const codeResources: CodeResource[] = [
   },
   {
     id: 'glass-panel',
-    title: '🧊 Frosted Glass Card',
+    title: 'Glassmorphism - Original from w3schools',
     description:
-      'The look this whole site is built around',
+      'Visit <a href="https://www.w3schools.com/tools/tool_css_glassmorphism.php" target="_blank" rel="noopener">w3schools glassmorphism</a> generator!',
     html: glassPanelHtml,
     css: glassPanelCss,
   },
   {
     id: 'gradient-text',
-    title: '🌈 Gradient Text',
+    title: 'Gradient Text',
     description:
       "For headings you want filled with a color gradient.",
     html: gradientTextHtml,
@@ -57,7 +57,7 @@ export const codeResources: CodeResource[] = [
   },
   {
     id: 'theme-toggle',
-    title: '🌗 Dark / Light Theme Toggle',
+    title: 'Dark / Light Theme Toggle',
     description:
       "Remembers what you picked (localStorage) and falls back to your OS setting if you haven't picked anything yet.",
     html: themeToggleHtml,

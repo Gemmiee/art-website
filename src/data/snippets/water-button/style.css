@@ -25,10 +25,10 @@
   inset: 0;
   border-radius: inherit;
   overflow: hidden;
-  background: rgba(255, 250, 245, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(20px) saturate(1.4);
-  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  background: rgba(255, 255, 255, 0.48);
+  border: 1px solid rgba(255, 255, 255, 0.30);
+  backdrop-filter: blur(13px) saturate(208%);
+  -webkit-backdrop-filter: blur(13px) saturate(208%);
   pointer-events: none;
 }
 

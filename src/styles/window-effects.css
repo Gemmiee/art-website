@@ -1,9 +1,4 @@
 /* ---------- window effects ---------- */
-.window.inactive {
-  background: var(--surface);
-  backdrop-filter: blur(8px) saturate(1.1);
-  -webkit-backdrop-filter: blur(8px) saturate(1.1);
-}
 .window.inactive .title-bar {
   background: linear-gradient(180deg, var(--titlebar-inactive-start) 0%, var(--titlebar-inactive-mid) 55%, var(--titlebar-inactive-end) 100%);
   border-bottom: 1px solid var(--titlebar-inactive-border);
