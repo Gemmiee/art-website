@@ -17,9 +17,10 @@ const blinkies = fs.existsSync(blinkiesDir)
   : [];
 
 const updates = [
-  { date: '09/08', text: 'Small revamp on dark mode, Im pairing yellow to fit with the lamp in the background."' },
-  { date: '09/06', text: 'New article posted: "Why I switched to Linux"' },
-  { date: '09/04', text: 'Ive noticed all this time, we didnt have an about-me page. Now we do lolol' },
+  { date: '10/12', text: 'Added new webring and revamped the glass on our website pages a little bit :D' },
+  { date: '10/08', text: 'Small revamp on dark mode, Im pairing yellow to fit with the lamp in the background.' },
+  { date: '10/06', text: 'New article posted: "Why I switched to Linux"' },
+  { date: '10/04', text: 'Ive noticed all this time, we didnt have an about-me page. Now we do lolol' },
   { date: '09/03', text: 'Posted some code snippets used on this site :>' },
   { date: '09/29', text: 'Music got a new look 🌀 you can now select your music from the new music page! Did I mention that music keeps playing even when you switch pages? (°□°) ა🥬' },
   { date: '09/23', text: 'Blog is here! YAAAAAAYYYY! More spending your time! Plus newsletter!' },
@@ -40,9 +41,9 @@ const updates = [
 
 const announcements = [
   'HELLO! University is starting, therefore I might not make many new updates. I wont stop working on the site though when I get time! Thanks for sticking around!',
+  'I revamped my new coding profile!',
   'Whipping out an "OCs" page about my original characters and their lore.',
   'YO blog is finally here! 📰 Fr cant believe it.',
-  'Site is perpetually a work in progress',
 ];
 ---
 
@@ -231,34 +232,47 @@ const announcements = [
 
               <div class="webring-scroll-box webring-stack">
                 <div class="friends-grid">
+
+                  <!-- webmaster -->
+                <map name="badge-wwstamp">
+                    <area shape="rect" coords="66,38,79,49" href="https://webmasterwebring.netlify.app?Gemmie-previous" alt="Previous" target="_blank">
+                    <area shape="rect" coords="78,29,90,40" href="https://webmasterwebring.netlify.app?Gemmie-next" alt="Next" target="_blank">
+                    <area shape="rect" coords="13,15,63,47" href="https://webmasterwebring.netlify.app" alt="Webmaster Webring" target="_blank">
+                </map>
+                <img usemap="#badge-wwstamp" id="ww-stamp" src="https://file.garden/ZrZSgsrYfQXsO7QH/ww/stamp.png" alt="Webmaster Webring" width="99" height="56">
+
+
+                  <!-- petrapixel -->
                   <a class="offsite-btn" href="https://petrapixel.neocities.org/indiewebdb/" target="_blank" rel="noopener" aria-label="indie web database">
                     <img src="https://cdn.jsdelivr.net/gh/petracoding/petrapixel.neocities.org@latest/public/assets/img/links/indiewebdb.png" alt="indie web database" loading="lazy" />
                   </a>
-                  <a class="offsite-btn" href="https://webmasterwebring.netlify.app" target="_blank" rel="noopener" aria-label="Webmaster Webring">
-                    <img src="https://file.garden/ZrZSgsrYfQXsO7QH/ww/btn.png" alt="Webmaster Webring" loading="lazy" />
-                  </a>
+                  
+
+                  <!-- angelical -->
                   <a class="offsite-btn" href="https://butteroncookies.neocities.org/angelical" target="_blank" rel="noopener" aria-label="become an angel clique!">
                     <img src="/images/other_components/angelicalbtn.gif" alt="become an angel clique button" loading="lazy" />
                   </a>
                 </div>
 
-                <!-- Online Widget -->
+              
+
+                <!-- Online -->
                 <map name="onlinewidget">
                 <area href="https://webring.ghostk.id/online/" target="_blank" shape="rect" coords="20,14,167,24" alt="The online webring" title="The online webring">
-                <area href="https://webring.ghostk.id/online/Gemmie/previous" target="_top" shape="rect" coords="7,27,60,36" alt="Previous" title="Previous">
-                <area href="https://webring.ghostk.id/online/random" target="_top" shape="rect" coords="74,27,126,36" alt="Random" title="Random">
-                <area href="https://webring.ghostk.id/online/Gemmie/next" target="_top" shape="rect" coords="139,27,192,36" alt="Next" title="Next">
+                <area href="https://webring.ghostk.id/online/Gemmie/previous" target="_blank" shape="rect" coords="7,27,60,36" alt="Previous" title="Previous">
+                <area href="https://webring.ghostk.id/online/random" target="_blank" shape="rect" coords="74,27,126,36" alt="Random" title="Random">
+                <area href="https://webring.ghostk.id/online/Gemmie/next" target="_blank" shape="rect" coords="139,27,192,36" alt="Next" title="Next">
                 </map>
                 <img usemap="#onlinewidget" src="https://ghostk.id/i/onlineblue.gif" width="200" height="40" style="width:200px;height:40px;max-width:none;image-rendering:pixelated;" alt="A Windows style dialog box titled 'THE ONLINE WEBRING' with three clickable buttons labeled Previous, Random, and Next" class="offsite-imagemap" />
 
                 <!--For The Dreamers -->
                 <div style="text-align: center;">
-                  <a href="https://e0nbreak.neocities.org/miscellaneous/connectcollect"><b>For The Dreamers</b></a><br />
+                  <a href="https://e0nbreak.neocities.org/miscellaneous/connectcollect" target="_blank"><b>For The Dreamers</b></a><br />
                   <img src="/images/other_components/gemmie_dream_webring.gif" style="width: 200px;">
                   <br />
-                  <a href="https://e0nbreak.neocities.org/miscellaneous/connectcollect?action=previous">←</a>
-                  <a href="https://e0nbreak.neocities.org/miscellaneous/connectcollect?action=random">Random?</a>
-                  <a href="https://e0nbreak.neocities.org/miscellaneous/connectcollect?action=next">→</a>
+                  <a href="https://e0nbreak.neocities.org/miscellaneous/connectcollect?action=previous" target="_blank">←</a>
+                  <a href="https://e0nbreak.neocities.org/miscellaneous/connectcollect?action=random" target="_blank">Random?</a>
+                  <a href="https://e0nbreak.neocities.org/miscellaneous/connectcollect?action=next" target="_blank">→</a>
                 </div>
 
                 
