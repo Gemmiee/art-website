@@ -10,24 +10,13 @@
   aspect-ratio: 1 / 1;
   object-fit: cover;
   border-radius: 0;
-
   border: 1px solid var(--glass-border);
-}
-.now-playing-label {
-  margin: 0;
-  font-size: 0.76rem;
-  font-weight: 600;
-  color: var(--ink-soft);
-  text-align: center;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 .bandcamp-frame {
   display: block;
   width: calc(100% + 28px);
   margin: 0 -14px -14px;
-  height: 120px;
+  height: 110px;
   border: 0;
 }
 .bandcamp-frame-slot {

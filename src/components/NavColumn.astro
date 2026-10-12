@@ -1,9 +1,6 @@
 ---
 // Left sidebar
-import { musicAlbums } from '../data/musicAlbums';
 import Sticker from './Sticker.astro';
-
-const defaultAlbum = musicAlbums[0];
 
 interface NavLink {
   label: string;
@@ -146,32 +143,6 @@ const startExpanded = currentPath === '/';
       </div>
     </div>
   </section>
-
-  <!-- ================= now playing ================= -->
-  <section class="window compact inactive" id="now-playing">
-    <div class="title-bar">
-      <span class="title-bar-icon" aria-hidden="true"><Sticker name="black_cd.gif" /></span>
-      <span class="title-bar-text">nowplaying.mp3</span>
-      <div class="title-bar-controls" aria-hidden="true">
-        <span class="tb-btn">_</span>
-        <span class="tb-btn">□</span>
-        <span class="tb-btn close">×</span>
-      </div>
-    </div>
-    <div class="window-body bandcamp-body" id="now-playing-widget">
-      <a class="now-playing-change-link" href="/music"><Sticker name="blue_cd.png" /> Change the music here!</a>
-      <img
-        class="bandcamp-cover"
-        id="now-playing-cover"
-        src={defaultAlbum.coverUrl}
-        alt={`${defaultAlbum.title} album cover`}
-        loading="lazy"
-      />
-      <p class="now-playing-label" id="now-playing-label">{defaultAlbum.title} — {defaultAlbum.artist}</p>
-      <!-- Placeholder, not the real player -->
-      <div class="bandcamp-frame bandcamp-frame-slot" id="now-playing-iframe-slot" aria-hidden="true"></div>
-    </div>
-  </section>
 </div>
 
 <script>
@@ -208,94 +179,5 @@ const startExpanded = currentPath === '/';
         } catch {}
       });
     });
-  });
-</script>
-
-<script define:vars={{ musicAlbums }} is:inline>
-  // Floating Bandcamp player 
-  document.addEventListener('astro:page-load', () => {
-    const cover = document.getElementById('now-playing-cover');
-    const label = document.getElementById('now-playing-label');
-    if (!cover || !label) return;
-
-    const bandcampEmbedSrc = (albumId) =>
-      `https://bandcamp.com/EmbeddedPlayer/album=${albumId}/size=large/bgcol=faf3ea/linkcol=4b3a7a/tracklist=false/artwork=none/`;
-    const findAlbum = (id) => musicAlbums.find((a) => a.id === id);
-    const renderInfo = (album) => {
-      const coverEl = document.getElementById('now-playing-cover');
-      const labelEl = document.getElementById('now-playing-label');
-      if (coverEl) {
-        coverEl.src = album.coverUrl;
-        coverEl.alt = `${album.title} album cover`;
-      }
-      if (labelEl) {
-        labelEl.textContent = `${album.title} — ${album.artist}`;
-      }
-    };
-
-    if (!window.__gemmieFloatingFrame) {
-      const frame = document.createElement('iframe');
-      frame.id = 'now-playing-frame';
-      frame.className = 'bandcamp-frame bandcamp-frame-floating';
-      frame.setAttribute('seamless', '');
-      document.documentElement.appendChild(frame);
-      window.__gemmieFloatingFrame = frame;
-
-      const syncPosition = () => {
-        const slot = document.getElementById('now-playing-iframe-slot');
-        if (!slot) {
-          frame.style.display = 'none';
-          return;
-        }
-        const rect = slot.getBoundingClientRect();
-        const visible = rect.width > 0 && rect.height > 0;
-        frame.style.display = visible ? 'block' : 'none';
-        if (visible) {
-          frame.style.top = `${rect.top}px`;
-          frame.style.left = `${rect.left}px`;
-          frame.style.width = `${rect.width}px`;
-          frame.style.height = `${rect.height}px`;
-        }
-      };
-      window.__gemmieSyncNowPlaying = syncPosition;
-
-      window.addEventListener('scroll', syncPosition, { passive: true });
-      window.addEventListener('resize', syncPosition);
-      const navCol = document.querySelector('.col-nav');
-      if (navCol) new ResizeObserver(syncPosition).observe(navCol);
-    }
-
-    const frame = window.__gemmieFloatingFrame;
-
-    const setAlbum = (album, { persist = true } = {}) => {
-      renderInfo(album);
-      if (window.__gemmieCurrentAlbumId === album.id) return;
-      window.__gemmieCurrentAlbumId = album.id;
-      frame.src = bandcampEmbedSrc(album.id);
-      frame.title = `${album.title} by ${album.artist} — Bandcamp player`;
-      if (persist) {
-        try {
-          localStorage.setItem('gemmie-now-playing-album', album.id);
-        } catch {}
-      }
-    };
-
-    if (!window.__gemmieNowPlayingInit) {
-      window.__gemmieNowPlayingInit = true;
-      let initialAlbum = musicAlbums[0];
-      try {
-        const savedId = localStorage.getItem('gemmie-now-playing-album');
-        const saved = savedId && findAlbum(savedId);
-        if (saved) initialAlbum = saved;
-      } catch {}
-      setAlbum(initialAlbum, { persist: false });
-
-      window.addEventListener('gemmie:play-album', (e) => setAlbum(e.detail));
-    } else {
-      const current = findAlbum(window.__gemmieCurrentAlbumId);
-      if (current) renderInfo(current);
-    }
-
-    window.__gemmieSyncNowPlaying?.();
   });
 </script>

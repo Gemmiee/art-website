@@ -2,6 +2,9 @@
 import '../styles/global.css';
 import { ViewTransitions } from 'astro:transitions';
 import Sticker from '../components/Sticker.astro';
+import { musicAlbums } from '../data/musicAlbums';
+
+const defaultAlbum = musicAlbums[0];
 
 interface Props {
   title?: string;
@@ -66,6 +69,36 @@ const ogUrl = new URL(Astro.url.pathname, Astro.site).toString();
 
     <img class="corner-mascot" src="/images/other_components/gemmie_yaar_clique.gif" alt="" aria-hidden="true" />
 
+    <div class="now-playing-widget" id="now-playing-widget">
+      <section class="window compact inactive">
+        <button
+          class="now-playing-toggle"
+          type="button"
+          id="now-playing-toggle"
+          aria-expanded="false"
+          aria-controls="now-playing-content"
+        >
+          <div class="title-bar">
+            <span class="title-bar-icon" aria-hidden="true"><Sticker name="black_cd.gif" /></span>
+            <span class="title-bar-text">player.mp3</span>
+          </div>
+        </button>
+        <div class="nav-section-content is-collapsed" id="now-playing-content">
+          <div class="bandcamp-body">
+            <img
+              class="bandcamp-cover"
+              id="now-playing-cover"
+              src={defaultAlbum.coverUrl}
+              alt={`${defaultAlbum.title} album cover`}
+              loading="lazy"
+            />
+            <a class="now-playing-change-link" href="/music">Change the music here!</a>
+            <div class="bandcamp-frame bandcamp-frame-slot" id="now-playing-iframe-slot" aria-hidden="true"></div>
+          </div>
+        </div>
+      </section>
+    </div>
+
     <div class="site-banner">
       <img src="/images/other_components/banner2.webp" alt="Gemmie's corner banner — gemmiewow.com" />
     </div>
@@ -89,6 +122,115 @@ const ogUrl = new URL(Astro.url.pathname, Astro.site).toString();
             const next = current === 'dark' ? 'light' : 'dark';
             document.documentElement.setAttribute('data-theme', next);
             localStorage.setItem('theme', next);
+          });
+        }
+      });
+    </script>
+
+    <script define:vars={{ musicAlbums }} is:inline>
+      // Floating Bandcamp player
+      document.addEventListener('astro:page-load', () => {
+        const slot = document.getElementById('now-playing-iframe-slot');
+        if (!slot) return;
+
+        const bandcampEmbedSrc = (albumId) =>
+          `https://bandcamp.com/EmbeddedPlayer/album=${albumId}/size=large/bgcol=faf3ea/linkcol=4b3a7a/tracklist=true/artwork=none/transparent=true/`;
+        const findAlbum = (id) => musicAlbums.find((a) => a.id === id);
+
+        if (!window.__gemmieFloatingFrame) {
+          const frame = document.createElement('iframe');
+          frame.id = 'now-playing-frame';
+          frame.className = 'bandcamp-frame bandcamp-frame-floating';
+          frame.setAttribute('seamless', '');
+          document.documentElement.appendChild(frame);
+          window.__gemmieFloatingFrame = frame;
+
+          const syncPosition = () => {
+            const slot = document.getElementById('now-playing-iframe-slot');
+            if (!slot) {
+              frame.style.display = 'none';
+              return;
+            }
+
+            const content = document.getElementById('now-playing-content');
+            const collapsed = content ? content.getBoundingClientRect().height === 0 : false;
+            const rect = slot.getBoundingClientRect();
+            const visible = !collapsed && rect.width > 0 && rect.height > 0;
+            frame.style.display = visible ? 'block' : 'none';
+            if (visible) {
+              frame.style.top = `${rect.top}px`;
+              frame.style.left = `${rect.left}px`;
+              frame.style.width = `${rect.width}px`;
+              frame.style.height = `${rect.height}px`;
+            }
+          };
+          window.__gemmieSyncNowPlaying = syncPosition;
+          window.addEventListener('resize', syncPosition);
+        }
+
+        const frame = window.__gemmieFloatingFrame;
+
+        const renderCover = (album) => {
+          const coverEl = document.getElementById('now-playing-cover');
+          if (coverEl) {
+            coverEl.src = album.coverUrl;
+            coverEl.alt = `${album.title} album cover`;
+          }
+        };
+
+        const setAlbum = (album, { persist = true } = {}) => {
+          renderCover(album);
+          if (window.__gemmieCurrentAlbumId === album.id) return;
+          window.__gemmieCurrentAlbumId = album.id;
+          frame.src = bandcampEmbedSrc(album.id);
+          frame.title = `${album.title} by ${album.artist} — Bandcamp player`;
+          if (persist) {
+            try {
+              localStorage.setItem('gemmie-now-playing-album', album.id);
+            } catch {}
+          }
+        };
+
+        if (!window.__gemmieNowPlayingInit) {
+          window.__gemmieNowPlayingInit = true;
+          let initialAlbum = musicAlbums[0];
+          try {
+            const savedId = localStorage.getItem('gemmie-now-playing-album');
+            const saved = savedId && findAlbum(savedId);
+            if (saved) initialAlbum = saved;
+          } catch {}
+          setAlbum(initialAlbum, { persist: false });
+
+          window.addEventListener('gemmie:play-album', (e) => setAlbum(e.detail));
+        } else {
+          const current = findAlbum(window.__gemmieCurrentAlbumId);
+          if (current) renderCover(current);
+        }
+
+        window.__gemmieSyncNowPlaying?.();
+
+        // expand/collapse toggle (snaps instantly, no animation to track)
+        const toggle = document.getElementById('now-playing-toggle');
+        const content = document.getElementById('now-playing-content');
+        if (toggle && content) {
+          const applyExpanded = (expanded) => {
+            toggle.setAttribute('aria-expanded', String(expanded));
+            content.classList.toggle('is-collapsed', !expanded);
+            window.__gemmieSyncNowPlaying?.();
+          };
+
+          let startExpanded = false;
+          try {
+            startExpanded = localStorage.getItem('gemmie-music-player-expanded') === 'true';
+          } catch {}
+          applyExpanded(startExpanded);
+
+          toggle.addEventListener('click', () => {
+            const nowExpanded = toggle.getAttribute('aria-expanded') !== 'true';
+            applyExpanded(nowExpanded);
+            try {
+              localStorage.setItem('gemmie-music-player-expanded', String(nowExpanded));
+            } catch {}
           });
         }
       });
@@ -180,7 +322,7 @@ const ogUrl = new URL(Astro.url.pathname, Astro.site).toString();
       /* gemmie angel, for the angelic clique. */
       .corner-mascot {
         position: fixed;
-        left: 16px;
+        right: 16px;
         bottom: 16px;
         width: 57px;
         height: auto;
@@ -191,6 +333,57 @@ const ogUrl = new URL(Astro.url.pathname, Astro.site).toString();
         .corner-mascot {
           display: none;
         }
+      }
+
+      /* bandcamp embed */
+      .now-playing-widget {
+        position: fixed;
+        left: 20px;
+        bottom: 0px;
+        width: 250px;
+        z-index: 40;
+      }
+      @media (max-width: 640px) {
+        .now-playing-widget {
+          display: none;
+        }
+      }
+      /* flip stacking so the title bar stays pinned at the bottom and content opens upward above it */
+      .now-playing-widget .window {
+        display: flex;
+        flex-direction: column-reverse;
+      }
+      /* snap open/closed instead of animating, so the floating iframe never
+         needs to chase a moving target (see .now-playing-toggle's click handler) */
+      .now-playing-widget .nav-section-content {
+        transition: none;
+      }
+
+      .now-playing-toggle {
+        display: block;
+        width: 100%;
+        background: none;
+        border: none;
+        padding: 0;
+        margin: 0;
+        cursor: pointer;
+        position: relative;
+        text-align: left;
+      }
+      .now-playing-toggle::after {
+        content: '▾';
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: var(--ink-inverse);
+        text-shadow: 0 1px 1px rgba(0, 0, 0, 0.35);
+        transition: transform 0.2s ease;
+      }
+      .now-playing-toggle[aria-expanded="true"]::after {
+        transform: translateY(-50%) rotate(180deg);
       }
       .theme-icon {
         position: absolute;
@@ -218,6 +411,5 @@ const ogUrl = new URL(Astro.url.pathname, Astro.site).toString();
         transform: rotate(0deg) scale(1);
       }
     </style>
-    
   </body>
 </html>
