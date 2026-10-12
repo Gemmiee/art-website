@@ -26,6 +26,7 @@
   position: fixed;
   margin: 0;
   z-index: 40;
+  visibility: hidden;
 }
 .now-playing-change-link {
   display: block;

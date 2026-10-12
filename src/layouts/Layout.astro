@@ -148,21 +148,19 @@ const ogUrl = new URL(Astro.url.pathname, Astro.site).toString();
           const syncPosition = () => {
             const slot = document.getElementById('now-playing-iframe-slot');
             if (!slot) {
-              frame.style.display = 'none';
+              frame.style.visibility = 'hidden';
               return;
             }
 
+            // always keep the iframe sized correctly even while hidden 
             const content = document.getElementById('now-playing-content');
             const collapsed = content ? content.getBoundingClientRect().height === 0 : false;
             const rect = slot.getBoundingClientRect();
-            const visible = !collapsed && rect.width > 0 && rect.height > 0;
-            frame.style.display = visible ? 'block' : 'none';
-            if (visible) {
-              frame.style.top = `${rect.top}px`;
-              frame.style.left = `${rect.left}px`;
-              frame.style.width = `${rect.width}px`;
-              frame.style.height = `${rect.height}px`;
-            }
+            frame.style.top = `${rect.top}px`;
+            frame.style.left = `${rect.left}px`;
+            frame.style.width = `${rect.width}px`;
+            frame.style.height = `${rect.height}px`;
+            frame.style.visibility = collapsed || rect.width === 0 || rect.height === 0 ? 'hidden' : 'visible';
           };
           window.__gemmieSyncNowPlaying = syncPosition;
           window.addEventListener('resize', syncPosition);
