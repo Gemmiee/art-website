@@ -67,6 +67,20 @@ export const musicAlbums: MusicAlbum[] = [
     coverUrl: 'https://f4.bcbits.com/img/a854956843_1x1_700.avif',
     albumUrl: 'https://christopherlarkin.bandcamp.com/album/hollow-knight-gods-nightmares',
   },
+  {
+    id: '2861197113',
+    title: 'Hollow Knight: Silksong',
+    artist: 'Christopher Larkin',
+    coverUrl: 'https://f4.bcbits.com/img/a2085224863_2.jpg',
+    albumUrl: 'https://christopherlarkin.bandcamp.com/album/hollow-knight-silksong-original-soundtrack',
+  },
+  {
+    id: '2136659789',
+    title: 'Smash Hit OST',
+    artist: 'Douglas Holmquist',
+    coverUrl: 'https://f4.bcbits.com/img/a2540284740_2.jpg',
+    albumUrl: 'https://douglasholmquist.bandcamp.com/album/smash-hit-ost',
+  },
 
 ];
 
