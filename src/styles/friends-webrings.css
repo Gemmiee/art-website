@@ -42,7 +42,6 @@
 .friend-marquee {
   overflow: hidden;
   margin-bottom: 4px;
-  /* soft fade at both edges */
   mask-image: linear-gradient(to right, transparent, black 20px, black calc(100% - 20px), transparent);
   -webkit-mask-image: linear-gradient(to right, transparent, black 20px, black calc(100% - 20px), transparent);
 }
@@ -56,14 +55,15 @@
   animation-play-state: paused;
 }
 @keyframes friend-marquee-scroll {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .friend-marquee-track {
-    animation: none;
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
   }
 }
+
+
 .friend-btn {
   display: block;
   flex-shrink: 0;

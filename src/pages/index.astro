@@ -183,19 +183,17 @@ const announcements = [
           </div>
 
           {blinkies.length > 0 && (
-            <>
-              <div class="blinkie-marquee">
-                <div class="blinkie-marquee-track">
-                  {blinkies.map((src) => (
-                    <img class="blinkie-item" src={src} alt="" loading="lazy" />
-                  ))}
-                  {/* repeat so the marquee can loop seamlessly */}
-                  {blinkies.map((src) => (
-                    <img class="blinkie-item" src={src} alt="" aria-hidden="true" loading="lazy" />
-                  ))}
-                </div>
+            <div class="blinkie-marquee">
+              <div class="blinkie-marquee-track">
+                {blinkies.map((src) => (
+                  <img class="blinkie-item" src={src} alt="" loading="lazy" />
+                ))}
+                {/* repeat so the marquee can loop seamlessly */}
+                {blinkies.map((src) => (
+                  <img class="blinkie-item" src={src} alt="" aria-hidden="true" loading="lazy" />
+                ))}
               </div>
-            </>
+            </div>
           )}
         </div>
 

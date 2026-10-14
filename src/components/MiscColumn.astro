@@ -1,7 +1,6 @@
 ---
 import BubbleDivider from './BubbleDivider.astro';
 import Sticker from './Sticker.astro';
-import { friends } from '../data/friends';
 
 const socials = [
   { emoji: '🛍️', label: 'Ko-fi Shop', href: 'https://ko-fi.com/gemmiewow/', icon: 'icon_kofi.png' },
@@ -52,7 +51,7 @@ const embedCode = `<a href="${siteUrl}"><img src="${ownButtonSrc}" width="88" he
     </div>
   </section>
 
-  <!-- ================= friend links / webring ================= -->
+  <!-- =============== friend links / webring ================ -->
   <section class="window compact inactive" id="friend-links">
     <div class="title-bar">
       <span class="title-bar-icon" aria-hidden="true"><Sticker name="pink_nintendo.gif" /></span>
@@ -67,17 +66,56 @@ const embedCode = `<a href="${siteUrl}"><img src="${ownButtonSrc}" width="88" he
       <p class="hand-note">Cool as heck people</p>
       <div class="friend-marquee">
         <div class="friend-marquee-track">
-          {friends.map((friend) => (
-            <a class="friend-btn" href={friend.href} target="_blank" rel="noopener">
-              <img src={`/images/friends/${friend.button}`} width="88" height="31" alt={friend.name} />
-            </a>
-          ))}
-          {/* repeat the buttons so the marquee can loop seamlessly */}
-          {friends.map((friend) => (
-            <a class="friend-btn" href={friend.href} target="_blank" rel="noopener" aria-hidden="true" tabindex="-1">
-              <img src={`/images/friends/${friend.button}`} width="88" height="31" alt="" />
-            </a>
-          ))}
+          <a class="friend-btn" href="https://www.instagram.com/mage.236" target="_blank" rel="noopener">
+            <img src="/images/friends/button_mage.png" width="88" height="31" alt="Mage" />
+          </a>
+          <a class="friend-btn" href="https://www.instagram.com/athinaleli/" target="_blank" rel="noopener">
+            <img src="/images/friends/button_leli.png" width="88" height="31" alt="Leli" />
+          </a>
+          <a class="friend-btn" href="https://www.youtube.com/channel/UCMr9ZRUKxJgv4uBKAtGeM0w" target="_blank" rel="noopener">
+            <img src="/images/friends/button_mia.gif" width="88" height="31" alt="mianimator" />
+          </a>
+          <a class="friend-btn" href="https://linktr.ee/sweetlysours" target="_blank" rel="noopener">
+            <img src="/images/friends/button_sweetly.png" width="88" height="31" alt="Sweetly" />
+          </a>
+          <a class="friend-btn" href="https://www.instagram.com/kaito_solos_" target="_blank" rel="noopener">
+            <img src="/images/friends/button_leda.png" width="88" height="31" alt="Leda" />
+          </a>
+          <a class="friend-btn" href="https://grasshampoo.carrd.co/" target="_blank" rel="noopener">
+            <img src="/images/friends/button_grassy.png" width="88" height="31" alt="Grassy" />
+          </a>
+          <a class="friend-btn" href="https://www.instagram.com/voiceofthederanged" target="_blank" rel="noopener">
+            <img src="/images/friends/button_dera.gif" width="88" height="31" alt="Dera" />
+          </a>
+          <a class="friend-btn" href="https://klaxxium.carrd.co/" target="_blank" rel="noopener">
+            <img src="/images/friends/button_klax.gif" width="88" height="31" alt="Klaxxium" />
+          </a>
+
+          <!-- friend loop -->
+          <a class="friend-btn" href="https://www.instagram.com/mage.236" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1">
+            <img src="/images/friends/button_mage.png" width="88" height="31" alt="" />
+          </a>
+          <a class="friend-btn" href="https://www.instagram.com/athinaleli/" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1">
+            <img src="/images/friends/button_leli.png" width="88" height="31" alt="" />
+          </a>
+          <a class="friend-btn" href="https://www.youtube.com/channel/UCMr9ZRUKxJgv4uBKAtGeM0w" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1">
+            <img src="/images/friends/button_mia.gif" width="88" height="31" alt="" />
+          </a>
+          <a class="friend-btn" href="https://linktr.ee/sweetlysours" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1">
+            <img src="/images/friends/button_sweetly.png" width="88" height="31" alt="" />
+          </a>
+          <a class="friend-btn" href="https://www.instagram.com/kaito_solos_" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1">
+            <img src="/images/friends/button_leda.png" width="88" height="31" alt="" />
+          </a>
+          <a class="friend-btn" href="https://grasshampoo.carrd.co/" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1">
+            <img src="/images/friends/button_grassy.png" width="88" height="31" alt="" />
+          </a>
+          <a class="friend-btn" href="https://www.instagram.com/voiceofthederanged" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1">
+            <img src="/images/friends/button_dera.gif" width="88" height="31" alt="" />
+          </a>
+          <a class="friend-btn" href="https://klaxxium.carrd.co/" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1">
+            <img src="/images/friends/button_klax.gif" width="88" height="31" alt="" />
+          </a>
         </div>
       </div>
 

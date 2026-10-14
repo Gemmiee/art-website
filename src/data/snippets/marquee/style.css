@@ -25,12 +25,6 @@
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .marquee-track {
-    animation: none;
-  }
-}
-
 .marquee-item {
   display: block;
   flex-shrink: 0;

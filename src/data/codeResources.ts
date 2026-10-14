@@ -35,7 +35,7 @@ export const codeResources: CodeResource[] = [
     id: 'marquee',
     title: 'Friend Loop Marquee',
     description:
-      'For friend buttons that you wanna have em scroll forever with no visible seam + pause on hover.',
+      'There is also the marquee tag as the og method, this a slightly more polished version.',
     html: marqueeHtml,
     css: marqueeCss,
   },

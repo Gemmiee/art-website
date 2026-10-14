@@ -4,7 +4,6 @@ import PageShell from '../components/PageShell.astro';
 import Sticker from '../components/Sticker.astro';
 import BubbleDivider from '../components/BubbleDivider.astro';
 import DocBanner from '../components/DocBanner.astro';
-import { friends } from '../data/friends';
 
 const links: { name: string; href: string; blurb: string }[] = [
   {
@@ -80,11 +79,30 @@ const links: { name: string; href: string; blurb: string }[] = [
           <h2 class="links-section-heading">💌 Friends</h2>
           <p class="hand-note">My friends aka cool as heck people</p>
           <div class="friends-grid">
-            {friends.map((friend) => (
-              <a class="friend-btn" href={friend.href} target="_blank" rel="noopener" aria-label={friend.name}>
-                <img src={`/images/friends/${friend.button}`} width="88" height="31" alt={friend.name} />
-              </a>
-            ))}
+            <a class="friend-btn" href="https://www.instagram.com/mage.236" target="_blank" rel="noopener" aria-label="Mage">
+              <img src="/images/friends/button_mage.png" width="88" height="31" alt="Mage" />
+            </a>
+            <a class="friend-btn" href="https://www.instagram.com/athinaleli/" target="_blank" rel="noopener" aria-label="Leli">
+              <img src="/images/friends/button_leli.png" width="88" height="31" alt="Leli" />
+            </a>
+            <a class="friend-btn" href="https://www.youtube.com/channel/UCMr9ZRUKxJgv4uBKAtGeM0w" target="_blank" rel="noopener" aria-label="mianimator">
+              <img src="/images/friends/button_mia.gif" width="88" height="31" alt="mianimator" />
+            </a>
+            <a class="friend-btn" href="https://linktr.ee/sweetlysours" target="_blank" rel="noopener" aria-label="Sweetly">
+              <img src="/images/friends/button_sweetly.png" width="88" height="31" alt="Sweetly" />
+            </a>
+            <a class="friend-btn" href="https://www.instagram.com/kaito_solos_" target="_blank" rel="noopener" aria-label="Leda">
+              <img src="/images/friends/button_leda.png" width="88" height="31" alt="Leda" />
+            </a>
+            <a class="friend-btn" href="https://grasshampoo.carrd.co/" target="_blank" rel="noopener" aria-label="Grassy">
+              <img src="/images/friends/button_grassy.png" width="88" height="31" alt="Grassy" />
+            </a>
+            <a class="friend-btn" href="https://www.instagram.com/voiceofthederanged" target="_blank" rel="noopener" aria-label="Dera">
+              <img src="/images/friends/button_dera.gif" width="88" height="31" alt="Dera" />
+            </a>
+            <a class="friend-btn" href="https://klaxxium.carrd.co/" target="_blank" rel="noopener" aria-label="Klaxxium">
+              <img src="/images/friends/button_klax.gif" width="88" height="31" alt="Klaxxium" />
+            </a>
           </div>
         </div>
 
