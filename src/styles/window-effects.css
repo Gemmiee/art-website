@@ -43,7 +43,7 @@ h1 {
   color: transparent;
 }
 :root[data-theme="dark"] h1 {
-  background: linear-gradient(180deg, #fdf0ca 0%, #e69c2c 45%, #6b1304 100%);
+  background: linear-gradient(180deg, #fdf0ca 0%, #f5bb65 45%, #884b28 100%);
   -webkit-background-clip: text;
   background-clip: text;
 }
@@ -72,7 +72,7 @@ h1 {
   margin: 0 auto 8px;
 }
 
-/* image on the side and text on the other */
+/* image on the LEFT side and text on the RIGHT */
 .article-grid {
   display: grid;
   grid-template-columns: 260px 1fr;
@@ -96,7 +96,8 @@ h1 {
 }
 @media (max-width: 480px) {
   .article-grid,
-  .profile-grid {
+  .profile-grid,
+  .article-grid-reverse {
     grid-template-columns: 1fr;
     justify-items: center;
     text-align: center;
@@ -120,6 +121,18 @@ h1 {
     text-align: center;
   }
 }
+/* we place paragraph before the image so that the position changes muahahah*/
+.article-grid-reverse {
+  display: grid;
+  grid-template-columns: 1fr 260px;
+  gap: 26px;
+  align-items: center;
+}
+.article-grid-reverse > * {
+  min-width: 0;
+}
+
+
 
 /* shop section: shop card on the left, webrings on the right */
 .shop-grid {
