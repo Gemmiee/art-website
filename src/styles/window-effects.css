@@ -82,6 +82,18 @@ h1 {
 .article-grid > * {
   min-width: 0;
 }
+
+/* we place paragraph before the image so that the position changes muahahah*/
+.article-grid-reverse {
+  display: grid;
+  grid-template-columns: 1fr 260px;
+  gap: 26px;
+  align-items: center;
+}
+.article-grid-reverse > * {
+  min-width: 0;
+}
+
 .article-portrait {
   max-width: 260px;
 }
@@ -121,16 +133,7 @@ h1 {
     text-align: center;
   }
 }
-/* we place paragraph before the image so that the position changes muahahah*/
-.article-grid-reverse {
-  display: grid;
-  grid-template-columns: 1fr 260px;
-  gap: 26px;
-  align-items: center;
-}
-.article-grid-reverse > * {
-  min-width: 0;
-}
+
 
 
 
