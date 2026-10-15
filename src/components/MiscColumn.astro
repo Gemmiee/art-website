@@ -132,11 +132,11 @@ const embedCode = `<a href="${siteUrl}"><img src="${ownButtonSrc}" width="88" he
     </div>
   </section>
 
-  <!-- ================= chat ================= -->
+  <!-- ============== GUESTBOOK=============== -->
   <section class="window compact inactive" id="guestbook">
     <div class="title-bar">
       <span class="title-bar-icon" aria-hidden="true"><Sticker name="marije_blanket.png" /></span>
-      <span class="title-bar-text">chat.exe</span>
+      <span class="title-bar-text">guestbook.exe</span>
       <div class="title-bar-controls" aria-hidden="true">
         <span class="tb-btn">_</span>
         <span class="tb-btn">□</span>
@@ -144,26 +144,18 @@ const embedCode = `<a href="${siteUrl}"><img src="${ownButtonSrc}" width="88" he
       </div>
     </div>
     <div class="window-body">
-      <!-- The chat loader script used to run unsandboxed on this page
-       and people thought it was malware cause of their adguards, son -->
-      <iframe
-        class="guestbook-iframe"
-        title="Gemmie's corner guestbook chat"
-        sandbox="allow-scripts allow-same-origin allow-forms allow-modals"
-        srcdoc={`<!doctype html><html><head><style>html,body{margin:0;padding:0;height:100%;}</style></head><body>
-<iframe id="chattable" src="https://iframe.chat/embed?chat=10281099" sandbox="allow-scripts allow-same-origin allow-forms allow-modals" style="display:block;width:100%;height:100%;border:0;"></iframe>
-<script src="https://iframe.chat/scripts/main.min.js"></script>
-<script>
-  (function initChattable() {
-    if (window.chattable && typeof window.chattable.initialize === 'function') {
-      window.chattable.initialize({ stylesheet: "/chattable-kick.css" });
-    } else {
-      setTimeout(initChattable, 50);
-    }
-  })();
-</script>
-</body></html>`}
-      ></iframe>
+      <p style="display: flex;" class="hand-note">
+          Hosted by:
+          <a style="margin-left:5px;" class="offsite-btn" href="https://atabook.org/" target="_blank" rel="noopener" aria-label="atabook website">
+            <img src="https://atabook.org/images/button.gif" alt="atabook website button" loading="lazy" />
+          </a>
+        </p>
+    </div>
+    <div class="doc-section">
+          <iframe src="https://gemmie.atabook.org/"
+          class="guestbook-page-iframe"
+          loading="lazy"></iframe>
+     
     </div>
   </section>
 

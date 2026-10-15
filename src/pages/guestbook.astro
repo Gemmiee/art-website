@@ -21,15 +21,26 @@ import DocBanner from '../components/DocBanner.astro';
       <div class="window-body">
         <div class="doc-section" id="guestbook">
           <DocBanner src="/images/banners/banner_guestbook.png" alt="Guestbook" />
-          <p class="hand-note">
-            Leave a little note before you go!
+          <p style="display: flex;" class="hand-note">
+            Guestbook hosted by:
+            <a style="margin-left:5px;" class="offsite-btn" href="https://atabook.org/" target="_blank" rel="noopener" aria-label="atabook website">
+              <img src="https://atabook.org/images/button.gif" alt="atabook website button" loading="lazy" />
+            </a>
           </p>
+
+          <iframe src="https://gemmie.atabook.org/"
+          class="guestbook-page-iframe"
+          loading="lazy"></iframe>
+
+          <!-- OLD GUESTBOOK 
           <iframe
             class="guestbook-page-iframe"
             src="https://users.smartgb.com/g/g.php?a=s&i=g19-03423-df"
             title="Gemmie's Guestbook"
             loading="lazy"
           ></iframe>
+          -->
+
         </div>
       </div>
     </section>
