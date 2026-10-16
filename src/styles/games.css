@@ -82,4 +82,23 @@
   height: 450px;
   border: 0;
 }
+.game-frame--scgmd4 {
+  container-type: inline-size;
+  aspect-ratio: 720 / 450;
+  max-width: 720px;
+  margin: 0 auto;
+  background: #000;
+}
+.game-frame-scale--scgmd4 {
+  width: 720px;
+  height: 450px;
+  flex-shrink: 0;
+  transform: scale(calc(100cqw / 720px));
+}
+.game-frame-iframe--scgmd4 {
+  display: block;
+  width: 720px;
+  height: 450px;
+  border: 0;
+}
 

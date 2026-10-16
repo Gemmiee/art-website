@@ -1,0 +1,41 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageShell from '../components/PageShell.astro';
+---
+
+<Layout title="Super Crazy Guitar Maniac Deluxe 4 ☆ Gemmie's corner">
+  <PageShell showMisc={false}>
+    <!-- ================= SCGMD4 ================= -->
+    <section class="window main-doc">
+      <div class="title-bar">
+        <span class="title-bar-icon" aria-hidden="true">🎸</span>
+        <span class="title-bar-text">SCGMD4.exe</span>
+        <div class="title-bar-controls" aria-hidden="true">
+          <span class="tb-btn">_</span>
+          <span class="tb-btn">□</span>
+          <span class="tb-btn close">×</span>
+        </div>
+      </div>
+      <div class="window-body">
+        <div class="doc-section" id="scgmd4">
+          <h2 class="links-section-heading">🎸 Super Crazy Guitar Maniac Deluxe 4</h2>
+          <p class="hand-note">
+            One of my childhood flash games.
+          </p>
+          <div class="game-frame game-frame--scgmd4">
+            <div class="game-frame-scale game-frame-scale--scgmd4">
+              <embed
+                class="game-frame-iframe game-frame-iframe--scgmd4"
+                src="/games/supercrazyguitarmaniacdeluxe4.swf"
+                width="720"
+                height="450"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </PageShell>
+</Layout>
+
+<script is:inline src="https://cdn.jsdelivr.net/npm/@ruffle-rs/ruffle@0.7.1/ruffle.js"></script>
