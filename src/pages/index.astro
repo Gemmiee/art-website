@@ -17,6 +17,7 @@ const blinkies = fs.existsSync(blinkiesDir)
   : [];
 
 const updates = [
+  { date: '10/16', text: '‼🧃🍎 A Latest Drawing section has been added in our index page.' },
   { date: '10/15', text: '💿 Two new albums in the music page were added 💿 Plus, I decided to bring the guestbook to the front page too.' },
   { date: '10/12', text: 'Separated the mp3 player into its own little window outside of the navigation column, due to a bug I faced with the bandcamp embed.' },
   { date: '10/08', text: 'Small revamp on dark mode, Im pairing yellow to fit with the lamp in the background.' },
@@ -189,7 +190,7 @@ const announcements = [
                 {blinkies.map((src) => (
                   <img class="blinkie-item" src={src} alt="" loading="lazy" />
                 ))}
-                {/* repeat so the marquee can loop seamlessly */}
+                {/* repeat so the marquee can loop */}
                 {blinkies.map((src) => (
                   <img class="blinkie-item" src={src} alt="" aria-hidden="true" loading="lazy" />
                 ))}
@@ -199,6 +200,16 @@ const announcements = [
         </div>
 
         <BubbleDivider class="bubble-divider-dashed" />
+
+
+        <!-- --- for latest drawings --- -->
+        <div class="doc-section">
+            <h2 class="links-section-heading">🍊 Latest Drawing:</h2>
+            <p class="hand-note">See more of my art in the <a href="/art">art page!</a></p>
+            <img class="shop-img" src="/images/Art/1)%20OCs/Gemmie/gem_ship.png" alt="Gemmie's latest drawing" />
+        </div>
+
+        <BubbleDivider  />
 
         <!-- ---- shop + webrings ---- -->
  
@@ -297,7 +308,9 @@ const announcements = [
             </div>
           </div>
         </div>
-      </div>
+
+
+
 
     </section>
   </PageShell>
