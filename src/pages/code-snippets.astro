@@ -20,7 +20,7 @@ import { codeResources } from '../data/codeResources';
       </div>
       <div class="window-body">
         <div class="doc-section" id="code-resources">
-          <p class="hand-note">Little bits of code from this site, free to copy into your own</p>
+          <p class="hand-note">Code used for this site, feel free to copy them.</p>
 
           {codeResources.map((resource) => (
             <div class="code-resource">
@@ -32,6 +32,9 @@ import { codeResources } from '../data/codeResources';
                   <WaterButton href="#" label="Hello! Mi me ma mo muu!" waterColor="#3fbfc7" />
                 </div>
               )}
+
+
+                <!-- ---- marquee ---- -->
 
               {resource.id === 'marquee' && (
                 <div class="code-resource-demo">
@@ -49,6 +52,10 @@ import { codeResources } from '../data/codeResources';
                 </div>
               )}
 
+
+
+                <!-- ---- glass ---- -->
+
               {resource.id === 'glass-panel' && (
                 <div class="code-resource-demo demo-glass-backdrop">
                   <style set:html={resource.css} />
@@ -58,12 +65,18 @@ import { codeResources } from '../data/codeResources';
                 </div>
               )}
 
+
+                <!-- ---- gradient ---- -->
+
               {resource.id === 'gradient-text' && (
                 <div class="code-resource-demo">
                   <style set:html={resource.css} />
                   <h1 class="gradient-text">Gradient Text oooOOoo</h1>
                 </div>
               )}
+
+
+                <!-- ---- dark/light mode ---- -->
 
               {resource.id === 'theme-toggle' && (
                 <div class="code-resource-demo">
@@ -76,6 +89,17 @@ import { codeResources } from '../data/codeResources';
                       <span class="demo-theme-icon demo-moon-icon" aria-hidden="true">🌙</span>
                     </button>
                   </div>
+                </div>
+              )}
+
+
+              <!-- ---- bubble deviders ---- -->
+
+              {resource.id === 'bubble-divider' && (
+                <div class="code-resource-demo">
+                  <style set:html={resource.css} />
+                  <div class="bubble-divider"></div>
+                  <div class="bubble-divider bubble-divider-dashed"></div>
                 </div>
               )}
 

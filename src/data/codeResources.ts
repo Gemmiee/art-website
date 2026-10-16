@@ -11,6 +11,8 @@ import gradientTextCss from './snippets/gradient-text/style.css?raw';
 import themeToggleHtml from './snippets/theme-toggle/markup.html?raw';
 import themeToggleCss from './snippets/theme-toggle/style.css?raw';
 import themeToggleJs from './snippets/theme-toggle/script.js?raw';
+import bubbleDividerHtml from './snippets/bubble-divider/markup.html?raw';
+import bubbleDividerCss from './snippets/bubble-divider/style.css?raw';
 
 export interface CodeResource {
   id: string;
@@ -63,5 +65,13 @@ export const codeResources: CodeResource[] = [
     html: themeToggleHtml,
     css: themeToggleCss,
     js: themeToggleJs,
+  },
+  {
+    id: 'bubble-divider',
+    title: 'Bubble Dividers',
+    description:
+      'My deviders for organisation.',
+    html: bubbleDividerHtml,
+    css: bubbleDividerCss,
   },
 ];
