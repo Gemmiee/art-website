@@ -5,54 +5,6 @@ import Sticker from '../components/Sticker.astro';
 import BubbleDivider from '../components/BubbleDivider.astro';
 import DocBanner from '../components/DocBanner.astro';
 
-const links: { name: string; href: string; blurb: string }[] = [
-  {
-    name: '🌱 DelphiTools',
-    href: 'https://delphi.tools/',
-    blurb: 'A wide range of tools for art, writing, web development and more!',
-  },
-  {
-    name: '️🧊 Chattable',
-    href: 'https://iframe.chat/',
-    blurb: 'The platform I used to make my chat! Very easy to use and completely free.',
-  },
-  {
-    name: '🍊 Cloudflare',
-    href: 'https://www.cloudflare.com/',
-    blurb: 'Free website deployment and hosting? Whoa? Using it for my own site :D',
-  },
-  {
-    name: '🫧 Nightwave Plaza',
-    href: 'https://plaza.one/',
-    blurb: 'An aesthetic vaporwave radio.',
-  },
-  {
-    name: '⚙️ 88x31 Button Maker',
-    href: 'https://hekate2.github.io/buttonmaker/',
-    blurb: 'A simple website to make your own 88x31 buttons ;)',
-  },
-  {
-    name: '🧹 URLClean',
-    href: 'https://urlclean.com/',
-    blurb: 'Make sure to clean your urls before sharing them to remove tracking.',
-  },
-  {
-    name: '📺 Toonami Aftermath',
-    href: 'https://www.toonamiaftermath.com/',
-    blurb: 'A website that hosts a lot of old Toonami shows and movies.',
-  },
-  {
-    name: '📚 W3Schools',
-    href: 'https://www.w3schools.com/',
-    blurb: 'The absolute html cheat sheet.',
-  },
-  {
-    name: '🖱️ Cursors-4U',
-    href: 'https://www.cursors-4u.com/',
-    blurb: 'Free cursors for your desktop :]',
-  }
-
-];
 ---
 
 <Layout title="Links ☆ Gemmie's corner">
@@ -245,16 +197,68 @@ const links: { name: string; href: string; blurb: string }[] = [
 
         <!-- ---- fun & useful links ---- -->
         <div class="doc-section" id="links-fun">
-          <h2 class="links-section-heading">🌐 Fun &amp; Useful Links</h2>
-          <p class="hand-note">Fun + useful sites ;] </p>
-          <ul class="link-list">
-            {links.map((link) => (
-              <li>
-                <a href={link.href} target="_blank" rel="noopener">{link.name}</a>
-                {' — '}{link.blurb}
-              </li>
-            ))}
-          </ul>
+          <h2 class="links-section-heading">🌐 Links</h2>
+          <div class="doc-section" id="shop">
+          <div class="shop-grid">
+
+
+            <!-- resources links -->
+            <div class="shop-col">
+              <h2 class="links-section-heading">Resources</h2>
+              <ul class="link-list">
+                <li>
+                  <a href="https://delphi.tools/" target="_blank" rel="noopener">🌱 DelphiTools:</a>
+                  A wide range of tools for art, writing, web development and more!
+                </li>
+                <li>
+                  <a href="https://atabook.org/" target="_blank" rel="noopener">️🧊 Atabook:</a>
+                  Free guestbook for your website.
+                </li>
+                <li>
+                  <a href="https://www.cloudflare.com/" target="_blank" rel="noopener">🍊 Cloudflare:</a>
+                  Free website deployment and hosting? Whoa? Using it for my own site :D
+                </li>
+                <li>
+                  <a href="https://hekate2.github.io/buttonmaker/" target="_blank" rel="noopener">⚙️ 88x31 Button Maker:</a>
+                  A simple website to make your own 88x31 buttons ;)
+                </li>
+                <li>
+                  <a href="https://urlclean.com/" target="_blank" rel="noopener">🧹 URLClean:</a>
+                  Make sure to clean your urls before sharing them to remove tracking.
+                </li>
+                <li>
+                  <a href="https://www.w3schools.com/" target="_blank" rel="noopener">📚 W3Schools:</a>
+                  Html, CSS, Javascript cheat sheet.
+                </li>
+                <li>
+                  <a href="https://www.cursors-4u.com/" target="_blank" rel="noopener">🖱️ Cursors-4U:</a>
+                  Cursors for your desktop.
+                </li>
+              </ul>
+            </div>
+
+
+            <!-- fun links -->
+            <div class="shop-col">
+              <h2 class="links-section-heading">Fun</h2>
+              <ul class="link-list">
+                <li>
+                  <a href="https://plaza.one/" target="_blank" rel="noopener">🫧 Nightwave Plaza:</a>
+                  An aesthetic vaporwave radio.
+                </li>
+                <li>
+                  <a href="https://www.toonamiaftermath.com/" target="_blank" rel="noopener">📺 Toonami Aftermath:</a>
+                  A website that hosts a lot of old Toonami shows and movies.
+                </li>
+                <li>
+                  <a href="https://wigglypaint.com/" target="_blank" rel="noopener">🧩 Wiggly Paint:</a>
+                  Draw your characters and watch them wiiigle.
+                </li>
+              </ul>
+            </div>
+
+            </div>
+            </div>
         </div>
       </div>
     </section>
