@@ -65,7 +65,6 @@ function mountWaterButton(root) {
   const context = canvas?.getContext('2d');
   if (!canvas || !context) return;
   const ctx = context;
-  let raf = 0;
   let last = 0;
   let pixScale = 1;
   let W = 0;
@@ -339,7 +338,7 @@ function mountWaterButton(root) {
         draw();
       }
     }
-    raf = requestAnimationFrame(loop);
+    requestAnimationFrame(loop);
   }
   const wake = () => {
     asleep = false;
@@ -395,7 +394,7 @@ function mountWaterButton(root) {
   }, 300);
   build();
   draw();
-  raf = requestAnimationFrame(loop);
+  requestAnimationFrame(loop);
 }
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.water-button').forEach(mountWaterButton);

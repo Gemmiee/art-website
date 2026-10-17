@@ -89,14 +89,6 @@
   background: #fff;
 }
 
-.guestbook-iframe {
-  display: block;
-  width: calc(100% + 32px);
-  height: 380px;
-  margin: -16px;
-  border: 0;
-}
-
 .webring-iframe {
   display: block;
   width: 188px;
