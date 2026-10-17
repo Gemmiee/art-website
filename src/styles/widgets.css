@@ -2,8 +2,6 @@
 .blinkie-marquee {
   overflow: hidden;
   margin: 10px 0 4px;
-  mask-image: linear-gradient(to right, transparent, black 20px, black calc(100% - 20px), transparent);
-  -webkit-mask-image: linear-gradient(to right, transparent, black 20px, black calc(100% - 20px), transparent);
 }
 .blinkie-marquee-track {
   display: flex;

@@ -42,8 +42,6 @@
 .friend-marquee {
   overflow: hidden;
   margin-bottom: 4px;
-  mask-image: linear-gradient(to right, transparent, black 20px, black calc(100% - 20px), transparent);
-  -webkit-mask-image: linear-gradient(to right, transparent, black 20px, black calc(100% - 20px), transparent);
 }
 .friend-marquee-track {
   display: flex;

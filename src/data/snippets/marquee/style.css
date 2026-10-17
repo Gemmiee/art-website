@@ -1,8 +1,5 @@
 .marquee {
   overflow: hidden;
-  /* soft fade at both edges */
-  mask-image: linear-gradient(to right, transparent, black 20px, black calc(100% - 20px), transparent);
-  -webkit-mask-image: linear-gradient(to right, transparent, black 20px, black calc(100% - 20px), transparent);
 }
 
 .marquee-track {
