@@ -1,4 +1,3 @@
-// bandcamp album data for the music page
 export interface MusicAlbum {
   id: string;
   title: string;

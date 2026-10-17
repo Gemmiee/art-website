@@ -207,7 +207,7 @@ const ogUrl = new URL(Astro.url.pathname, Astro.site).toString();
 
         window.__gemmieSyncNowPlaying?.();
 
-        // expand/collapse toggle (snaps instantly, no animation to track)
+        // expand/collapse
         const toggle = document.getElementById('now-playing-toggle');
         const content = document.getElementById('now-playing-content');
         if (toggle && content) {
@@ -346,13 +346,11 @@ const ogUrl = new URL(Astro.url.pathname, Astro.site).toString();
           display: none;
         }
       }
-      /* flip stacking so the title bar stays pinned at the bottom and content opens upward above it */
+      /* flip: the title bar stays down and contents acordeon from above */
       .now-playing-widget .window {
         display: flex;
         flex-direction: column-reverse;
       }
-      /* snap open/closed instead of animating, so the floating iframe never
-         needs to chase a moving target (see .now-playing-toggle's click handler) */
       .now-playing-widget .nav-section-content {
         transition: none;
       }

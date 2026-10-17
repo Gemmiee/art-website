@@ -45,7 +45,7 @@ function hasFfmpeg(): boolean {
   return ffmpegAvailable;
 }
 
-// Grabs a still frame from a video to use as the thumbnail
+// Grabs a still frame from a video for thumbnail
 function getVideoPoster(absVideoPath: string): string | undefined {
   if (!hasFfmpeg()) return undefined;
 
@@ -92,8 +92,6 @@ function slugify(segments: string[]): string {
 }
 
 function encodeSegment(segment: string): string {
-  // Vite's dev server 404s on a literal %3A in the path, so undo just that
-  // one substitution (colons don't need escaping in a path segment anyway).
   return encodeURIComponent(segment).replace(/%3A/g, ':');
 }
 
@@ -126,8 +124,8 @@ async function scan(absDir: string, segments: string[]): Promise<ArtFolderNode> 
     const fileSegments = [...segments, entry.name];
     const absFilePath = path.join(absDir, entry.name);
 
-    // name a file "Thumbnail" to make it the thumbnail duh
-    // and add a description txt for disc
+    // name a file "Thumbnail" so it gets to be the folder's thumbnail
+    // description txt for the folder's disc
     if (baseName === 'thumbnail' && IMAGE_EXTS.has(ext)) {
       thumbnailUrl = (await getImageThumb(absFilePath, FOLDER_ICON_WIDTH)) ?? toUrl(fileSegments);
       continue;

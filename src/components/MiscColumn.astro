@@ -19,7 +19,7 @@ const embedCode = `<a href="${siteUrl}"><img src="${ownButtonSrc}" width="88" he
 ---
 
 <div class="col-misc">
-  <!-- ================= socials ================= -->
+  <!-- --- socials --- -->
   <section class="window compact inactive" id="socials">
     <div class="title-bar">
       <span class="title-bar-icon" aria-hidden="true"><img class="sticker" src="/images/stickers/blue_fish.gif" alt="" /></span>
@@ -51,7 +51,7 @@ const embedCode = `<a href="${siteUrl}"><img src="${ownButtonSrc}" width="88" he
     </div>
   </section>
 
-  <!-- =============== friend links / webring ================ -->
+  <!-- --- friends --- -->
   <section class="window compact inactive" id="friend-links">
     <div class="title-bar">
       <span class="title-bar-icon" aria-hidden="true"><Sticker name="yellow_egg.png" /></span>
@@ -91,7 +91,7 @@ const embedCode = `<a href="${siteUrl}"><img src="${ownButtonSrc}" width="88" he
             <img src="/images/friends/button_klax.gif" width="88" height="31" alt="Klaxxium" />
           </a>
 
-          <!-- friend loop -->
+          <!-- double it and give it to the next person (so that it loops) -->
           <a class="friend-btn" href="https://www.instagram.com/mage.236" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1">
             <img src="/images/friends/button_mage.png" width="88" height="31" alt="" />
           </a>
@@ -132,7 +132,7 @@ const embedCode = `<a href="${siteUrl}"><img src="${ownButtonSrc}" width="88" he
     </div>
   </section>
 
-  <!-- ============== GUESTBOOK=============== -->
+  <!-- ------- guestbook --------- -->
   <section class="window compact inactive" id="guestbook">
     <div class="title-bar">
       <span class="title-bar-icon" aria-hidden="true"><Sticker name="yellow_pompompurin.gif" /></span>
@@ -159,7 +159,7 @@ const embedCode = `<a href="${siteUrl}"><img src="${ownButtonSrc}" width="88" he
     </div>
   </section>
 
-  <!-- so the app bubbles are outside the socials window -->
+
   <div class="icon-tooltip" id="icon-tooltip" role="tooltip"></div>
 </div>
 
@@ -194,7 +194,7 @@ const embedCode = `<a href="${siteUrl}"><img src="${ownButtonSrc}" width="88" he
       window.addEventListener('scroll', hide, { passive: true });
     }
 
-    // grab my button embed snippet
+    // grab my button 
     const embedInput = document.querySelector<HTMLInputElement>('.embed-input');
     embedInput?.addEventListener('click', () => embedInput.select());
     bindCopyButton(document.querySelector<HTMLButtonElement>('.embed-copy-btn'), embedInput);

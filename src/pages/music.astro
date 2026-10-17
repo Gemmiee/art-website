@@ -8,7 +8,7 @@ import DocBanner from '../components/DocBanner.astro';
 
 <Layout title="Music ☆ Gemmie's corner" description="Albums I love — pick one and it follows you around the site in the sidebar player.">
   <PageShell showMisc={false}>
-    <!-- ================= music window ================= -->
+    <!-- --------- music ---------- -->
     <section class="window main-doc">
       <div class="title-bar">
         <span class="title-bar-icon" aria-hidden="true"><Sticker name="black_cd.gif" /></span>
@@ -71,8 +71,6 @@ import DocBanner from '../components/DocBanner.astro';
     const activeLabel = '♫ Playing in sidebar';
     const defaultLabel = '▶ Play in sidebar';
 
-    // Reflect whatever's already playing (from an earlier visit or another
-    // page) rather than always showing every button as "not yet pressed".
     let currentId = (window as any).__gemmieCurrentAlbumId;
     if (!currentId) {
       try {

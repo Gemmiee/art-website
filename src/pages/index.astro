@@ -59,7 +59,7 @@ const announcements = [
     <!-- css for sanrio webring -->
     <link href="https://luckyatoll.nekoweb.org/sanriowebring.css" rel="stylesheet" type="text/css" media="all"/>
     
-    <!-- ================= single merged content window ================= -->
+    <!-- -------- middle window --------- -->
     <section class="window main-doc">
       <div class="title-bar">
         <span class="title-bar-icon" aria-hidden="true"><Sticker name="yellow_sunflower.gif" /></span>
@@ -71,7 +71,7 @@ const announcements = [
         </div>
       </div>
       <div class="window-body">
-        <!-- ---- about me ---- -->
+        <!-- ---- intro ---- -->
         <div class="doc-section" id="about">
           <div class="profile-grid">
             <div class="avatar-frame">
@@ -195,7 +195,7 @@ const announcements = [
                 {blinkies.map((src) => (
                   <img class="blinkie-item" src={src} alt="" loading="lazy" />
                 ))}
-                {/* repeat so the marquee can loop */}
+                <!-- repeat so the marquee can loop -->
                 {blinkies.map((src) => (
                   <img class="blinkie-item" src={src} alt="" aria-hidden="true" loading="lazy" />
                 ))}

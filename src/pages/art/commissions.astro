@@ -197,7 +197,7 @@ const styleTiers = visibleTiers.filter((tier) => tier !== termsTier);
       </div>
     </section>
 
-    <!-- shared lightbox for the examples galleries -->
+    <!-- lightbox -->
     <div class="art-lightbox" id="art-lightbox" hidden>
       <div class="art-lightbox-backdrop" data-close></div>
       <div class="art-lightbox-frame window">
@@ -218,7 +218,6 @@ const styleTiers = visibleTiers.filter((tier) => tier !== termsTier);
 </Layout>
 
 <script>
-  // shared lightbox for the examples and terms
   document.addEventListener('astro:page-load', () => {
     const lightbox = document.getElementById('art-lightbox');
     const lightboxBody = document.getElementById('art-lightbox-body');

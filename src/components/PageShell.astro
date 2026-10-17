@@ -10,8 +10,7 @@ const { showMisc = true } = Astro.props;
 ---
 
 <main class:list={['wrap', 'layout-grid', !showMisc && 'no-misc']}>
-  <!-- ================= mood check (FOR MOBILE) =================
-       Only visible on mobile  -->
+  <!-- -------- MOOD CHECK FOR MOBILE ----------- -->
   <div class="nav-mascot in-shell">
     <div class="nav-mascot-cloud">
       <img class="nav-mascot-cloud-img" src="/images/banners/speech_cloud_inverted.png" alt="" aria-hidden="true" />
@@ -32,11 +31,11 @@ const { showMisc = true } = Astro.props;
 
   {showMisc && <MiscColumn />}
 
-  <!-- ================= footer ================= -->
+  <!-- footer -->
   <footer class="footer">
     <div class="badge-row">
-      <span class="badge-btn">made w/ astro ☆</span>
-      <span class="badge-btn">I do silly coding</span>
+      <span class="badge-btn">made w/ Astro</span>
+      <span class="badge-btn">I do silly art</span>
       
     
       <img src="/images/blinkies_stamps_tags/tags/tag_computer.gif" alt="I use a computer" width="88" height="31">

@@ -12,7 +12,7 @@ const folders = await scanArtGallery();
 
 <Layout title="Art Gallery ☆ Gemmie's corner" description="A gallery of my digital and traditional art from 2019 to present.">
   <PageShell showMisc={false}>
-    <!-- ================= art gallery window ================= -->
+    <!-- --------------- gallery ------------ -->
     <section class="window main-doc">
       <div class="title-bar">
         <span class="title-bar-icon" aria-hidden="true"><Sticker name="blue_cinnamonroll.gif" /></span>
@@ -58,7 +58,7 @@ const folders = await scanArtGallery();
       </div>
     </section>
 
-    <!-- shared lightbox for every thumbnail on the page -->
+    <!-- lightbox -->
     <div class="art-lightbox" id="art-lightbox" hidden>
       <div class="art-lightbox-backdrop" data-close></div>
       <div class="art-lightbox-frame window">
@@ -97,7 +97,8 @@ const folders = await scanArtGallery();
       });
     });
 
-    // ---- per-folder pagination ----
+
+
     document.querySelectorAll<HTMLElement>('.art-gallery').forEach((gallery) => {
       const pages = gallery.querySelectorAll<HTMLElement>('.art-gallery-page');
       gallery.querySelectorAll<HTMLButtonElement>('.art-pager-btn').forEach((btn) => {

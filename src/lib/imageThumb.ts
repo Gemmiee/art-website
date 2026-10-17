@@ -24,7 +24,7 @@ export async function getImageThumb(absPath: string, maxWidth: number): Promise<
   if (!fs.existsSync(thumbAbsPath)) {
     fs.mkdirSync(THUMB_DIR, { recursive: true });
     const tmpPath = `${thumbAbsPath}.${process.pid}.tmp`;
-    // i wanna let gifs play cause its a shame if they dont
+    // we let gifs play
     const isGif = path.extname(absPath).toLowerCase() === '.gif';
     try {
       await sharp(absPath, isGif ? { animated: true } : {})
