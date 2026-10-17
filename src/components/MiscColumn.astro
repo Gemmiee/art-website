@@ -2,17 +2,6 @@
 import BubbleDivider from './BubbleDivider.astro';
 import Sticker from './Sticker.astro';
 
-const socials = [
-  { emoji: '🛍️', label: 'Ko-fi Shop', href: 'https://ko-fi.com/gemmiewow/', icon: 'icon_kofi.png' },
-  { emoji: '🐠', label: 'Cara Art Portfolio', href: 'https://cara.app/gemmiewow', icon: 'icon_cara.png' },
-  { emoji: '🪼', label: 'Pixelfed', href: 'https://pixelfed.social/gemmie_wow', icon: 'icon_pixelfed.png' },
-  { emoji: '📸', label: 'Instagram', href: 'https://www.instagram.com/gemmie_wow', icon: 'icon_instagram.png' },
-  { emoji: '🕹️', label: 'Twitch', href: 'https://www.twitch.tv/gemmie_wow', icon: 'icon_twitch.png' },
-  { emoji: '🎥', label: 'YouTube', href: 'https://youtube.com/@gemmiewow', icon: 'icon_youtube.png' },
-  { emoji: '🎨', label: "Colors!Live 3DS Gallery", href: 'https://www.colorslive.com/artist/GemmieWow', icon: 'icon_colorslive.png' },
-  { emoji: '🎵', label: 'My Bandcamp Library', href: 'https://bandcamp.com/gemmiewow', icon: 'icon_bandcamp.png' },
-];
-
 const siteUrl = 'https://gemmiewow.com/';
 const ownButtonSrc = `${siteUrl}images/friends/button_gem.gif`;
 const embedCode = `<a href="${siteUrl}"><img src="${ownButtonSrc}" width="88" height="31" alt="Gemmie's corner"></a>`;
@@ -31,22 +20,31 @@ const embedCode = `<a href="${siteUrl}"><img src="${ownButtonSrc}" width="88" he
       </div>
     </div>
     <div class="window-body">
-      <div class="icon-link-grid">
-        {socials.map((link) => (
-          <a
-            class="icon-link"
-            href={link.href}
-            target="_blank"
-            rel="noopener"
-            aria-label={link.label}
-          >
-            {link.icon ? (
-              <img src={`/images/icons/${link.icon}`} alt="" />
-            ) : (
-              <span class="icon-link-emoji" aria-hidden="true">{link.emoji}</span>
-            )}
-          </a>
-        ))}
+      <div class="blinkie-list">
+        <a class="blinkie-btn" href="https://ko-fi.com/gemmiewow/" target="_blank" rel="noopener">
+          <img src="/images/icons/blinkie_kofi.gif" width="150" height="20" alt="Ko-fi Shop" />
+        </a>
+        <a class="blinkie-btn" href="https://cara.app/gemmiewow" target="_blank" rel="noopener">
+          <img src="/images/icons/blinkie_cara.gif" width="150" height="20" alt="Cara Art Portfolio" />
+        </a>
+        <a class="blinkie-btn" href="https://pixelfed.social/gemmie_wow" target="_blank" rel="noopener">
+          <img src="/images/icons/blinkie_pixelfed.gif" width="150" height="20" alt="Pixelfed" />
+        </a>
+        <a class="blinkie-btn" href="https://www.instagram.com/gemmie_wow" target="_blank" rel="noopener">
+          <img src="/images/icons/blinkie_instagram.gif" width="150" height="20" alt="Instagram" />
+        </a>
+        <a class="blinkie-btn" href="https://www.twitch.tv/gemmie_wow" target="_blank" rel="noopener">
+          <img src="/images/icons/blinkie_twitch.gif" width="150" height="20" alt="Twitch" />
+        </a>
+        <a class="blinkie-btn" href="https://youtube.com/@gemmiewow" target="_blank" rel="noopener">
+          <img src="/images/icons/blinkie_youtube.gif" width="150" height="20" alt="YouTube" />
+        </a>
+        <a class="blinkie-btn" href="https://www.colorslive.com/artist/GemmieWow" target="_blank" rel="noopener">
+          <img src="/images/icons/blinkie_3ds.gif" width="150" height="20" alt="Colors!Live 3DS Gallery" />
+        </a>
+        <a class="blinkie-btn" href="https://bandcamp.com/gemmiewow" target="_blank" rel="noopener">
+          <img src="/images/icons/blinkie_bandcam.gif" width="150" height="20" alt="My Bandcamp Library" />
+        </a>
       </div>
     </div>
   </section>
@@ -159,8 +157,6 @@ const embedCode = `<a href="${siteUrl}"><img src="${ownButtonSrc}" width="88" he
     </div>
   </section>
 
-
-  <div class="icon-tooltip" id="icon-tooltip" role="tooltip"></div>
 </div>
 
 <script>
@@ -168,33 +164,7 @@ const embedCode = `<a href="${siteUrl}"><img src="${ownButtonSrc}" width="88" he
 
   // MiscColumn only renders on the home page
   document.addEventListener('astro:page-load', () => {
-    const tooltip = document.getElementById('icon-tooltip');
-    if (tooltip) {
-      const hide = () => tooltip.classList.remove('is-visible');
-
-      document.querySelectorAll<HTMLElement>('.icon-link').forEach((link) => {
-        const label = link.getAttribute('aria-label') || '';
-        const show = () => {
-          const rect = link.getBoundingClientRect();
-          tooltip.textContent = label;
-          tooltip.style.left = `${rect.left + rect.width / 2}px`;
-          tooltip.style.top = `${rect.top}px`;
-          tooltip.classList.add('is-visible');
-        };
-        link.addEventListener('mouseenter', show);
-        link.addEventListener('mouseleave', hide);
-        link.addEventListener('focus', show);
-        link.addEventListener('blur', hide);
-      });
-
-      window.addEventListener('blur', hide);
-      document.addEventListener('visibilitychange', () => {
-        if (document.hidden) hide();
-      });
-      window.addEventListener('scroll', hide, { passive: true });
-    }
-
-    // grab my button 
+    // grab my button
     const embedInput = document.querySelector<HTMLInputElement>('.embed-input');
     embedInput?.addEventListener('click', () => embedInput.select());
     bindCopyButton(document.querySelector<HTMLButtonElement>('.embed-copy-btn'), embedInput);
