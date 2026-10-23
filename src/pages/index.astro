@@ -17,6 +17,7 @@ const blinkies = fs.existsSync(blinkiesDir)
   : [];
 
 const updates = [
+  { date: '10/23', text: 'Added theme song in the main page, THANK YOU GREM FOR MAKING IT!' },
   { date: '10/17', text: 'New game: Super Crazy Guitar Maniac Deluxe 4' },
   { date: '10/16', text: '‼🧃🍎 A Latest Drawing section has been added in our index page.' },
   { date: '10/15', text: '💿 Two new albums in the music page were added 💿 Plus, I decided to bring the guestbook to the front page too.' },
@@ -188,9 +189,15 @@ const announcements = [
                 <Sticker name="yellow_sunflower.gif" /> Welcome to my website! This is my little personal spot on the internet filled with art and games.
                 I keep adding new stuff, so make sure you check the 'Site Updates' above.
               </br>
+                <Sticker name="yellow_vibe.gif" /> Credits to <a href="https://www.youtube.com/@gremghost">gremghost</a> for making me a dubious character theme song 🥹
               </br>
-                <Sticker name="blue_teddybear.gif" /> Leave your comments and feedback in my <a href="/guestbook" class="guestbook-link">guestbook</a>! I would love to hear from you! <span class="sparkle">☆</span>
-              </br>
+
+                  <audio controls>
+                  <source src="/sounds/jazzy%20gemmie.flac" type="audio/ogg">
+                  <source src="/sounds/jazzy%20gemmie.flac" type="audio/mpeg">
+                  Your browser does not support the audio element.
+                  </audio>
+
               </br>
                <Sticker name="blue_castle.gif" /> If you enjoy the site, consider bookmarking it! Add my button to your own website or we can become neighbours!!
                 <span class="sparkle">☆</span>
@@ -271,16 +278,8 @@ const announcements = [
                   </a>
                 </div>
 
-              
-
-                <!-- Online -->
-                <map name="onlinewidget">
-                <area href="https://webring.ghostk.id/online/" target="_blank" shape="rect" coords="20,14,167,24" alt="The online webring" title="The online webring">
-                <area href="https://webring.ghostk.id/online/Gemmie/previous" target="_blank" shape="rect" coords="7,27,60,36" alt="Previous" title="Previous">
-                <area href="https://webring.ghostk.id/online/random" target="_blank" shape="rect" coords="74,27,126,36" alt="Random" title="Random">
-                <area href="https://webring.ghostk.id/online/Gemmie/next" target="_blank" shape="rect" coords="139,27,192,36" alt="Next" title="Next">
-                </map>
-                <img usemap="#onlinewidget" src="https://ghostk.id/i/onlineblue.gif" width="200" height="40" style="width:200px;height:40px;max-width:none;image-rendering:pixelated;" alt="A Windows style dialog box titled 'THE ONLINE WEBRING' with three clickable buttons labeled Previous, Random, and Next" class="offsite-imagemap" />
+            
+               
 
                 <!--For The Dreamers -->
                 <div style="text-align: center;">
@@ -314,6 +313,8 @@ const announcements = [
               </div>
             </div>
           </div>
+
+
         </div>
 
 
