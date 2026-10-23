@@ -42,7 +42,7 @@
 
 audio {
   display: flex;
-   align-items: center;
+  align-items: center;
   justify-content: center;
   background: linear-gradient(180deg, #eafcff 0%, #9fe0ea 30%, #3f7fc9 65%, #1a3f66 100%);
   border: 1px solid rgba(255,255,255,0.75);
