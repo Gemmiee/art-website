@@ -64,17 +64,30 @@ import DocBanner from '../components/DocBanner.astro';
           <h2 class="links-section-heading">🔗 Webrings</h2>
           <p class="hand-note">Webrings I'm part of</p>
 
+
+          <div class="friends-grid">
+            
+            <a class="offsite-btn" href="https://petrapixel.neocities.org/indiewebdb/" target="_blank" rel="noopener" aria-label="indie web database">
+              <img src="https://cdn.jsdelivr.net/gh/petracoding/petrapixel.neocities.org@latest/public/assets/img/links/indiewebdb.png" alt="indie web database" loading="lazy" />
+            </a>
+
+             <!-- angelical -->
+                  <a class="offsite-btn" href="https://butteroncookies.neocities.org/angelical" target="_blank" rel="noopener" aria-label="become an angel clique!">
+                    <img src="/images/other_components/angelicalbtn.gif" alt="become an angel clique button" loading="lazy" />
+                  </a>
+
+             <!-- webmaster -->
+                <map name="badge-wwstamp">
+                    <area shape="rect" coords="66,38,79,49" href="https://webmasterwebring.netlify.app?Gemmie-previous" alt="Previous" target="_blank">
+                    <area shape="rect" coords="78,29,90,40" href="https://webmasterwebring.netlify.app?Gemmie-next" alt="Next" target="_blank">
+                    <area shape="rect" coords="13,15,63,47" href="https://webmasterwebring.netlify.app" alt="Webmaster Webring" target="_blank">
+                </map>
+                <img usemap="#badge-wwstamp" id="ww-stamp" src="https://file.garden/ZrZSgsrYfQXsO7QH/ww/stamp.png" alt="Webmaster Webring" width="99" height="56">
+
+
           <div class="friends-grid">
 
-            <!--Windows Enthusiasts Webring -->
-              <iframe class="webring-iframe" title="Windows Enthusiasts Webring" src="https://brooklynights.nekoweb.org/we_bring/ifridget"></iframe>
-
-              
-            <!-- Wii Ring -->
-                <div style="width: 135px; /* <- Set any width you'd like! */">
-                <iframe style="border: none; width: 100%" src="https://wiiring.jeith.com/snippet?site=https://gemmiewow.com/&variant=standard"></iframe>
-                </div>
-
+        
 
             <!--For The Dreamers -->
             <div class="doc-section">
@@ -99,29 +112,24 @@ import DocBanner from '../components/DocBanner.astro';
               <br>
               <a class="info" href="https://luckyatoll.nekoweb.org/sanringo.html">what's this?</a>
             </div>
-          
-          
-          <!-- WEBRING DIV FINISHES HERE!!! im getting lost -->
-          </div>
 
-          <div class="friends-grid">
-            <a class="offsite-btn" href="https://petrapixel.neocities.org/indiewebdb/" target="_blank" rel="noopener" aria-label="indie web database">
-              <img src="https://cdn.jsdelivr.net/gh/petracoding/petrapixel.neocities.org@latest/public/assets/img/links/indiewebdb.png" alt="indie web database" loading="lazy" />
-            </a>
+            <!-- Wii Ring -->
+            <div style="width: 135px; /* <- Set any width you'd like! */">
+            <iframe style="border: none; width: 100%" src="https://wiiring.jeith.com/snippet?site=https://gemmiewow.com/&variant=standard"></iframe>
+            </div>
 
-             <!-- angelical -->
-                  <a class="offsite-btn" href="https://butteroncookies.neocities.org/angelical" target="_blank" rel="noopener" aria-label="become an angel clique!">
-                    <img src="/images/other_components/angelicalbtn.gif" alt="become an angel clique button" loading="lazy" />
-                  </a>
+            <!--Windows Enthusiasts Webring -->
+              <iframe class="webring-iframe" title="Windows Enthusiasts Webring" src="https://brooklynights.nekoweb.org/we_bring/ifridget"></iframe>
+							
 
-             <!-- webmaster -->
-                <map name="badge-wwstamp">
-                    <area shape="rect" coords="66,38,79,49" href="https://webmasterwebring.netlify.app?Gemmie-previous" alt="Previous" target="_blank">
-                    <area shape="rect" coords="78,29,90,40" href="https://webmasterwebring.netlify.app?Gemmie-next" alt="Next" target="_blank">
-                    <area shape="rect" coords="13,15,63,47" href="https://webmasterwebring.netlify.app" alt="Webmaster Webring" target="_blank">
-                </map>
-                <img usemap="#badge-wwstamp" id="ww-stamp" src="https://file.garden/ZrZSgsrYfQXsO7QH/ww/stamp.png" alt="Webmaster Webring" width="99" height="56">
 
+            <!-- WEBRING DIV FINISHES HERE!!! im getting lost -->
+            </div>
+
+
+            <!-- smallweb subway, doodle crew GREEN line -->
+              <script is:inline src="https://gusbus.space/smallweb-subway.js/doodlecrew.js"></script>
+              <smallweb-subway-doodlecrew></smallweb-subway-doodlecrew>
 
               <!-- ds webring -->
               <div id="dsring">
@@ -129,6 +137,7 @@ import DocBanner from '../components/DocBanner.astro';
               <script type="text/javascript" src="https://dsring.neocities.org/dswidget/onionring-variables.js"></script>
               <script type="text/javascript" src="https://dsring.neocities.org/dswidget/onionring-widget.js"></script>
               </div>
+
           
 
           </div>
