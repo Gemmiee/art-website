@@ -35,6 +35,7 @@ const unlockedGames: NavLink[] = [
 const otherLinks: NavLink[] = [
   { sticker: 'black_computer.gif', label: 'Links', href: '/links' },
   { sticker: 'blue_computer.gif', label: 'Code Snippets', href: '/code-snippets' },
+  { sticker: 'orange_cat.gif', label: 'Clipboard', href: '/clipboard' },
 ];
 
 const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
@@ -55,7 +56,7 @@ const startExpanded = currentPath === '/';
       <img class="nav-mascot-cloud-img-night" src="/images/banners/speech_cloud_inverted_night.png" alt="" aria-hidden="true" />
       <div class="nav-mascot-mood">
         <p class="nav-mascot-mood-label">Mood Check:</p>
-        <p class="nav-mascot-mood-note">NEW THEME SONG! I'm so jamming to this</p>
+        <p class="nav-mascot-mood-note">Yaarr mateys!</p>
       </div>
     </div>
     <img class="nav-mascot-sprite" src="/images/other_components/Gemmie_pixel.gif" alt="pixel Gemmie" />

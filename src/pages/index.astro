@@ -18,6 +18,7 @@ const blinkies = fs.existsSync(blinkiesDir)
   : [];
 
 const updates = [
+  { date: '11/04', text: 'New Clipboard page added ദ്ദി˙∇˙)ว' },
   { date: '11/04', text: 'Added two new webrings! DS webring and the Smallweb Subway!' },
   { date: '10/27', text: 'Yo! I got a Newgrounds account!' },
   { date: '10/23', text: 'Added theme song in the main page, THANK YOU GREM FOR MAKING IT!' },
@@ -282,10 +283,14 @@ const announcements = [
                 </div>
 
 
-                <!-- smallweb subway, doodle crew GREEN line -->
-              <script is:inline src="https://gusbus.space/smallweb-subway.js/doodlecrew.js"></script>
-              <smallweb-subway-doodlecrew></smallweb-subway-doodlecrew>
-            
+                <!-- ds webring -->
+                <DsRing />
+
+
+                <!-- Wii Ring -->
+                <div style="width: 135px; /* <- Set any width you'd like! */">
+                <iframe style="border: none; width: 100%" src="https://wiiring.jeith.com/snippet?site=https://gemmiewow.com/&variant=standard"></iframe>
+                </div>
                
 
                 <!--For The Dreamers -->
@@ -298,13 +303,10 @@ const announcements = [
                   <a href="https://e0nbreak.neocities.org/miscellaneous/connectcollect?action=next" target="_blank">→</a>
                 </div>
 
-                <!-- Wii Ring -->
-                <div style="width: 135px; /* <- Set any width you'd like! */">
-                <iframe style="border: none; width: 100%" src="https://wiiring.jeith.com/snippet?site=https://gemmiewow.com/&variant=standard"></iframe>
-                </div>
 
-                <!-- ds webring -->
-                <DsRing />
+                <!-- smallweb subway, doodle crew GREEN line -->
+              <script is:inline src="https://gusbus.space/smallweb-subway.js/doodlecrew.js"></script>
+              <smallweb-subway-doodlecrew></smallweb-subway-doodlecrew>
                 
                 <!--Windows Enthusiasts Webring -->
                 <iframe class="webring-iframe" title="Windows Enthusiasts Webring" src="https://brooklynights.nekoweb.org/we_bring/ifridget"></iframe>
