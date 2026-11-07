@@ -6,6 +6,7 @@ import PageShell from '../components/PageShell.astro';
 import WaterButton from '../components/WaterButton.astro';
 import BubbleDivider from '../components/BubbleDivider.astro';
 import Sticker from '../components/Sticker.astro';
+import DsRing from '../components/DsRing.astro';
 
 const blinkiesDir = path.join(process.cwd(), 'public', 'images', 'blinkies_stamps_tags', 'blinkies');
 const blinkies = fs.existsSync(blinkiesDir)
@@ -301,6 +302,9 @@ const announcements = [
                 <div style="width: 135px; /* <- Set any width you'd like! */">
                 <iframe style="border: none; width: 100%" src="https://wiiring.jeith.com/snippet?site=https://gemmiewow.com/&variant=standard"></iframe>
                 </div>
+
+                <!-- ds webring -->
+                <DsRing />
                 
                 <!--Windows Enthusiasts Webring -->
                 <iframe class="webring-iframe" title="Windows Enthusiasts Webring" src="https://brooklynights.nekoweb.org/we_bring/ifridget"></iframe>
