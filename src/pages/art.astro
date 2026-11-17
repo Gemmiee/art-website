@@ -53,7 +53,7 @@ const folders = (await scanArtGallery()).sort((a, b) => {
 
           <div class="art-panels">
             {folders.map((folder, i) => (
-              <ArtPanel folder={folder} active={i === 0} widgetViewer={folder.id === 'memes'} />
+              <ArtPanel folder={folder} active={i === 0} />
             ))}
           </div>
 
@@ -83,36 +83,38 @@ const folders = (await scanArtGallery()).sort((a, b) => {
       </div>
     </section>
 
-    <!-- lightbox -->
+    <!-- video player; images open in Viewer.js instead -->
     <div class="art-lightbox" id="art-lightbox" hidden>
       <div class="art-lightbox-backdrop" data-close></div>
       <div class="art-lightbox-frame window">
         <div class="title-bar">
-          <span class="title-bar-icon" aria-hidden="true">🖼️</span>
+          <span class="title-bar-icon" aria-hidden="true">🎬</span>
           <span class="title-bar-text" id="art-lightbox-title"></span>
-          <div class="title-bar-controls" aria-hidden="true">
-            <span class="tb-btn close" data-close>×</span>
+          <div class="title-bar-controls">
+            <button class="tb-btn close" type="button" data-close aria-label="Close">×</button>
           </div>
         </div>
-        <p class="blurb"> Use the <b>Arrow Keys</b> to navigate easily!</p>
         <div class="art-lightbox-body" id="art-lightbox-body"></div>
-        <button class="art-lightbox-nav art-lightbox-prev" type="button" id="art-lightbox-prev" aria-label="Previous image">‹</button>
-        <button class="art-lightbox-nav art-lightbox-next" type="button" id="art-lightbox-next" aria-label="Next image">›</button>
       </div>
     </div>
   </PageShell>
 </Layout>
 
 <script>
-  document.addEventListener('astro:page-load', () => {
-    // widgetstar viewer (trial on Memes). Its script crashes if it runs twice, so only load it once
-    if (document.querySelector('ws-widget') && !customElements.get('ws-widget') && !document.getElementById('ws-loader')) {
-      const loader = document.createElement('script');
-      loader.id = 'ws-loader';
-      loader.src = 'https://u.widget.st/ar.js';
-      document.head.appendChild(loader);
-    }
+  import Viewer from 'viewerjs';
+  import 'viewerjs/dist/viewer.css';
 
+  let viewers: Viewer[] = [];
+  let onVideoKeydown: ((e: KeyboardEvent) => void) | null = null;
+
+  document.addEventListener('astro:before-swap', () => {
+    viewers.forEach((v) => v.destroy());
+    viewers = [];
+    if (onVideoKeydown) document.removeEventListener('keydown', onVideoKeydown);
+    onVideoKeydown = null;
+  });
+
+  document.addEventListener('astro:page-load', () => {
     // ---- year/category tabs ----
     const tabs = Array.from(document.querySelectorAll<HTMLButtonElement>('.art-tab'));
     const panels = Array.from(document.querySelectorAll<HTMLElement>('.art-panel'));
@@ -177,67 +179,62 @@ const folders = (await scanArtGallery()).sort((a, b) => {
       });
     });
 
-    // ---- lightbox ----
+    document.querySelectorAll<HTMLElement>('.art-gallery').forEach((gallery) => {
+      const viewer = new Viewer(gallery, {
+        url: 'data-original',
+        navbar: true,
+        toolbar: true,
+        title: true,
+        transition: true,
+        movable: true,
+        zoomable: true,
+        scalable: true,
+        rotatable: true,
+        loop: true,
+        minWidth: 200,
+        minHeight: 100,
+      });
+      viewers.push(viewer);
+
+      const images = Array.from(gallery.querySelectorAll<HTMLImageElement>('.art-thumb img'));
+      gallery.querySelectorAll<HTMLButtonElement>('.art-thumb:not(.art-thumb-video)').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const img = btn.querySelector('img');
+          if (img) viewer.view(images.indexOf(img));
+        });
+      });
+    });
+
+    // ---- video player ----
     const lightbox = document.getElementById('art-lightbox');
     const lightboxBody = document.getElementById('art-lightbox-body');
     const lightboxTitle = document.getElementById('art-lightbox-title');
-    const prevBtn = document.getElementById('art-lightbox-prev') as HTMLButtonElement | null;
-    const nextBtn = document.getElementById('art-lightbox-next') as HTMLButtonElement | null;
-    if (lightbox && lightboxBody && lightboxTitle && prevBtn && nextBtn) {
-      let currentThumbs: HTMLButtonElement[] = [];
-      let currentIndex = -1;
-
-      const renderCurrent = () => {
-        const thumb = currentThumbs[currentIndex];
-        if (!thumb) return;
-        const { full, kind, name } = thumb.dataset;
-        lightboxTitle.textContent = name || '';
-        lightboxBody.innerHTML =
-          kind === 'video'
-            ? `<video src="${full}" controls autoplay playsinline></video>`
-            : `<img src="${full}" alt="${name || ''}" />`;
-      };
-
-      const step = (delta: number) => {
-        if (currentThumbs.length === 0) return;
-        currentIndex = (currentIndex + delta + currentThumbs.length) % currentThumbs.length;
-        renderCurrent();
-      };
-
-      const closeLightbox = () => {
+    if (lightbox && lightboxBody && lightboxTitle) {
+      const closeVideo = () => {
         lightbox.hidden = true;
         lightboxBody.innerHTML = '';
-        currentThumbs = [];
-        currentIndex = -1;
       };
 
-      document.querySelectorAll<HTMLButtonElement>('.art-thumb').forEach((thumb) => {
+      document.querySelectorAll<HTMLButtonElement>('.art-thumb-video').forEach((thumb) => {
         thumb.addEventListener('click', () => {
-          const gallery = thumb.closest('.art-gallery');
-          currentThumbs = gallery
-            ? Array.from(gallery.querySelectorAll<HTMLButtonElement>('.art-thumb'))
-            : [thumb];
-          currentIndex = currentThumbs.indexOf(thumb);
-          renderCurrent();
+          lightboxTitle.textContent = thumb.dataset.name || '';
+          const video = document.createElement('video');
+          video.src = thumb.dataset.full || '';
+          video.controls = true;
+          video.autoplay = true;
+          video.playsInline = true;
+          lightboxBody.replaceChildren(video);
           lightbox.hidden = false;
-          const hasMultiple = currentThumbs.length > 1;
-          prevBtn.hidden = !hasMultiple;
-          nextBtn.hidden = !hasMultiple;
         });
       });
 
-      prevBtn.addEventListener('click', () => step(-1));
-      nextBtn.addEventListener('click', () => step(1));
-
       lightbox.querySelectorAll<HTMLElement>('[data-close]').forEach((el) => {
-        el.addEventListener('click', closeLightbox);
+        el.addEventListener('click', closeVideo);
       });
-      document.addEventListener('keydown', (e) => {
-        if (lightbox.hidden) return;
-        if (e.key === 'Escape') closeLightbox();
-        else if (e.key === 'ArrowLeft') step(-1);
-        else if (e.key === 'ArrowRight') step(1);
-      });
+      onVideoKeydown = (e) => {
+        if (!lightbox.hidden && e.key === 'Escape') closeVideo();
+      };
+      document.addEventListener('keydown', onVideoKeydown);
     }
   });
 </script>

@@ -4,11 +4,9 @@ import type { ArtFolderNode, ArtItem } from '../lib/artGallery';
 interface Props {
   folder: ArtFolderNode;
   active?: boolean;
-  // Trial: render with the widgetstar viewer instead of our grid + lightbox
-  widgetViewer?: boolean;
 }
 
-const { folder, active = false, widgetViewer = false } = Astro.props;
+const { folder, active = false } = Astro.props;
 
 const PAGE_SIZE = 30;
 
@@ -39,23 +37,17 @@ const stripExt = (name: string) => name.replace(/\.[^./]+$/, '');
   </p>
   {folder.description && <p class="art-panel-desc">{folder.description}</p>}
 
-  {widgetViewer ? (
-    <ws-widget type="viewer" iid="29518" embed="script">
-      {items.filter((item) => item.kind === 'image').map((item) => (
-        <img src={item.url} alt={stripExt(item.name)} />
-      ))}
-    </ws-widget>
-  ) : (
   <div class="art-gallery">
     {pages.map((pageItems, pageIndex) => (
       <div class="art-gallery-page" data-page-index={pageIndex} hidden={pageIndex !== 0}>
         {pageItems.map((item) => (
           item.kind === 'image' ? (
-            <button class="art-thumb" type="button" data-full={item.url} data-kind="image" data-name={stripExt(item.name)}>
-              <img src={item.thumbUrl ?? item.url} alt={stripExt(item.name)} loading="lazy" />
+            <button class="art-thumb" type="button" aria-label={`View ${stripExt(item.name)}`}>
+              <!-- grid shows the small thumb, the viewer opens data-original -->
+              <img src={item.thumbUrl ?? item.url} data-original={item.url} alt={stripExt(item.name)} loading="lazy" />
             </button>
           ) : (
-            <button class="art-thumb art-thumb-video" type="button" data-full={item.url} data-kind="video" data-name={stripExt(item.name)}>
+            <button class="art-thumb art-thumb-video" type="button" data-full={item.url} data-name={stripExt(item.name)}>
               <!-- data-src, not src: videos would download even in hidden tabs. The script fills it in when the tab opens -->
               <video data-src={item.url} poster={item.posterUrl} preload="none" muted playsinline></video>
               <span class="art-thumb-play" aria-hidden="true">▶</span>
@@ -80,5 +72,4 @@ const stripExt = (name: string) => name.replace(/\.[^./]+$/, '');
       </div>
     )}
   </div>
-  )}
 </div>
