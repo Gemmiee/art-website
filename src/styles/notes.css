@@ -2,7 +2,7 @@
 .hand-note,
 .code-resource-desc,
 .footer-note,
-.art-folder-desc {
+.art-panel-desc {
   color: var(--ink-soft);
 }
 .hand-note,
@@ -17,6 +17,6 @@
   margin: 0 0 14px;
 }
 :root[data-theme="dark"] .hand-note,
-:root[data-theme="dark"] .art-folder-desc {
+:root[data-theme="dark"] .art-panel-desc {
   color: var(--glow-soft);
 }

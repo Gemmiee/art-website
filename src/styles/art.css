@@ -1,96 +1,55 @@
 /* ---------------- art ---------------*/
-.art-folder-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 18px;
-}
-.art-folder-toggle {
+.art-tabs {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  gap: 18px;
-  width: 100%;
-  padding: 18px 22px;
+  gap: 6px;
+  margin: 14px 0 0;
+  padding-bottom: 10px;
+  border-bottom: 2px dashed var(--card-border-dashed);
+}
+.art-tab {
+  padding: 6px 14px;
   border-radius: 0;
-
   border: 1px solid var(--card-border);
   background: var(--surface);
-  cursor: pointer;
+  color: var(--accent-deep);
   font-family: inherit;
-  text-align: left;
-  transition: transform 0.15s ease;
-}
-.art-folder-toggle:hover {
-  transform: translateY(-1px);
-}
-.art-folder-icon {
-  font-size: 2rem;
-}
-.art-folder-icon-img {
-  width: 72px;
-  height: 72px;
-  border-radius: 0;
-
-  object-fit: cover;
-  border: 1px solid var(--card-border);
-  flex-shrink: 0;
-}
-.art-folder[data-depth="0"] > .art-folder-toggle .art-folder-icon-img {
-  width: 88px;
-  height: 88px;
-  border-radius: 0;
-
-}
-.art-folder-heading {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  min-width: 0;
-}
-.art-folder-name {
+  font-size: 0.92rem;
   font-weight: 700;
-  font-size: 1.08rem;
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s ease;
 }
-.art-folder[data-depth="0"] > .art-folder-toggle .art-folder-name {
-  font-size: 1.3rem;
+.art-tab:hover {
+  transform: translateY(-1px);
+  background: var(--surface-hover);
+}
+.art-tab[aria-selected="true"] {
+  background: var(--accent-deep);
+  border-color: var(--accent-deep);
+  color: #fff;
+}
+/* accent-deep turns pale yellow in dark mode, so the selected tab needs dark text */
+:root[data-theme="dark"] .art-tab {
+  color: var(--glow);
+}
+:root[data-theme="dark"] .art-tab[aria-selected="true"] {
+  color: #0a0d28;
 }
 
-.art-folder-desc {
-  flex-basis: 100%;
-  margin-top: 2px;
-  margin-left: 90px;
-  font-size: 0.86rem;
-  font-weight: 400;
-  white-space: normal;
+.art-panels {
+  margin: 14px 0 18px;
 }
-.art-folder[data-depth="0"] > .art-folder-toggle .art-folder-desc {
-  margin-left: 106px;
+.art-panel[hidden] {
+  display: none;
 }
-.art-folder-count {
+.art-panel-meta {
+  margin: 0 0 6px;
   font-size: 0.82rem;
   color: var(--ink-soft);
-  white-space: nowrap;
 }
-.art-folder-chevron {
-  display: inline-block;
-  transition: transform 0.2s ease;
-  color: var(--ink-soft);
-}
-.art-folder-toggle[aria-expanded="true"] .art-folder-chevron {
-  transform: rotate(90deg);
-}
-.art-folder-body {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin: 10px 0 0 14px;
-  padding-left: 14px;
-  border-left: 2px dashed var(--card-border-dashed);
-}
-.art-folder-body[hidden] {
-  display: none;
+.art-panel-desc {
+  margin: 0 0 12px;
+  font-size: 0.86rem;
 }
 
 
@@ -257,30 +216,11 @@
 
 /* art for the mobile view */
 @media (max-width: 640px) {
-  .art-folder-toggle {
-    gap: 12px;
-    padding: 14px 16px;
+  .art-tab {
+    padding: 5px 10px;
+    font-size: 0.82rem;
   }
-  .art-folder-icon-img {
-    width: 48px;
-    height: 48px;
-  }
-  .art-folder[data-depth="0"] > .art-folder-toggle .art-folder-icon-img {
-    width: 56px;
-    height: 56px;
-  }
-  .art-folder-name {
-    font-size: 0.96rem;
-  }
-  .art-folder[data-depth="0"] > .art-folder-toggle .art-folder-name {
-    font-size: 1.05rem;
-  }
-  .art-folder-count {
-    font-size: 0.72rem;
-  }
-  .art-folder-desc,
-  .art-folder[data-depth="0"] > .art-folder-toggle .art-folder-desc {
-    margin-left: 0;
+  .art-panel-desc {
     font-size: 0.78rem;
   }
 }

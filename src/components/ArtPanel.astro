@@ -1,0 +1,84 @@
+---
+import type { ArtFolderNode, ArtItem } from '../lib/artGallery';
+
+interface Props {
+  folder: ArtFolderNode;
+  active?: boolean;
+  // Trial: render with the widgetstar viewer instead of our grid + lightbox
+  widgetViewer?: boolean;
+}
+
+const { folder, active = false, widgetViewer = false } = Astro.props;
+
+const PAGE_SIZE = 30;
+
+// Folders are flat now, but pull in any nested ones so nothing goes missing
+function collectItems(node: ArtFolderNode): ArtItem[] {
+  return [...node.items, ...node.subfolders.flatMap(collectItems)];
+}
+const items = collectItems(folder);
+
+const pages: ArtItem[][] = [];
+for (let i = 0; i < items.length; i += PAGE_SIZE) {
+  pages.push(items.slice(i, i + PAGE_SIZE));
+}
+
+const stripExt = (name: string) => name.replace(/\.[^./]+$/, '');
+---
+
+<div
+  class="art-panel"
+  id={`art-panel-${folder.id}`}
+  role="tabpanel"
+  aria-labelledby={`art-tab-${folder.id}`}
+  data-folder-id={folder.id}
+  hidden={!active}
+>
+  <p class="art-panel-meta">
+    {items.length} {items.length === 1 ? 'piece' : 'pieces'}
+  </p>
+  {folder.description && <p class="art-panel-desc">{folder.description}</p>}
+
+  {widgetViewer ? (
+    <ws-widget type="viewer" iid="29518" embed="script">
+      {items.filter((item) => item.kind === 'image').map((item) => (
+        <img src={item.url} alt={stripExt(item.name)} />
+      ))}
+    </ws-widget>
+  ) : (
+  <div class="art-gallery">
+    {pages.map((pageItems, pageIndex) => (
+      <div class="art-gallery-page" data-page-index={pageIndex} hidden={pageIndex !== 0}>
+        {pageItems.map((item) => (
+          item.kind === 'image' ? (
+            <button class="art-thumb" type="button" data-full={item.url} data-kind="image" data-name={stripExt(item.name)}>
+              <img src={item.thumbUrl ?? item.url} alt={stripExt(item.name)} loading="lazy" />
+            </button>
+          ) : (
+            <button class="art-thumb art-thumb-video" type="button" data-full={item.url} data-kind="video" data-name={stripExt(item.name)}>
+              <!-- data-src, not src: videos would download even in hidden tabs. The script fills it in when the tab opens -->
+              <video data-src={item.url} poster={item.posterUrl} preload="none" muted playsinline></video>
+              <span class="art-thumb-play" aria-hidden="true">▶</span>
+            </button>
+          )
+        ))}
+      </div>
+    ))}
+
+    {pages.length > 1 && (
+      <div class="art-pager" role="navigation" aria-label={`${folder.name} pages`}>
+        {pages.map((_, pageIndex) => (
+          <button
+            class="art-pager-btn"
+            type="button"
+            data-page-index={pageIndex}
+            aria-current={pageIndex === 0 ? 'page' : undefined}
+          >
+            {pageIndex + 1}
+          </button>
+        ))}
+      </div>
+    )}
+  </div>
+  )}
+</div>

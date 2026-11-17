@@ -1,13 +1,21 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import PageShell from '../components/PageShell.astro';
-import ArtFolder from '../components/ArtFolder.astro';
+import ArtPanel from '../components/ArtPanel.astro';
 import WaterButton from '../components/WaterButton.astro';
 import { scanArtGallery } from '../lib/artGallery';
 import Sticker from '../components/Sticker.astro';
 import DocBanner from '../components/DocBanner.astro';
 
-const folders = await scanArtGallery();
+// Years newest first, then Memes, then anything else (Commissions)
+const isYear = (name: string) => /^\d{4}$/.test(name);
+const rank = (name: string) => (isYear(name) ? 0 : name.toLowerCase() === 'memes' ? 1 : 2);
+const folders = (await scanArtGallery()).sort((a, b) => {
+  const byRank = rank(a.name) - rank(b.name);
+  if (byRank !== 0) return byRank;
+  if (isYear(a.name)) return Number(b.name) - Number(a.name);
+  return a.name.localeCompare(b.name);
+});
 ---
 
 <Layout title="Art Gallery ☆ Gemmie's corner" description="A gallery of my digital and traditional art from 2019 to present.">
@@ -26,24 +34,42 @@ const folders = await scanArtGallery();
         <div class="doc-section" id="art">
           <DocBanner src="/images/banners/banner_art.png" alt="My Art Gallery" />
 
-          
+          <div class="art-tabs" role="tablist" aria-label="Art by year">
+            {folders.map((folder, i) => (
+              <button
+                class="art-tab"
+                type="button"
+                role="tab"
+                id={`art-tab-${folder.id}`}
+                aria-controls={`art-panel-${folder.id}`}
+                aria-selected={i === 0 ? 'true' : 'false'}
+                tabindex={i === 0 ? 0 : -1}
+                data-folder-id={folder.id}
+              >
+                {folder.name}
+              </button>
+            ))}
+          </div>
+
+          <div class="art-panels">
+            {folders.map((folder, i) => (
+              <ArtPanel folder={folder} active={i === 0} widgetViewer={folder.id === 'memes'} />
+            ))}
+          </div>
+
           <p class="blurb">
-            🌱₊ ⊹ I use IbisPaintX and my finger to draw! Below, you'll see some of my digital
-            and traditional art from 2019 - present. Enjoy and thanks 
+            🌱₊ ⊹ I use IbisPaintX and my finger to draw! Here you'll see some of my digital
+            and traditional art. Enjoy and thanks 
             for stopping by! (❁´◡`❁)ﾉ
           </p>
 
+          <center>
           <WaterButton
             href="/art/commissions"
             label="💌 Interested in a commission? See my info + examples here!"
             waterColor="#A32910"
           />
-
-          <div class="art-folder-list">
-            {folders.map((folder) => (
-              <ArtFolder folder={folder} />
-            ))}
-          </div>
+          </center>
 
           <!-- NEONET Arts Collective webring -->
           <p class="hand-note" style="text-align: center;"> Teehee, I'm Part of the NEONET Arts Collective webring!</p>
@@ -79,22 +105,60 @@ const folders = await scanArtGallery();
 
 <script>
   document.addEventListener('astro:page-load', () => {
-    // ---- folder expand/collapse ----
-    document.querySelectorAll<HTMLButtonElement>('.art-folder-toggle').forEach((toggle) => {
-      toggle.addEventListener('click', () => {
-        const body = toggle.nextElementSibling as HTMLElement | null;
-        if (!body) return;
-        const isOpen = toggle.getAttribute('aria-expanded') === 'true';
-        toggle.setAttribute('aria-expanded', String(!isOpen));
-        body.hidden = isOpen;
+    // widgetstar viewer (trial on Memes). Its script crashes if it runs twice, so only load it once
+    if (document.querySelector('ws-widget') && !customElements.get('ws-widget') && !document.getElementById('ws-loader')) {
+      const loader = document.createElement('script');
+      loader.id = 'ws-loader';
+      loader.src = 'https://u.widget.st/ar.js';
+      document.head.appendChild(loader);
+    }
 
-        
-        body.querySelectorAll<HTMLVideoElement>(':scope > .art-gallery video[data-src]').forEach((video) => {
+    // ---- year/category tabs ----
+    const tabs = Array.from(document.querySelectorAll<HTMLButtonElement>('.art-tab'));
+    const panels = Array.from(document.querySelectorAll<HTMLElement>('.art-panel'));
+
+    const selectTab = (id: string, { focus = false } = {}) => {
+      const tab = tabs.find((t) => t.dataset.folderId === id);
+      if (!tab) return;
+      tabs.forEach((t) => {
+        const selected = t === tab;
+        t.setAttribute('aria-selected', String(selected));
+        t.tabIndex = selected ? 0 : -1;
+      });
+      panels.forEach((panel) => {
+        panel.hidden = panel.dataset.folderId !== id;
+        if (panel.hidden) return;
+        panel.querySelectorAll<HTMLVideoElement>('video[data-src]').forEach((video) => {
           video.src = video.dataset.src!;
           video.removeAttribute('data-src');
         });
       });
+      if (focus) tab.focus();
+      // keep the pick in the URL so /art#2024 links straight to a year
+      history.replaceState(history.state, '', `#${id}`);
+    };
+
+    tabs.forEach((tab, i) => {
+      tab.addEventListener('click', () => selectTab(tab.dataset.folderId!));
+      tab.addEventListener('keydown', (e) => {
+        const step = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+        if (!step) return;
+        e.preventDefault();
+        const next = tabs[(i + step + tabs.length) % tabs.length];
+        selectTab(next.dataset.folderId!, { focus: true });
+      });
     });
+
+    const fromHash = decodeURIComponent(location.hash.slice(1));
+    if (fromHash && tabs.some((t) => t.dataset.folderId === fromHash)) {
+      selectTab(fromHash);
+    } else if (tabs[0]) {
+      // first tab is already shown, just load its videos
+      panels[0]?.querySelectorAll<HTMLVideoElement>('video[data-src]').forEach((video) => {
+        video.src = video.dataset.src!;
+        video.removeAttribute('data-src');
+      });
+    }
 
 
 

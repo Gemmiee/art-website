@@ -8,12 +8,10 @@
   font-size: 1.05rem;
   font-weight: 700;
 }
-.links-section-heading,
-.art-folder-name {
+.links-section-heading {
   color: var(--accent-deep);
 }
-:root[data-theme="dark"] .links-section-heading,
-:root[data-theme="dark"] .art-folder-name {
+:root[data-theme="dark"] .links-section-heading {
   color: var(--glow);
 }
 
