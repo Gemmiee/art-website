@@ -13,13 +13,14 @@ import themeToggleCss from './snippets/theme-toggle/style.css?raw';
 import themeToggleJs from './snippets/theme-toggle/script.js?raw';
 import bubbleDividerHtml from './snippets/bubble-divider/markup.html?raw';
 import bubbleDividerCss from './snippets/bubble-divider/style.css?raw';
+import seasonalHtml from './snippets/seasonal/seasonal.html?raw';
 
 export interface CodeResource {
   id: string;
   title: string;
   description: string;
   html: string;
-  css: string;
+  css?: string;
   js?: string;
 }
 
@@ -73,5 +74,12 @@ export const codeResources: CodeResource[] = [
       'My deviders for organisation.',
     html: bubbleDividerHtml,
     css: bubbleDividerCss,
+  },
+  {
+    id: 'seasonal',
+    title: 'Seasonal Window Effects',
+    description:
+      'Fall leaves, snow for winter, butterflies for spring, sun for summer. Original from <a href="https://github.com/berkayerdemsoy/four-seasons-fx" target="_blank" rel="noopener">Seasonal github repo!</a>',
+    html: seasonalHtml,
   },
 ];

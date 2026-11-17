@@ -111,13 +111,15 @@ import { codeResources } from '../data/codeResources';
                 </div>
               </details>
 
-              <details class="code-block">
-                <summary>CSS</summary>
-                <div class="code-block-body">
-                  <button class="embed-copy-btn code-copy-btn" type="button" data-copy-target={`${resource.id}-css`}>Copy</button>
-                  <pre><code id={`${resource.id}-css`}>{resource.css}</code></pre>
-                </div>
-              </details>
+              {resource.css && (
+                <details class="code-block">
+                  <summary>CSS</summary>
+                  <div class="code-block-body">
+                    <button class="embed-copy-btn code-copy-btn" type="button" data-copy-target={`${resource.id}-css`}>Copy</button>
+                    <pre><code id={`${resource.id}-css`}>{resource.css}</code></pre>
+                  </div>
+                </details>
+              )}
 
               {resource.js && (
                 <details class="code-block">
