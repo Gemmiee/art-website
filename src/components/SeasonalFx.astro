@@ -1,0 +1,35 @@
+---
+import type { SeasonInput } from 'four-seasons-fx';
+
+interface Props {
+  // 'auto' picks from today's date
+  season?: SeasonInput;
+}
+
+const { season = 'auto' } = Astro.props;
+---
+
+<!-- Persisted so ViewTransitions page swaps don't wipe the canvas -->
+<div id="seasonal-fx" data-season={season} transition:persist aria-hidden="true"></div>
+
+<style>
+  #seasonal-fx {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+  }
+</style>
+
+<script>
+  import { createSeasonalEffect, type SeasonInput } from 'four-seasons-fx';
+
+  const container = document.getElementById('seasonal-fx');
+  if (container && !container.dataset.started) {
+    container.dataset.started = 'true';
+    createSeasonalEffect({
+      container,
+      season: (container.dataset.season as SeasonInput) ?? 'auto',
+    });
+  }
+</script>

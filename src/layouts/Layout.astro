@@ -3,8 +3,12 @@ import '../styles/global.css';
 import { ViewTransitions } from 'astro:transitions';
 import Sticker from '../components/Sticker.astro';
 import { musicAlbums } from '../data/musicAlbums';
+import SeasonalFx from '../components/SeasonalFx.astro';
 
 const defaultAlbum = musicAlbums[0];
+
+// Seasonal override, set to false to fall back to the day/night scene
+const christmasTheme = true;
 
 interface Props {
   title?: string;
@@ -41,6 +45,7 @@ const ogUrl = new URL(Astro.url.pathname, Astro.site).toString();
     <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16" />
     <link rel="icon" href="/favicon.ico" sizes="48x48" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="preload" href="/fonts/dynapuff-latin.woff2" as="font" type="font/woff2" crossorigin />
     <!-- Sanrio webring styling -->
     <link href="https://luckyatoll.nekoweb.org/sanriowebring.css" rel="stylesheet" type="text/css" media="all" />
     {feedUrl && <link rel="alternate" type="application/rss+xml" title="Gemmie's corner — Blog" href={feedUrl} />}
@@ -59,8 +64,14 @@ const ogUrl = new URL(Astro.url.pathname, Astro.site).toString();
     <ViewTransitions />
   </head>
   <body>
+    
     <div class="scene scene-light" aria-hidden="true"></div>
     <div class="scene scene-dark" aria-hidden="true"></div>
+
+    <!-- SEASONAL EFFECTS -->
+    {christmasTheme && <div class="scene scene-christmas" aria-hidden="true"></div>}
+    {christmasTheme && <SeasonalFx season="winter" />}
+    <!-- miaou, end of seasonal effects -->
 
     <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle dark mode">
       <span class="theme-icon sun-icon" aria-hidden="true"><Sticker name="black_cat.gif" /></span>
@@ -284,6 +295,12 @@ const ogUrl = new URL(Astro.url.pathname, Astro.site).toString();
       }
       :root[data-theme="dark"] .scene-dark {
         opacity: 1;
+      }
+      /* Sits above both day/night layers, so it shows in either theme */
+      .scene.scene-christmas {
+        z-index: -2;
+        background-image: url('/images/wallpaper/christmas/christmas1.png');
+        background-position: center;
       }
 
       .site-banner {

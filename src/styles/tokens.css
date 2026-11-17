@@ -1,5 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=DynaPuff:wght@400..700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700&family=Caveat:wght@700&family=Pacifico&display=swap');
+
+@font-face {
+  font-family: 'DynaPuff';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: block;
+  src: url('/fonts/dynapuff-latin.woff2') format('woff2');
+}
 :root {
   /* glass light mode */
   --glass-fill: rgba(255, 255, 255, 0.562);
