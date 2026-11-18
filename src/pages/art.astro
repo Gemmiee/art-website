@@ -73,10 +73,8 @@ const folders = (await scanArtGallery()).sort((a, b) => {
 
           <!-- NEONET Arts Collective webring -->
           <p class="hand-note" style="text-align: center;"> Teehee, I'm Part of the NEONET Arts Collective webring!</p>
-          <div class="offsite-btn" id="dumri-art" style="width: fit-content; margin: 0 auto;">
-            <script type="text/javascript" src="https://dumbiee.neocities.org/webring/art/variables.js"></script>
-            <script type="text/javascript" src="https://dumbiee.neocities.org/webring/art/widget3sfw.js"></script>
-          </div>
+          <!-- filled in by the script at the bottom of this file -->
+          <div class="offsite-btn" id="dumri-art" style="width: fit-content; margin: 0 auto;"></div>
 
           <img  src="/images/other_components/gemmies.webp" alt="My Art Gallery" />
         </div>
@@ -114,7 +112,31 @@ const folders = (await scanArtGallery()).sort((a, b) => {
     onVideoKeydown = null;
   });
 
+
+  const loadScript = (src: string, parent: HTMLElement) =>
+    new Promise<void>((resolve, reject) => {
+      const s = document.createElement('script');
+      s.src = src;
+      s.onload = () => resolve();
+      s.onerror = () => reject(new Error(`Failed to load ${src}`));
+      parent.appendChild(s);
+    });
+
+  const loadNeonetRing = async () => {
+    const ring = document.getElementById('dumri-art');
+    if (!ring || ring.dataset.loaded) return;
+    ring.dataset.loaded = 'true';
+    try {
+      await loadScript('https://dumbiee.neocities.org/webring/art/variables.js', ring);
+      await loadScript('https://dumbiee.neocities.org/webring/art/widget3sfw.js', ring);
+    } catch (err) {
+      console.warn('[art] NEONET webring failed to load', err);
+    }
+  };
+
   document.addEventListener('astro:page-load', () => {
+    loadNeonetRing();
+
     // ---- year/category tabs ----
     const tabs = Array.from(document.querySelectorAll<HTMLButtonElement>('.art-tab'));
     const panels = Array.from(document.querySelectorAll<HTMLElement>('.art-panel'));

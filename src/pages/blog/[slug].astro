@@ -47,6 +47,7 @@ const thumbnailUrl = `/images/blog/${encodeURIComponent(post.data.thumbnail)}`;
 
           <a class="blog-back-link" href="/blog">‹ Back to Blog</a>
 
+          <ws-widget type="like" iid="29573"></ws-widget>
           <article class="blog-article">
             <img class="blog-hero-img" src={thumbnailUrl} alt="" />
             <h1 class="blog-title">{post.data.title}</h1>
@@ -57,6 +58,7 @@ const thumbnailUrl = `/images/blog/${encodeURIComponent(post.data.thumbnail)}`;
                   {post.data.tags.map((tag) => (
                     <span class="blog-tag" style={`--tag-hue:${tagHue(tag)}`}>#{tag}</span>
                   ))}
+                  
                 </div>
               )}
             </div>
