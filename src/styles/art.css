@@ -51,11 +51,6 @@
   margin: 0 0 12px;
   font-size: 0.86rem;
 }
-/* clicks go to the button, so Viewer.js doesn't also open from the <img> */
-.art-gallery .art-thumb img {
-  pointer-events: none;
-}
-
 
 /* ---------------- ms paint ---------------*/
 .paint-invite {

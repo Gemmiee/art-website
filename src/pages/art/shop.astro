@@ -78,13 +78,12 @@ const products = await Promise.all(
                     <div class="shop-carousel-track">
                       {product.images.map((img, i) => (
                         <button
-                          class:list={['shop-thumb', 'shop-carousel-slide', { 'is-active': i === 0 }]}
+                          class:list={['shop-carousel-slide', { 'is-active': i === 0 }]}
                           type="button"
-                          data-full={img.url}
-                          data-kind="image"
-                          data-name={product.title}
+                          tabindex={i === 0 ? 0 : -1}
+                          aria-label={`View ${product.title} photo ${i + 1}`}
                         >
-                          <img src={img.thumbUrl} alt={product.title} loading="lazy" />
+                          <img src={img.thumbUrl} data-original={img.url} alt={product.title} loading="lazy" />
                         </button>
                       ))}
                     </div>
@@ -129,99 +128,34 @@ const products = await Promise.all(
       </div>
     </section>
 
-    <!-- lightbox -->
-    <div class="art-lightbox" id="art-lightbox" hidden>
-      <div class="art-lightbox-backdrop" data-close></div>
-      <div class="art-lightbox-frame window">
-        <div class="title-bar">
-          <span class="title-bar-icon" aria-hidden="true">💌</span>
-          <span class="title-bar-text" id="art-lightbox-title"></span>
-          <div class="title-bar-controls" aria-hidden="true">
-            <span class="tb-btn close" data-close>×</span>
-          </div>
-        </div>
-        <p class="blurb"> Use the <b>Arrow Keys</b> to navigate easily!</p>
-        <div class="art-lightbox-body" id="art-lightbox-body"></div>
-        <button class="art-lightbox-nav art-lightbox-prev" type="button" id="art-lightbox-prev" aria-label="Previous image">‹</button>
-        <button class="art-lightbox-nav art-lightbox-next" type="button" id="art-lightbox-next" aria-label="Next image">›</button>
-      </div>
-    </div>
   </PageShell>
 </Layout>
 
 <script>
+  import { attachViewer } from '../../lib/imageViewer';
+
   document.addEventListener('astro:page-load', () => {
-    // products images are carousel
     document.querySelectorAll<HTMLElement>('.shop-carousel').forEach((carousel) => {
+      const track = carousel.querySelector<HTMLElement>('.shop-carousel-track');
+      if (!track) return;
       const slides = Array.from(carousel.querySelectorAll<HTMLElement>('.shop-carousel-slide'));
       const dots = Array.from(carousel.querySelectorAll<HTMLElement>('.shop-carousel-dot'));
       let index = 0;
       const show = (next: number) => {
         index = (next + slides.length) % slides.length;
-        slides.forEach((slide, i) => slide.classList.toggle('is-active', i === index));
+        slides.forEach((slide, i) => {
+          slide.classList.toggle('is-active', i === index);
+          slide.tabIndex = i === index ? 0 : -1; // hidden slides shouldn't be tabbable
+        });
         dots.forEach((dot, i) => dot.classList.toggle('is-active', i === index));
       };
       carousel.querySelector('[data-carousel-prev]')?.addEventListener('click', () => show(index - 1));
       carousel.querySelector('[data-carousel-next]')?.addEventListener('click', () => show(index + 1));
-    });
 
-    const lightbox = document.getElementById('art-lightbox');
-    const lightboxBody = document.getElementById('art-lightbox-body');
-    const lightboxTitle = document.getElementById('art-lightbox-title');
-    const prevBtn = document.getElementById('art-lightbox-prev') as HTMLButtonElement | null;
-    const nextBtn = document.getElementById('art-lightbox-next') as HTMLButtonElement | null;
-    if (!lightbox || !lightboxBody || !lightboxTitle || !prevBtn || !nextBtn) return;
-
-    let currentThumbs: HTMLButtonElement[] = [];
-    let currentIndex = -1;
-
-    const renderCurrent = () => {
-      const thumb = currentThumbs[currentIndex];
-      if (!thumb) return;
-      const { full, name } = thumb.dataset;
-      lightboxTitle.textContent = name || '';
-      lightboxBody.innerHTML = `<img src="${full}" alt="${name || ''}" />`;
-    };
-
-    const step = (delta: number) => {
-      if (currentThumbs.length === 0) return;
-      currentIndex = (currentIndex + delta + currentThumbs.length) % currentThumbs.length;
-      renderCurrent();
-    };
-
-    const closeLightbox = () => {
-      lightbox.hidden = true;
-      lightboxBody.innerHTML = '';
-      currentThumbs = [];
-      currentIndex = -1;
-    };
-
-    document.querySelectorAll<HTMLButtonElement>('.shop-thumb').forEach((thumb) => {
-      thumb.addEventListener('click', () => {
-        const gallery = thumb.closest('.shop-carousel-track');
-        currentThumbs = gallery
-          ? Array.from(gallery.querySelectorAll<HTMLButtonElement>('.shop-thumb'))
-          : [thumb];
-        currentIndex = currentThumbs.indexOf(thumb);
-        renderCurrent();
-        lightbox.hidden = false;
-        const hasMultiple = currentThumbs.length > 1;
-        prevBtn.hidden = !hasMultiple;
-        nextBtn.hidden = !hasMultiple;
-      });
-    });
-
-    prevBtn.addEventListener('click', () => step(-1));
-    nextBtn.addEventListener('click', () => step(1));
-
-    lightbox.querySelectorAll<HTMLElement>('[data-close]').forEach((el) => {
-      el.addEventListener('click', closeLightbox);
-    });
-    document.addEventListener('keydown', (e) => {
-      if (lightbox.hidden) return;
-      if (e.key === 'Escape') closeLightbox();
-      else if (e.key === 'ArrowLeft') step(-1);
-      else if (e.key === 'ArrowRight') step(1);
+      // clicking the visible photo opens the lightbox on it; arrows there go through this product's photos
+      attachViewer(track, '.shop-carousel-slide');
+      // keep the carousel on whatever photo the lightbox was last showing
+      track.addEventListener('viewed', (e) => show((e as CustomEvent<{ index: number }>).detail.index));
     });
   });
 </script>

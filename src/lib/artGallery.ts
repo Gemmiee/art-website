@@ -21,7 +21,6 @@ export interface ArtFolderNode {
   id: string;
   items: ArtItem[];
   subfolders: ArtFolderNode[];
-  thumbnailUrl?: string;
   description?: string;
 }
 
@@ -100,14 +99,12 @@ function toUrl(segments: string[]): string {
 }
 
 const GALLERY_THUMB_WIDTH = 480;
-const FOLDER_ICON_WIDTH = 160;
 
 async function scan(absDir: string, segments: string[]): Promise<ArtFolderNode> {
   const entries = fs.readdirSync(absDir, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name));
 
   const items: ArtItem[] = [];
   const subfolders: ArtFolderNode[] = [];
-  let thumbnailUrl: string | undefined;
   let description: string | undefined;
 
   for (const entry of entries) {
@@ -124,10 +121,8 @@ async function scan(absDir: string, segments: string[]): Promise<ArtFolderNode> 
     const fileSegments = [...segments, entry.name];
     const absFilePath = path.join(absDir, entry.name);
 
-    // name a file "Thumbnail" so it gets to be the folder's thumbnail
-    // description txt for the folder's disc
+    // old folder-icon images, kept out of the gallery; Description.txt shows above the tab's art
     if (baseName === 'thumbnail' && IMAGE_EXTS.has(ext)) {
-      thumbnailUrl = (await getImageThumb(absFilePath, FOLDER_ICON_WIDTH)) ?? toUrl(fileSegments);
       continue;
     }
     if (baseName === 'description' && ext === '.txt') {
@@ -157,7 +152,6 @@ async function scan(absDir: string, segments: string[]): Promise<ArtFolderNode> 
     id: slugify(segments.length > 0 ? segments : ['art']),
     items,
     subfolders,
-    thumbnailUrl,
     description,
   };
 }

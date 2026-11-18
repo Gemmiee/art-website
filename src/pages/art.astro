@@ -99,15 +99,11 @@ const folders = (await scanArtGallery()).sort((a, b) => {
 </Layout>
 
 <script>
-  import Viewer from 'viewerjs';
-  import 'viewerjs/dist/viewer.css';
+  import { attachViewer } from '../lib/imageViewer';
 
-  let viewers: Viewer[] = [];
   let onVideoKeydown: ((e: KeyboardEvent) => void) | null = null;
 
   document.addEventListener('astro:before-swap', () => {
-    viewers.forEach((v) => v.destroy());
-    viewers = [];
     if (onVideoKeydown) document.removeEventListener('keydown', onVideoKeydown);
     onVideoKeydown = null;
   });
@@ -201,30 +197,9 @@ const folders = (await scanArtGallery()).sort((a, b) => {
       });
     });
 
+    // one lightbox group per tab, so arrows move through the whole folder across its pages
     document.querySelectorAll<HTMLElement>('.art-gallery').forEach((gallery) => {
-      const viewer = new Viewer(gallery, {
-        url: 'data-original',
-        navbar: true,
-        toolbar: true,
-        title: true,
-        transition: true,
-        movable: true,
-        zoomable: true,
-        scalable: true,
-        rotatable: true,
-        loop: true,
-        minWidth: 200,
-        minHeight: 100,
-      });
-      viewers.push(viewer);
-
-      const images = Array.from(gallery.querySelectorAll<HTMLImageElement>('.art-thumb img'));
-      gallery.querySelectorAll<HTMLButtonElement>('.art-thumb:not(.art-thumb-video)').forEach((btn) => {
-        btn.addEventListener('click', () => {
-          const img = btn.querySelector('img');
-          if (img) viewer.view(images.indexOf(img));
-        });
-      });
+      attachViewer(gallery, '.art-thumb:not(.art-thumb-video)');
     });
 
     // ---- video player ----

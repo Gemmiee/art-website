@@ -8,11 +8,8 @@ const embedCode = `<a href="${siteUrl}"><img src="${ownButtonSrc}" width="88" he
 ---
 
 <div class="col-misc">
-  <!-- like button -->
-  <script src="https://u.widget.st/ar.js"></script>
+  <!-- like button + hit count (script loaded by lib/widgetstar.ts) -->
   <ws-widget type="like" iid="29573"></ws-widget>
-  <!-- hit count -->
-  <script src="https://u.widget.st/ar.js"></script>
   <ws-widget type="hc" iid="29571"></ws-widget>
 
 
@@ -171,6 +168,7 @@ const embedCode = `<a href="${siteUrl}"><img src="${ownButtonSrc}" width="88" he
 </div>
 
 <script>
+  import '../lib/widgetstar';
   import { bindCopyButton } from '../lib/copyButton';
 
   // MiscColumn only renders on the home page
