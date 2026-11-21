@@ -31,6 +31,7 @@ const { href, label, waterColor = '#3fbfc7', external = false } = Astro.props;
     align-items: center;
     justify-content: center;
     width: fit-content;
+    max-width: 100%;            /* never wider than the window it sits in */
     box-sizing: border-box;
     margin-top: 14px;
     padding: 12px 30px;
@@ -90,12 +91,12 @@ const { href, label, waterColor = '#3fbfc7', external = false } = Astro.props;
     color: #ffffff;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
     text-align: center;
-    white-space: pre;
+    white-space: pre-wrap;      /* keeps your line breaks, but wraps when the button runs out of room */
     user-select: none;
     display: block;
   }
 
-  @media (max-width: 420px) {
+  @container doc (max-width: 388px) {
     .water-button {
       width: 100%;
     }

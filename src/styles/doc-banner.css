@@ -1,4 +1,7 @@
 /* ---------- main "active" document window ---------- */
+.window.main-doc {
+  container: doc / inline-size;
+}
 .window.main-doc .window-body {
   padding: 28px 30px;
 }
@@ -87,12 +90,6 @@
   height: auto;
 }
 
-@media (max-width: 480px) {
-  .bio-banner {
-    margin: 12px auto 16px;
-  }
-}
-
 
 .update-card-body {
   position: relative;
@@ -148,7 +145,7 @@
   margin-right: 2px;
 }
 
-@media (max-width: 640px) {
+@container doc (max-width: 608px) {
   .inner-window-grid {
     grid-template-columns: 1fr;
   }

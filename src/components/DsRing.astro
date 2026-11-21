@@ -4,28 +4,13 @@ const RING_MEMBERS = 'https://dsring.neocities.org/members';
 ---
 
 <div class="ds-ring" data-ds-ring>
-  <!-- top half -->
-  <div class="ds-half ds-top">
-    <span class="ds-speaker" aria-hidden="true"></span>
-    <div class="ds-screen ds-screen-top">
-      <div class="ds-titlebar">☶ DSring</div>
-      <p class="ds-msg" data-ds-msg>a webring for DS fans</p>
-    </div>
-    <span class="ds-speaker" aria-hidden="true"></span>
-  </div>
+  <img class="ds-img" src="/images/other_components/dsring_image.png" alt="DSring, a webring for DS fans" />
 
-  <div class="ds-hinge" aria-hidden="true"></div>
-
-  <!-- bottom half -->
-  <div class="ds-half ds-bottom">
-    <span class="ds-dpad" aria-hidden="true"></span>
-    <nav class="ds-screen ds-screen-bottom" aria-label="DSring webring">
-      <a class="ds-btn" data-ds-prev href={RING_HOME} aria-label="Previous site">◀</a>
-      <a class="ds-btn ds-btn-home" href={RING_MEMBERS}>index</a>
-      <a class="ds-btn" data-ds-next href={RING_HOME} aria-label="Next site">▶</a>
-    </nav>
-    <span class="ds-abxy" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
-  </div>
+  <nav class="ds-screen-bottom" aria-label="DSring webring">
+    <a class="ds-btn" data-ds-prev href={RING_HOME} aria-label="Previous site">&lt;</a>
+    <a class="ds-btn ds-btn-home" href={RING_MEMBERS}>index</a>
+    <a class="ds-btn" data-ds-next href={RING_HOME} aria-label="Next site">&gt;</a>
+  </nav>
 </div>
 
 <script>
@@ -58,14 +43,9 @@ const RING_MEMBERS = 'https://dsring.neocities.org/members';
       const i = sites.findIndex((s) => clean(s) === SELF);
       if (i === -1) throw new Error('not in ring');
 
-      const prev = sites[(i - 1 + sites.length) % sites.length];
-      const next = sites[(i + 1) % sites.length];
-      widget.querySelector<HTMLAnchorElement>('[data-ds-prev]')!.href = prev;
-      widget.querySelector<HTMLAnchorElement>('[data-ds-next]')!.href = next;
+      widget.querySelector<HTMLAnchorElement>('[data-ds-prev]')!.href = sites[(i - 1 + sites.length) % sites.length];
+      widget.querySelector<HTMLAnchorElement>('[data-ds-next]')!.href = sites[(i + 1) % sites.length];
     } catch {
-      // arrows already point at the ring's home page, which is a fine fallback
-      const msg = widget.querySelector('[data-ds-msg]');
-      if (msg) msg.textContent = 'ring offline... try the index!';
     }
   }
 
@@ -80,138 +60,47 @@ const RING_MEMBERS = 'https://dsring.neocities.org/members';
   }
 
   .ds-ring {
-    --ds-shell: #f4f4f6;
-    --ds-shell-edge: #c9cad1;
-    --ds-bezel: #2a2b30;
-    --ds-screen: #ffffff;
-    --ds-ink: #292929;
-    --ds-link: #42637b;
-    --ds-accent: #0049cb;
-
-    width: 172px;
+    position: relative;
+    width: 200px;
+    max-width: 100%;
     font-family: 'NintendoDS', var(--font-ui, sans-serif);
-    filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.18));
   }
-  :global(:root[data-theme='dark']) .ds-ring {
-    --ds-shell: #2c2d33;
-    --ds-shell-edge: #15161a;
-    --ds-bezel: #0d0d10;
-    --ds-screen: #e9eef5;
+  .ds-img {
+    display: block;
+    width: 100%;
+    height: auto;
   }
 
-  .ds-half {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    padding: 8px 6px;
-    background: linear-gradient(180deg, var(--ds-shell), var(--ds-shell-edge) 180%);
-    border: 1px solid var(--ds-shell-edge);
-  }
-  .ds-top {
-    border-radius: 10px 10px 3px 3px;
-  }
-  .ds-bottom {
-    border-radius: 3px 3px 12px 12px;
-  }
-  .ds-hinge {
-    height: 5px;
-    margin: 0 10px;
-    background: var(--ds-shell-edge);
-    border-radius: 0 0 3px 3px;
-  }
-
-  .ds-screen {
-    width: 112px;
-    height: 74px;
-    background-color: var(--ds-screen);
-    border: 4px solid var(--ds-bezel);
-    border-radius: 2px;
-    color: var(--ds-ink);
-    overflow: hidden;
-  }
-
-  /* top screen */
-  .ds-titlebar {
-    padding: 2px 4px;
-    font-size: 0.9rem;
-    line-height: 1.2;
-    background: url('https://dsring.neocities.org/universal/title.png') repeat-x;
-    background-size: auto 100%;
-    border-bottom: 2px solid var(--ds-bezel);
-  }
-  .ds-msg {
-    margin: 0;
-    padding: 6px 4px;
-    font-size: 0.8rem;
-    line-height: 1.15;
-    text-align: center;
-  }
-
-  /* bottom screen */
   .ds-screen-bottom {
+    position: absolute;
+    left: 28.1%;
+    top: 58.4%;
+    width: 43.6%;
+    height: 32.3%;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    padding: 0 4px;
-    background-image: url('https://dsring.neocities.org/universal/grid-small.png');
-    background-size: 31px;
+    justify-content: space-evenly;
+    box-sizing: border-box;
+    container-type: size;
   }
+
   .ds-btn {
-    padding: 2px 4px;
-    font-size: 0.85rem;
-    color: var(--ds-link);
+    width: 70%;
+    padding: 0.15em 0;
+    font-size: 18cqh;
+    line-height: 1;
+    text-align: center;
+    color: #42637b;
     text-decoration: none;
-    background: var(--ds-screen);
-    border: 2px solid #a5a5a5;
+    background: #fff;
+    border: 1px solid #a5a5a5;
     border-radius: 3px;
   }
   .ds-btn:hover,
   .ds-btn:focus-visible {
-    color: var(--ds-accent);
+    color: #0049cb;
     outline: none;
-    border: 2px solid transparent;
-    border-image: url('https://dsring.neocities.org/universal/selection.png') 7% round;
+    border-color: #0049cb;
   }
-
-  /* little decorations */
-  .ds-speaker {
-    width: 8px;
-    height: 22px;
-    background: radial-gradient(circle, var(--ds-shell-edge) 1px, transparent 1.5px) 0 0 / 4px 4px;
-  }
-  .ds-dpad {
-    position: relative;
-    width: 14px;
-    height: 14px;
-  }
-  .ds-dpad::before,
-  .ds-dpad::after {
-    content: '';
-    position: absolute;
-    background: var(--ds-bezel);
-    border-radius: 1px;
-  }
-  .ds-dpad::before {
-    inset: 5px 0;
-  }
-  .ds-dpad::after {
-    inset: 0 5px;
-  }
-  .ds-abxy {
-    display: grid;
-    grid-template-columns: repeat(3, 4px);
-    grid-template-rows: repeat(3, 4px);
-    gap: 1px;
-  }
-  .ds-abxy i {
-    width: 4px;
-    height: 4px;
-    background: var(--ds-bezel);
-    border-radius: 50%;
-  }
-  .ds-abxy i:nth-child(1) { grid-area: 1 / 2; }
-  .ds-abxy i:nth-child(2) { grid-area: 2 / 1; }
-  .ds-abxy i:nth-child(3) { grid-area: 2 / 3; }
-  .ds-abxy i:nth-child(4) { grid-area: 3 / 2; }
 </style>

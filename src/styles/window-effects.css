@@ -106,7 +106,8 @@ h1 {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-10px); }
 }
-@media (max-width: 480px) {
+/* stack until the text beside the image would get ~300px (220-260px image + gap + 60px padding) */
+@container doc (max-width: 640px) {
   .article-grid,
   .profile-grid,
   .article-grid-reverse {
@@ -131,7 +132,7 @@ h1 {
 .article-grid-3 > * {
   min-width: 0;
 }
-@media (max-width: 640px) {
+@container doc (max-width: 448px) {
   .article-grid-3 {
     grid-template-columns: 1fr;
     justify-items: center;
@@ -152,7 +153,7 @@ h1 {
 .shop-col > .section-banner {
   margin: 0 auto 8px;
 }
-@media (max-width: 700px) {
+@container doc (max-width: 668px) {
   .shop-grid {
     grid-template-columns: 1fr;
   }
@@ -268,6 +269,19 @@ h1 {
 @keyframes doodle-tilt {
   0%, 100% { transform: translateY(-50%) rotate(-14deg); }
   50% { transform: translateY(-50%) rotate(2deg); }
+}
+
+/* tablet + mobile (profile stacked): center the banner and tags.
+   Must come after the rules above, a container query doesn't win on its own */
+@container doc (max-width: 640px) {
+  .bio-banner {
+    margin: 12px auto 16px;
+    left: 23px;                       /* half the doodle's 46px, so doodle + banner center together */
+    width: min(380px, 100% - 46px);   /* leave room for the doodle on small phones */
+  }
+  .bio-icons {
+    justify-content: center;
+  }
 }
 
 .blurb {
