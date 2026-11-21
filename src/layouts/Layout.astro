@@ -164,15 +164,23 @@ const ogUrl = new URL(Astro.url.pathname, Astro.site).toString();
               return;
             }
 
-            // always keep the iframe sized correctly even while hidden 
+            // always keep the iframe sized correctly even while hidden
             const content = document.getElementById('now-playing-content');
             const collapsed = content ? content.getBoundingClientRect().height === 0 : false;
             const rect = slot.getBoundingClientRect();
+
+            // widget is display:none (under 640px) aka just hide that shit and keep the last real size.
+            // to prevent the bandcamp "now playing" from disappearing
+            if (rect.width === 0 || rect.height === 0) {
+              frame.style.visibility = 'hidden';
+              return;
+            }
+
             frame.style.top = `${rect.top}px`;
             frame.style.left = `${rect.left}px`;
             frame.style.width = `${rect.width}px`;
             frame.style.height = `${rect.height}px`;
-            frame.style.visibility = collapsed || rect.width === 0 || rect.height === 0 ? 'hidden' : 'visible';
+            frame.style.visibility = collapsed ? 'hidden' : 'visible';
           };
           window.__gemmieSyncNowPlaying = syncPosition;
           window.addEventListener('resize', syncPosition);
