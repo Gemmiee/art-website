@@ -3,7 +3,7 @@ title: "My IbisPaint brushes"
 excerpt: "And their QR codes so that you can use them too."
 thumbnail: "blog_post_6.png"
 tags: ["art"]
-date: 2026-10-24
+date: 2026-11-24
 ---
 
 Throughout my art career, I've jumped from art style to art style just because I would stumble upon a nice brush on pinterest and download it. It was a way to try something new and work with new rendering styles. Below, I'm going to list some of the Ibis Paint brushes I've gathered and use on my recent drawings!
