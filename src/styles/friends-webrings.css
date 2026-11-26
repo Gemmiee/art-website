@@ -123,6 +123,11 @@
   gap: 16px;
 }
 
+/* the box has a max-height, so flexbox would squash the widgets to fit instead of scrolling */
+.webring-stack > * {
+  flex-shrink: 0;
+}
+
 /* webring scrolled box */
 .webring-scroll-box {
   max-height: 380px;
