@@ -7,6 +7,7 @@ import { getImageThumb } from '../../lib/imageThumb';
 import { tagHue } from '../../lib/tagColor';
 import Sticker from '../../components/Sticker.astro';
 import DocBanner from '../../components/DocBanner.astro';
+import RssIcon from '../../components/RssIcon.astro';
 
 const BLOG_IMAGES_DIR = path.join(process.cwd(), 'public', 'images', 'blog');
 const THUMB_WIDTH = 480;
@@ -30,8 +31,6 @@ const posts = await Promise.all(
 const allTags = Array.from(new Set(allPosts.flatMap((post) => post.data.tags))).sort((a, b) =>
   a.localeCompare(b)
 );
-
-const feedUrl = 'https://gemmiewow.com/blog/rss.xml';
 ---
 
 <Layout title="Blog ☆ Gemmie's corner" feedUrl="/blog/rss.xml">
@@ -53,6 +52,7 @@ const feedUrl = 'https://gemmiewow.com/blog/rss.xml';
           <p class="hand-note">
             📰 Stuff about me, games, characters I love, art, thoughts and more!
             Articles may contain <strong><font color="--accent-teal"> soundboard </font></strong>, so keep that volume low.
+            <RssIcon class="rss-inline" href="/blog/rss.xml" title="blog feed. Add it to your rss reader!" label="Blog RSS feed" />
           </p>
 
           
@@ -106,14 +106,6 @@ const feedUrl = 'https://gemmiewow.com/blog/rss.xml';
                 loading="lazy"
               ></iframe>
             </div>
-
-            <p class="hand-note">
-              <Sticker name="blue_friends.gif" /> Prefer an RSS reader instead? Here's the feed URL:
-            </p>
-            <div class="embed-row">
-              <input class="embed-input" type="text" readonly value={feedUrl} />
-              <button class="embed-copy-btn" type="button" data-copy-text={feedUrl}>Copy</button>
-            </div>
           </div>
 
 
@@ -123,8 +115,6 @@ const feedUrl = 'https://gemmiewow.com/blog/rss.xml';
 </Layout>
 
 <script>
-  import { bindCopyButton } from '../../lib/copyButton';
-
   document.addEventListener('astro:page-load', () => {
     const filterBtns = Array.from(document.querySelectorAll<HTMLButtonElement>('.blog-tag-filter'));
     const cards = Array.from(document.querySelectorAll<HTMLElement>('.blog-card'));
@@ -156,10 +146,5 @@ const feedUrl = 'https://gemmiewow.com/blog/rss.xml';
         applyFilter();
       });
     });
-
-    // feed link copy button
-    const feedInput = document.querySelector<HTMLInputElement>('.blog-subscribe .embed-input');
-    feedInput?.addEventListener('click', () => feedInput.select());
-    bindCopyButton(document.querySelector<HTMLButtonElement>('.blog-subscribe .embed-copy-btn'), feedInput);
   });
 </script>

@@ -7,6 +7,8 @@ import WaterButton from '../components/WaterButton.astro';
 import BubbleDivider from '../components/BubbleDivider.astro';
 import Sticker from '../components/Sticker.astro';
 import DsRing from '../components/DsRing.astro';
+import { withIds } from '../data/siteUpdates';
+import RssIcon from '../components/RssIcon.astro';
 
 const blinkiesDir = path.join(process.cwd(), 'public', 'images', 'blinkies_stamps_tags', 'blinkies');
 const blinkies = fs.existsSync(blinkiesDir)
@@ -17,39 +19,6 @@ const blinkies = fs.existsSync(blinkiesDir)
       .map((name) => `/images/blinkies_stamps_tags/blinkies/${name}`)
   : [];
 
-const updates = [
-  { date: '11/25', text: 'New blog article! Also I added my Letterboxd in the socials mini window ;P' },
-  { date: '11/19', text: 'Shop just got its own update, two new canvases have been added.' },
-  { date: '11/18', text: 'Art page got a revamp :P' },
-  { date: '11/17', text: 'Christmas theme is here! 🎄' },
-  { date: '11/04', text: 'New Clipboard page added ദ്ദി˙∇˙)ว' },
-  { date: '11/04', text: 'Added two new webrings! DS webring and the Smallweb Subway!' },
-  { date: '10/27', text: 'Yo! I got a Newgrounds account!' },
-  { date: '10/23', text: 'Added theme song in the main page, THANK YOU GREM FOR MAKING IT!' },
-  { date: '10/17', text: 'New game: Super Crazy Guitar Maniac Deluxe 4' },
-  { date: '10/16', text: '‼🧃🍎 A Latest Drawing section has been added in our index page.' },
-  { date: '10/15', text: '💿 Two new albums in the music page were added 💿 Plus, I decided to bring the guestbook to the front page too.' },
-  { date: '10/12', text: 'Separated the mp3 player into its own little window outside of the navigation column, due to a bug I faced with the bandcamp embed.' },
-  { date: '10/08', text: 'Small revamp on dark mode, Im pairing yellow to fit with the lamp in the background.' },
-  { date: '10/06', text: 'New article posted: "Why I switched to Linux"' },
-  { date: '10/04', text: 'Ive noticed all this time, we didnt have an about-me page. Now we do lolol' },
-  { date: '09/03', text: 'Posted some code snippets used on this site :>' },
-  { date: '09/29', text: 'Music got a new look 🌀 you can now select your music from the new music page! Did I mention that music keeps playing even when you switch pages? (°□°) ა🥬' },
-  { date: '09/23', text: 'Blog is here! YAAAAAAYYYY! More spending your time! Plus newsletter!' },
-  { date: '09/18', text: 'Commissions page is done and open woohoo :o' },
-  { date: '09/17', text: 'New game added: Metal Slug X!' },
-  { date: '09/05', text: 'Art gallery is finally open! Go Go Go!!' },
-  { date: '08/29', text: 'Guestbook is now availablee wheeeee' },
-  { date: '08/27', text: 'Added Paint!' },
-  { date: '08/26', text: 'We got games! Space Cadet Pinball and Spider Solitaire!!' },
-  { date: '08/25', text: 'Chat is now open! Leave your messages theeree' },
-  { date: '08/24', text: 'Yooo we got a status noowww' },
-  { date: '08/23', text: 'Added music, social media and friends!' },
-  { date: '08/22', text: 'Dark mode + layered day/night wallpaper added' },
-  { date: '08/21', text: 'Added art banners and maaany art components, will add more overtime teehee' },
-  { date: '08/18', text: 'Redesigned into a 3-column desktop layout' },
-  { date: '08/17', text: 'Windows Aero glass' },
-];
 
 const announcements = [
   'HELLO! University is starting, therefore updates might take time. Thanks for sticking around!',
@@ -62,7 +31,7 @@ const announcements = [
 ];
 ---
 
-<Layout>
+<Layout feedUrl="/blog/site-updates.xml" feedTitle="Gemmie's corner — Site updates">
   <PageShell>
     <!-- css for sanrio webring -->
     <link href="https://luckyatoll.nekoweb.org/sanriowebring.css" rel="stylesheet" type="text/css" media="all"/>
@@ -154,12 +123,13 @@ const announcements = [
             <div class="update-card">
               <div class="update-card-banner">
                 <img src="/images/banners/banner_site_updates.png" alt="Site Updates" />
+                <RssIcon href="/blog/site-updates.xml" title="site updates feed! Add it in your rss reader" label="Site updates RSS feed" />
               </div>
               <div class="update-card-body card-border">
                 <div class="update-card-scroll scroll-border">
                   <ul class="update-list">
-                    {updates.map((u) => (
-                      <li><span class="update-date">{u.date}</span> {u.text}</li>
+                    {withIds().map((u) => (
+                      <li id={u.id}><span class="update-date">{u.date.slice(5).replace('-', '/')}</span> {u.text}</li>
                     ))}
                   </ul>
                 </div>

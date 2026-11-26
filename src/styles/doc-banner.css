@@ -81,6 +81,20 @@
   z-index: 2;
   pointer-events: none;
 }
+/* site updates + rss */
+.update-card-banner:has(.rss-link) {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.update-card-banner:has(.rss-link) img {
+  flex: 1;
+  min-width: 0;
+}
+.update-card-banner .rss-link {
+  flex: none;
+  pointer-events: auto;            /* the banner ignores clicks, the icon shouldn't */
+}
 .update-card-banner img,
 .shop-img,
 .avatar-img,

@@ -15,6 +15,7 @@ interface Props {
   description?: string;
   image?: string;
   feedUrl?: string;
+  feedTitle?: string;
 }
 
 const {
@@ -22,6 +23,7 @@ const {
   description = 'Art, animation, music, guestbook, games and more!',
   image = '/images/other_components/banner.webp',
   feedUrl,
+  feedTitle = "Gemmie's corner — Blog",
 } = Astro.props;
 
 const ogImage = new URL(image, Astro.site).toString();
@@ -49,7 +51,7 @@ const ogUrl = new URL(Astro.url.pathname, Astro.site).toString();
     <link rel="preload" href="/fonts/dynapuff-latin.woff2" as="font" type="font/woff2" crossorigin />
     <!-- Sanrio webring styling -->
     <link href="https://luckyatoll.nekoweb.org/sanriowebring.css" rel="stylesheet" type="text/css" media="all" />
-    {feedUrl && <link rel="alternate" type="application/rss+xml" title="Gemmie's corner — Blog" href={feedUrl} />}
+    {feedUrl && <link rel="alternate" type="application/rss+xml" title={feedTitle} href={feedUrl} />}
     <title>{title}</title>
 
     <meta property="og:type" content="website" />
