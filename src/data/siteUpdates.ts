@@ -4,6 +4,7 @@ export interface SiteUpdate {
 }
 
 export const siteUpdates: SiteUpdate[] = [
+  { date: '2026-11-26', text: 'Site updates have their own rss link, website got a slightly revamp on the windows to represent more the Windows XP theme.' },
   { date: '2026-11-25', text: 'New blog article! Also I added my Letterboxd in the socials mini window ;P' },
   { date: '2026-11-19', text: 'Shop just got its own update, two new canvases have been added.' },
   { date: '2026-11-18', text: 'Art page got a revamp :P' },

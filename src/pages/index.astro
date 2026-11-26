@@ -105,6 +105,20 @@ const announcements = [
           </div>
         </div>
 
+        <!-- ---- social icons ---- -->
+        <div class="social-icons">
+          <a href="https://ko-fi.com/gemmiewow/" target="_blank" rel="noopener" title="Ko-fi: support me + my shop!"><img src="/images/icons/kofi.png" alt="Ko-fi" /></a>
+          <a href="https://cara.app/gemmiewow" target="_blank" rel="noopener" title="Cara: art portfolio"><img src="/images/icons/cara.png" alt="Cara" /></a>
+          <a href="https://pixelfed.social/gemmie_wow" target="_blank" rel="noopener" title="Pixelfed: art portfolio"><img src="/images/icons/pixelfed.png" alt="Pixelfed" /></a>
+          <a href="https://www.instagram.com/gemmie_wow" target="_blank" rel="noopener" title="Instagram"><img src="/images/icons/instagram.png" alt="Instagram" /></a>
+          <a href="https://youtube.com/@gemmiewow" target="_blank" rel="noopener" title="YouTube"><img src="/images/icons/youtube.png" alt="YouTube" /></a>
+          <a href="https://www.twitch.tv/gemmie_wow" target="_blank" rel="noopener" title="Twitch, I sometimes stream :D"><img src="/images/icons/twitch.png" alt="Twitch" /></a>
+          <a href="https://www.colorslive.com/artist/GemmieWow" target="_blank" rel="noopener" title="Colors!Live: my 3DS gallery"><img src="/images/icons/colors3d.png" alt="Colors!Live 3DS gallery" /></a>
+          <a href="https://bandcamp.com/gemmiewow" target="_blank" rel="noopener" title="Bandcamp: my music collection"><img src="/images/icons/bandcamp.png" alt="Bandcamp" /></a>
+          <a href="https://gemmiewow.newgrounds.com/" target="_blank" rel="noopener" title="Newgrounds"><img src="/images/icons/newgrounds.png" alt="Newgrounds" /></a>
+          <a href="https://letterboxd.com/Gemmiewow/films/" target="_blank" rel="noopener" title="Letterboxd: films I've watched"><img src="/images/icons/letterboxd.png" alt="Letterboxd" /></a>
+        </div>
+
         <BubbleDivider />
 
 
@@ -377,3 +391,20 @@ const announcements = [
     });
   });
 </script>
+
+<style>
+  /* social media icons */
+  .social-icons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 2px;                      /* minimum space between icons when the window is narrow */
+    margin: 18px 0 4px;
+  }
+  .social-icons img {
+    display: block;
+    width: 38px;
+    height: 38px;
+    object-fit: contain;
+  }
+</style>

@@ -8,13 +8,14 @@
   z-index: 1;
 }
 
-/* -- Aero glass window -- */
+/* -- glass window -- */
 
 /* original from w3schools glassmorphism */
 .window {
   background: var(--glass-fill-strong);
-  border: 1px solid var(--glass-border);
-  border-radius: 0;
+  /* windows XP frame */
+  border: 3px solid var(--window-frame);
+  border-radius: 7px 7px 0 0;
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
   overflow: hidden;
@@ -34,20 +35,10 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 7px 8px 7px 12px;
-  background: linear-gradient(180deg, var(--titlebar-start) 0%, var(--titlebar-mid) 45%, var(--titlebar-end) 100%);
-  border-bottom: 1px solid var(--titlebar-border);
+  padding: 4px 3px 7px 9px;
+  background: var(--window-frame);
   position: relative;
-  transition: background var(--theme-transition) ease, border-color var(--theme-transition) ease;
-}
-
-.title-bar::before {
-  content: '';
-  position: absolute;
-  inset: 0 0 auto 0;
-  height: 45%;
-  background: linear-gradient(180deg, rgba(255,255,255,0.75), rgba(255,255,255,0));
-  pointer-events: none;
+  transition: background var(--theme-transition) ease;
 }
 
 .title-bar-icon {
@@ -57,26 +48,27 @@
 .title-bar-text {
   flex: 1;
   font-size: 0.82rem;
-  font-weight: 600;
-  color: var(--ink-inverse);
-  text-shadow: 0 1px 1px rgba(0,0,0,0.35);
+  font-weight: 700;
+  color: var(--titlebar-text);
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.35);
   letter-spacing: 0.2px;
 }
 
 .title-bar-controls {
   display: flex;
-  gap: 4px;
+  gap: 2px;
 }
 
+/* XP window buttons */
 .tb-btn {
-  width: 22px;
-  height: 20px;
-  border-radius: 0;
-
-  border: 1px solid rgba(255,255,255,0.6);
-  background: linear-gradient(180deg, var(--tb-btn-start) 0%, var(--tb-btn-end) 100%);
-  color: var(--ink);
-  font-size: 0.7rem;
+  width: 21px;
+  height: 21px;
+  border-radius: 3px;
+  border: 1px solid #fff;
+  background: var(--tb-btn-bg);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
   line-height: 1;
   display: flex;
   align-items: center;
@@ -85,8 +77,7 @@
 }
 
 .tb-btn.close {
-  background: linear-gradient(180deg, #ff9a8a 0%, #e3543f 100%);
-  color: #fff;
+  background: var(--tb-btn-close-bg);
 }
 
 .window-body {

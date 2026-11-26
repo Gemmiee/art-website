@@ -13,17 +13,15 @@
   --glass-fill-strong: rgba(255, 255, 255, 0.658);
   --glass-border: rgba(255, 255, 255, 0.30);
   --glass-blur: blur(13px) saturate(208%);
-  --titlebar-start: #d7e6f5;
-  --titlebar-mid: #4a85c9;
-  --titlebar-end: #1a3f66;
-  --titlebar-border: #11263f;
-  --titlebar-inactive-start: #e4ebf2;
-  --titlebar-inactive-mid: #b7c9da;
-  --titlebar-inactive-end: #7891ab;
-  --titlebar-inactive-border: #5a7290;
-  --titlebar-inactive-text: #2a3f55;
-  --tb-btn-start: #fdfefe;
-  --tb-btn-end: #cfe6e9;
+  /* windows xp colors */
+  --window-frame: #0a5ad8;
+  --window-frame-inactive: #698dd4;
+  --titlebar-text: #ffffff;
+  --titlebar-inactive-text: #e4ecfb;
+  --tb-btn-bg: #2e74ec;
+  --tb-btn-inactive-bg: #93b0e8;
+  --tb-btn-close-bg: #e04a24;
+  --tb-btn-close-inactive-bg: #e3a08c;
 
   /* text */
   --ink: #1a3f7a;
@@ -59,17 +57,14 @@
   --glass-fill: rgba(3, 46, 87, 0.774);
   --glass-fill-strong: rgba(3, 42, 92, 0.616);
   --glass-border: rgba(255, 255, 255, 0.493);
-  --titlebar-start: #2a5f99;
-  --titlebar-mid: #16304f;
-  --titlebar-end: #0d1030;
-  --titlebar-border: #070816;
-  --titlebar-inactive-start: #1a2f44;
-  --titlebar-inactive-mid: #15222f;
-  --titlebar-inactive-end: #10122c;
-  --titlebar-inactive-border: #0a0b1d;
+  --window-frame: #14306e;
+  --window-frame-inactive: #2a3b5e;
+  --titlebar-text: #ffffff;
   --titlebar-inactive-text: #a3bdd6;
-  --tb-btn-start: #27405a;
-  --tb-btn-end: #171538;
+  --tb-btn-bg: #24489a;
+  --tb-btn-inactive-bg: #34476e;
+  --tb-btn-close-bg: #c2431f;
+  --tb-btn-close-inactive-bg: #7a4a42;
 
   --ink: #e9f1fb;
   --ink-soft: #9ab6d6;
