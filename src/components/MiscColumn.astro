@@ -6,10 +6,19 @@ const siteUrl = 'https://gemmiewow.com/';
 const ownButtonSrc = `${siteUrl}images/friends/button_gem.gif`;
 const embedCode = `<a href="${siteUrl}"><img src="${ownButtonSrc}" width="88" height="31" alt="Gemmie's corner"></a>`;
 ---
+<!-- for reactions -->
+<script src="https://u.widget.st/ar.js"></script>
 
 <div class="col-misc">
-  <!-- like button -->
+  <!-- like button MOMENTARILY REMOVING THIS 
     <ws-widget type="like" iid="29573"></ws-widget>
+  -->
+
+
+    <p style="color:bisque" class="hand-note">
+          React with an emoji!
+    </p>
+    <ws-widget type="reactions" iid="31692"></ws-widget>
 
 
   <!-- --- socials --- -->
@@ -24,12 +33,16 @@ const embedCode = `<a href="${siteUrl}"><img src="${ownButtonSrc}" width="88" he
       </div>
     </div>
     <div class="window-body">
-    <a href="https://88x31.lol">
-    <img src="https://88x31.lol/counter3.gif"
-      alt="88x31 - Visitor counter" width="88" height="31" />
-    </a>
+        <p style="display: flex;" class="hand-note">
+          Hit count by:
+          <a style="margin-left:5px;" class="offsite-btn" href="https://widget.st/" target="_blank" rel="noopener" aria-label="widgetstar website">
+            <img src="https://widget.st/images/button.gif" alt="widgetstar website button" loading="lazy" />
+          </a>
+        </p>
 
-    <ws-widget type="hc" iid="29571"></ws-widget>
+      <BubbleDivider class="bubble-divider-dashed"/>
+
+      <ws-widget type="hc" iid="29571"></ws-widget>
 
     </div>
   </section>

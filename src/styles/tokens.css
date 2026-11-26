@@ -48,8 +48,9 @@
   --font-name: 'DynaPuff', cursive;
   --font-banner: 'Baloo 2', var(--font-ui);
 
-  /* misc */
   --theme-transition: 1.6s;
+  /* soft shadow for the banners and buttons */
+  --bottom-shade: linear-gradient(180deg, transparent 55%, rgba(0, 0, 0, 0.16) 100%);
 }
 
 /* ---------- dark theme token overrides ---------- */

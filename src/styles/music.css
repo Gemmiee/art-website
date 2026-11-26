@@ -44,11 +44,11 @@
 }
 .music-play-btn.is-active {
   border-color: #7aa2e8;
-  background: linear-gradient(180deg, #f5f9ff 0%, #e2ecfc 45%, #b7cdf5 46%, #cddcf8 100%);
+  background: var(--bottom-shade), #f7af51;
   color: #1a2b57;
 }
 :root[data-theme="dark"] .music-play-btn.is-active {
-  background: linear-gradient(180deg, #4d7fe0 0%, #3a5fc4 45%, #22346e 46%, #172452 100%);
+  background: var(--bottom-shade), #3a5fc4;
   color: #eaf1ff;
 }
 .music-bandcamp-link {

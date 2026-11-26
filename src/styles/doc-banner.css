@@ -17,15 +17,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(180deg, #eafcff 0%, #9fe0ea 30%, #3f7fc9 65%, #1a3f66 100%);
+  background: var(--bottom-shade), #a7cff5;
   border: 1px solid rgba(255,255,255,0.75);
-}
-.doc-banner::before {
-  content: '';
-  position: absolute;
-  inset: 0 0 55% 0;
-  background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0));
-  pointer-events: none;
 }
 .doc-banner-img {
   position: relative;

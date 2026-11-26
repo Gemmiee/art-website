@@ -50,7 +50,7 @@
 .embed-copy-btn {
   border-radius: 0;
   border: 1px solid var(--accent-deep);
-  background: linear-gradient(180deg, #ffffff 0%, #d9f3f0 45%, #4fb9c2 46%, #8fe0e6 100%);
+  background: var(--bottom-shade), #cee0f8;
   color: var(--ink);
   text-decoration: none;
   cursor: pointer;
@@ -60,7 +60,7 @@
 :root[data-theme="dark"] .shop-kofi-btn,
 :root[data-theme="dark"] .embed-copy-btn {
   border-color: var(--glow);
-  background: linear-gradient(180deg, #e8a63c 0%, #c97d1e 45%, #a3611a 46%, #5c3410 100%);
+  background: var(--bottom-shade), #c97d1e;
   color: var(--glow-deep);
 }
 .music-play-btn:hover,
