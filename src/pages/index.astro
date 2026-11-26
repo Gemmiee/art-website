@@ -313,6 +313,24 @@ const announcements = [
                 </div>
 
 
+                <!-- Jojo webring -->
+                 <div class="jojo-ring">
+                  <!-- arrows + golden image in one row, arrows level with the image's middle -->
+                  <div class="jojo-ring-row">
+                    <a href="https://alele.neocities.org/w/jojowebring?action=previous" aria-label="Previous site">
+                      <img src="https://thedawn.nekoweb.org/arrow-L.png" alt="" />
+                    </a>
+                    <a href="https://alele.neocities.org/w/jojowebring">
+                      <img src="https://thedawn.nekoweb.org/jotaro-3.png" alt="JoJo's bizarre webring" style="width: 88px;" />
+                    </a>
+                    <a href="https://alele.neocities.org/w/jojowebring?action=next" aria-label="Next site">
+                      <img src="https://thedawn.nekoweb.org/arrow-R.png" alt="" />
+                    </a>
+                  </div>
+                  <a href="https://alele.neocities.org/w/jojowebring">JoJo's bizarre webring!</a>
+                </div>
+
+
                 <!-- Android webring -->
                   <center>
                   <div class="droidringwidget">
@@ -461,6 +479,19 @@ const announcements = [
 </script>
 
 <style>
+  .jojo-ring {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    text-align: center;
+  }
+  .jojo-ring-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
   /* social media icons */
   .social-icons {
     display: flex;
