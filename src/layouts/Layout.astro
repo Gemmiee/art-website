@@ -68,8 +68,9 @@ const ogUrl = new URL(Astro.url.pathname, Astro.site).toString();
   </head>
   <body>
     
-    <div class="scene scene-light" aria-hidden="true"></div>
-    <div class="scene scene-dark" aria-hidden="true"></div>
+    <!-- skip the original background if the christmas one is on -->
+    {!christmasTheme && <div class="scene scene-light" aria-hidden="true"></div>}
+    {!christmasTheme && <div class="scene scene-dark" aria-hidden="true"></div>}
 
     <!-- SEASONAL EFFECTS -->
     {christmasTheme && <div class="scene scene-christmas" aria-hidden="true"></div>}

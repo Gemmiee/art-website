@@ -12,7 +12,7 @@
   --glass-fill: rgba(255, 255, 255, 0.562);
   --glass-fill-strong: rgba(255, 255, 255, 0.658);
   --glass-border: rgba(255, 255, 255, 0.30);
-  --glass-blur: blur(13px) saturate(208%);
+  --glass-blur: blur(8px) saturate(208%); /* in case scroll becomes fricking unbearable, tone down the blur for smoother scrolling BWAAA */
   /* windows xp colors */
   --window-frame: #0a5ad8;
   --window-frame-inactive: #698dd4;

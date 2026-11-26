@@ -9,6 +9,12 @@ import Sticker from '../components/Sticker.astro';
 import DsRing from '../components/DsRing.astro';
 import { withIds } from '../data/siteUpdates';
 import RssIcon from '../components/RssIcon.astro';
+import { getImageThumb } from '../lib/imageThumb';
+
+// latest drawing: show a lighter copy (900px wide webp) instead of the full-size file
+const LATEST_DRAWING = '/images/Art/2026/ntela_woody_commission.png';
+const latestDrawingSrc =
+  (await getImageThumb(path.join(process.cwd(), 'public', LATEST_DRAWING), 900)) ?? LATEST_DRAWING;
 
 const blinkiesDir = path.join(process.cwd(), 'public', 'images', 'blinkies_stamps_tags', 'blinkies');
 const blinkies = fs.existsSync(blinkiesDir)
@@ -57,8 +63,9 @@ const announcements = [
                 <button type="button" class="avatar-trigger" id="gemmie-trigger" aria-label="Boop Gemmie">
                   <span class="avatar-stage" id="gemmie-stage">
                     <img class="avatar-img avatar-img-normal" src="/images/other_components/GemmieBust.webp" alt="Gemmie bust illustration" />
-                    <img class="avatar-img avatar-img-burned" id="gemmie-burned" src="/images/other_components/BurnedGemmie.gif" alt="" aria-hidden="true" />
-                    <img class="avatar-explosion" id="gemmie-explosion" src="/images/other_components/explosion.gif" alt="" aria-hidden="true" />
+                    
+                    <img class="avatar-img avatar-img-burned" id="gemmie-burned" alt="" aria-hidden="true" />
+                    <img class="avatar-explosion" id="gemmie-explosion" alt="" aria-hidden="true" />
                   </span>
                 </button>
               </center>
@@ -126,7 +133,7 @@ const announcements = [
         <div class="doc-section">
             <h2 class="links-section-heading">🍊 Latest Drawing:</h2>
             <p class="hand-note">See more of my art in the <a href="/art">art page!</a></p>
-            <img class="shop-img" src="/images/Art/2026/ntela_woody_commission.png" alt="Gemmie's latest drawing" />
+            <img class="shop-img" src={latestDrawingSrc} alt="Gemmie's latest drawing" loading="lazy" />
         </div>
 
         <BubbleDivider  />
@@ -269,7 +276,7 @@ const announcements = [
 
                 <!-- Wii Ring -->
                 <div style="width: 135px; /* <- Set any width you'd like! */">
-                <iframe style="border: none; width: 100%" src="https://wiiring.jeith.com/snippet?site=https://gemmiewow.com/&variant=standard"></iframe>
+                <iframe style="border: none; width: 100%" src="https://wiiring.jeith.com/snippet?site=https://gemmiewow.com/&variant=standard" loading="lazy"></iframe>
                 </div>
                
 
@@ -289,7 +296,7 @@ const announcements = [
               <smallweb-subway-doodlecrew></smallweb-subway-doodlecrew>
                 
                 <!--Windows Enthusiasts Webring -->
-                <iframe class="webring-iframe" title="Windows Enthusiasts Webring" src="https://brooklynights.nekoweb.org/we_bring/ifridget"></iframe>
+                <iframe class="webring-iframe" title="Windows Enthusiasts Webring" src="https://brooklynights.nekoweb.org/we_bring/ifridget" loading="lazy"></iframe>
 							
 
 
